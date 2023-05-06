@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
-
+using GeKtviWpfToolkit.DataGridGK;
+using GeKtviWpfToolkit.ValueConverters;
 
 namespace GeKtviWpfToolkit.DataGridGK
 {
@@ -17,7 +14,6 @@ namespace GeKtviWpfToolkit.DataGridGK
         public event ExecutedRoutedEventHandler ExecutePasteEvent;
         public event CanExecuteRoutedEventHandler CanExecutePasteEvent;
 
-        // ******************************************************************
         public PastebleDataGrid()
         {
 
@@ -39,6 +35,20 @@ namespace GeKtviWpfToolkit.DataGridGK
             delete.Command = ApplicationCommands.Delete;
             ContextMenu.Items.Add(delete);
 
+            Binding pasteBinding = new Binding(nameof(IsReadOnly));
+            pasteBinding.Source = this;
+            pasteBinding.Mode = BindingMode.OneWay;
+            pasteBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            pasteBinding.Converter = new BooleanToVisibilityConverterReverse();
+            paste.SetBinding(MenuItem.VisibilityProperty, pasteBinding);
+
+            Binding deleteBinding = new Binding(nameof(CanUserDeleteRows));
+            deleteBinding.Source = this;
+            deleteBinding.Mode = BindingMode.OneWay;
+            deleteBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+            deleteBinding.Converter = new BooleanToVisibilityConverter();
+            delete.SetBinding(MenuItem.VisibilityProperty, deleteBinding);
+
             CommandManager.RegisterClassCommandBinding(
                 typeof(PastebleDataGrid),
                 new CommandBinding(ApplicationCommands.Paste,
@@ -49,7 +59,7 @@ namespace GeKtviWpfToolkit.DataGridGK
                 typeof(PastebleDataGrid),
                 new CommandBinding(ApplicationCommands.Delete,
                     new ExecutedRoutedEventHandler(OnExecutedDeleteInternal),
-                    new CanExecuteRoutedEventHandler(OnCanExecuteDelete)));
+                    new CanExecuteRoutedEventHandler(OnCanExecuteDeleteInternal)));
         }
 
         #region Clipboard Paste
@@ -95,16 +105,13 @@ namespace GeKtviWpfToolkit.DataGridGK
 
             List<string[]> clipboardData = ClipboardHelper.ParseClipboardData();
 
-
-#if DEBUG
-            Debug.Print(">>> DataGrid Paste: >>>");
-            StringBuilder sb = new StringBuilder();
-#endif 
             int minRowIndex = Items.IndexOf(CurrentItem);
             int maxRowIndex = Items.Count - 1;
-            int startIndexOfDisplayCol = SelectionUnit != DataGridSelectionUnit.FullRow ? CurrentColumn.DisplayIndex : 0;
+            int startIndexOfDisplayCol = (SelectionUnit != DataGridSelectionUnit.FullRow) ? CurrentColumn.DisplayIndex : 0;
             int clipboardRowIndex = 0;
+
             BeginEditCommand.Execute(null, this);
+
             for (int i = minRowIndex; i <= maxRowIndex && clipboardRowIndex < clipboardData.Count; i++, clipboardRowIndex++)
             {
                 if (i < this.Items.Count)
@@ -131,12 +138,6 @@ namespace GeKtviWpfToolkit.DataGridGK
 
                             SelectedCells.Add(new DataGridCellInfo(Items[i], column));
                         }
-
-
-#if DEBUG
-                        sb.AppendFormat("{0,-10}", clipboardData[clipboardRowIndex][clipboardColumnIndex]);
-                        sb.Append(" - ");
-#endif
                     }
 
                     CommitEditCommand.Execute(this, this);
@@ -145,11 +146,6 @@ namespace GeKtviWpfToolkit.DataGridGK
                         maxRowIndex++;
                     }
                 }
-
-                Debug.Print(sb.ToString());
-#if DEBUG
-                sb.Clear();
-#endif
             }
         }
 
@@ -175,14 +171,16 @@ namespace GeKtviWpfToolkit.DataGridGK
         // ******************************************************************
         #endregion Clipboard Paste
 
-        //private static void OnCanExecutePasteInternal(object target, CanExecuteRoutedEventArgs args)
-        //{
-        //    ((PastebleDataGrid)target).OnCanExecutePaste(target, args);
-        //}
+        #region Delete
+
+        private static void OnCanExecuteDeleteInternal(object target, CanExecuteRoutedEventArgs args)
+        {
+            ((PastebleDataGrid)target).OnCanExecuteDelete(target, args);
+        }
 
         protected virtual void OnCanExecuteDelete(object target, CanExecuteRoutedEventArgs args)
         {
-            args.CanExecute = true;
+            args.CanExecute = CurrentCell != null && CanUserDeleteRows;
             args.Handled = true;
         }
 
@@ -203,8 +201,7 @@ namespace GeKtviWpfToolkit.DataGridGK
                 return;
             }
 
-            //BeginEditCommand.Execute(null, this);
-
+            BeginEditCommand.Execute(null, this);
 
             foreach (DataGridCellInfo cellInfo in SelectedCells)
             {
@@ -223,175 +220,7 @@ namespace GeKtviWpfToolkit.DataGridGK
             }
         }
 
+        #endregion Clipboard Paste
 
-        private void SetGridToSupportManyEditEitherWhenValidationErrorExists()
-        {
-            this.Items.CurrentChanged += Items_CurrentChanged;
-
-
-            //Type DatagridType = this.GetType().BaseType;
-            //PropertyInfo HasCellValidationProperty = DatagridType.GetProperty("HasCellValidationError", BindingFlags.NonPublic | BindingFlags.Instance);
-            //HasCellValidationProperty.
-        }
-
-        void Items_CurrentChanged(object sender, EventArgs e)
-        {
-            //this.Items[0].
-            //throw new NotImplementedException();
-        }
-
-        // ******************************************************************
-        private void SetGridWritable()
-        {
-            Type DatagridType = GetType().BaseType;
-            PropertyInfo HasCellValidationProperty = DatagridType.GetProperty("HasCellValidationError", BindingFlags.NonPublic | BindingFlags.Instance);
-            if (HasCellValidationProperty != null)
-            {
-                HasCellValidationProperty.SetValue(this, false, null);
-            }
-        }
-
-        // ******************************************************************
-        public void SetGridWritableEx()
-        {
-            BindingFlags bindingFlags = BindingFlags.FlattenHierarchy | BindingFlags.NonPublic | BindingFlags.Instance;
-            PropertyInfo cellErrorInfo = GetType().BaseType.GetProperty("HasCellValidationError", bindingFlags);
-            PropertyInfo rowErrorInfo = GetType().BaseType.GetProperty("HasRowValidationError", bindingFlags);
-            cellErrorInfo.SetValue(this, false, null);
-            rowErrorInfo.SetValue(this, false, null);
-        }
-
-        //public PastebleDataGrid():base() 
-        //{
-        //    DelegateCommand Paste = new DelegateCommand(TextBoxPaste, () => true);
-        //    InputGesture gst = new KeyGesture(Key.V, ModifierKeys.Control);
-        //    InputBinding ib = new InputBinding(Paste, gst);
-        //    this.InputBindings.Add(ib);
-        //    //DataFormats.CommaSeparatedValue
-        //    ContextMenu = new ContextMenu();
-        //    MenuItem paste = new MenuItem();
-        //    paste.Command = Paste;
-        //    paste.Header = "Paste";
-        //    paste.InputGestureText = "Ctl + V";
-        //    ContextMenu.Items.Add(paste);
-        //}
-
-
-        //private void TextBoxPaste()
-        //{
-        //    //Clipboard.SetData(DataFormats.CommaSeparatedValue, SelectedCells);
-
-
-        //    var cellInfos = this.SelectedCells;
-
-        //    var list1 = new List<string>();
-
-        //    //Columns
-
-
-
-        //    foreach (DataGridCellInfo cellInfo in cellInfos)
-        //    {
-        //        if (cellInfo.IsValid)
-        //        {
-        //            //GetCellContent returns FrameworkElement
-        //            var content = cellInfo.Column.GetCellContent(cellInfo.Item);
-
-        //            //Need to add the extra lines of code below to get desired output
-
-        //            //get the datacontext from FrameworkElement and typecast to DataRowView
-        //            var row = (string)content.GetValue(TextBlock.TextProperty);
-
-
-        //            list1.Add(row);
-        //            ////ItemArray returns an object array with single element
-        //            //object[] obj = row.Row.ItemArray;
-
-        //            ////store the obj array in a list or Arraylist for later use
-        //            //list1.Add(obj[0].ToString());
-        //        }
-        //    }
-        //    //DataObject d = this.GetClipboardContent();
-        //    // Clipboard.SetDataObject(d);
-        //    //string clipboard = args.DataObject.GetData(typeof(string)) as string;
-
-        //    //Regex nonNumeric = new System.Text.RegularExpressions.Regex(@"\D");
-        //    //string result = nonNumeric.Replace(clipboard, String.Empty);
-
-        //    //int start = uiTextBox.SelectionStart;
-        //    //int length = uiTextBox.SelectionLength;
-        //    //int caret = uiTextBox.CaretIndex;
-
-        //    //string text = uiTextBox.Text.Substring(0, start);
-        //    //text += uiTextBox.Text.Substring(start + length);
-
-        //    //string newText = text.Substring(0, uiTextBox.CaretIndex) + result;
-        //    //newText += text.Substring(caret);
-        //    //uiTextBox.Text = newText;
-        //    //uiTextBox.CaretIndex = caret + result.Length;
-
-        //    //args.CancelCommand();
-        //}
-
-        //private void TextBoxCopy(object sender, DataObjectCopyingEventArgs args)
-        //{
-        //    //string clipboard = args.DataObject.GetData(typeof(string)) as string;
-
-        //    //Regex nonNumeric = new System.Text.RegularExpressions.Regex(@"\D");
-        //    //string result = nonNumeric.Replace(clipboard, String.Empty);
-
-        //    //int start = uiTextBox.SelectionStart;
-        //    //int length = uiTextBox.SelectionLength;
-        //    //int caret = uiTextBox.CaretIndex;
-
-        //    //string text = uiTextBox.Text.Substring(0, start);
-        //    //text += uiTextBox.Text.Substring(start + length);
-
-        //    //string newText = text.Substring(0, uiTextBox.CaretIndex) + result;
-        //    //newText += text.Substring(caret);
-        //    //uiTextBox.Text = newText;
-        //    //uiTextBox.CaretIndex = caret + result.Length;
-
-        //    //args.CancelCommand();
-        //}
-
-        //private void PasteClipboardValue()
-        //{
-        //    ////Show Error if no cell is selected
-        //    //if (dataGridView1.SelectedCells.Count == 0)
-        //    //{
-        //    //    MessageBox.Show("Please select a cell", "Paste",
-        //    //    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-        //    //    return;
-        //    //}
-
-        //    ////Get the starting Cell
-        //    //DataGridViewCell startCell = GetStartCell(dataGridView1);
-        //    ////Get the clipboard value in a dictionary
-        //    //Dictionary<int, Dictionary<int, string>> cbValue =
-        //    //        ClipBoardValues(Clipboard.GetText());
-
-        //    //int iRowIndex = startCell.RowIndex;
-        //    //foreach (int rowKey in cbValue.Keys)
-        //    //{
-        //    //    int iColIndex = startCell.ColumnIndex;
-        //    //    foreach (int cellKey in cbValue[rowKey].Keys)
-        //    //    {
-        //    //        //Check if the index is within the limit
-        //    //        if (iColIndex <= dataGridView1.Columns.Count - 1
-        //    //        && iRowIndex <= dataGridView1.Rows.Count - 1)
-        //    //        {
-        //    //            DataGridViewCell cell = dataGridView1[iColIndex, iRowIndex];
-
-        //    //            //Copy to selected cells if 'chkPasteToSelectedCells' is checked
-        //    //            if ((chkPasteToSelectedCells.Checked && cell.Selected) ||
-        //    //                (!chkPasteToSelectedCells.Checked))
-        //    //                cell.Value = cbValue[rowKey][cellKey];
-        //    //        }
-        //    //        iColIndex++;
-        //    //    }
-        //    //    iRowIndex++;
-        //    //}
-        //}
     }
 }

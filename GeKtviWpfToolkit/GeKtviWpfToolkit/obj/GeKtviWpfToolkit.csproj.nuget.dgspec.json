@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\gektvi\\source\\repos\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\GeKtviWpfToolkit.csproj": {}
+    "C:\\Users\\gektvi\\Documents\\GitHub\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\GeKtviWpfToolkit.csproj": {}
   },
   "projects": {
-    "C:\\Users\\gektvi\\source\\repos\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\GeKtviWpfToolkit.csproj": {
+    "C:\\Users\\gektvi\\Documents\\GitHub\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\GeKtviWpfToolkit.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\gektvi\\source\\repos\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\GeKtviWpfToolkit.csproj",
+        "projectUniqueName": "C:\\Users\\gektvi\\Documents\\GitHub\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\GeKtviWpfToolkit.csproj",
         "projectName": "GeKtviWpfToolkit",
-        "projectPath": "C:\\Users\\gektvi\\source\\repos\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\GeKtviWpfToolkit.csproj",
+        "projectPath": "C:\\Users\\gektvi\\Documents\\GitHub\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\GeKtviWpfToolkit.csproj",
         "packagesPath": "C:\\Users\\gektvi\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\gektvi\\source\\repos\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\obj\\",
+        "outputPath": "C:\\Users\\gektvi\\Documents\\GitHub\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\GeKtviWpfToolkit\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
