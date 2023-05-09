@@ -65,33 +65,26 @@ namespace GeKtviWpfToolkit
             }
         }
 
-        public DefaultWindowSettings()
+        private WindowState _windowState;
+        public WindowState WindowState
         {
-            _top = 0;
-            _left = 0;
-            _width = 500;
-            _height = 500;
-            _scale = 1;
+            get => _windowState;
+            set
+            {
+                _windowState = value;
+                OnPropertyChanged(nameof(WindowState));
+            }
         }
-
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-
-        public virtual void ArrangeWindow(Window w)
+        public DefaultWindowSettings()
         {
-            w.Left = Left;
-            w.Top = Top;
-            w.Width = Width;
-            w.Height = Height;
-        }
-
-        public virtual void ReadArrangeFromWindow(Window w)
-        {
-            Left = w.Left;
-            Top = w.Top;
-            Width = w.Width;
-            Height = w.Height;
+            Top = 0;
+            Left = 0;
+            Width = 500;
+            Height = 500;
+            Scale = 1;
         }
 
         protected virtual void OnPropertyChanged(string propertyName)
