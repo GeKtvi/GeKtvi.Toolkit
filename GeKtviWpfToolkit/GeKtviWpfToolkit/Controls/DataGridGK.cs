@@ -1,20 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using GeKtviWpfToolkit.DataGridGK;
 using GeKtviWpfToolkit.ValueConverters;
 
-namespace GeKtviWpfToolkit.DataGridGK
+namespace GeKtviWpfToolkit.Controls
 {
-    public class PastebleDataGrid : DataGrid
+    public class DataGridGK : DataGrid
     {
         public event ExecutedRoutedEventHandler ExecutePasteEvent;
         public event CanExecuteRoutedEventHandler CanExecutePasteEvent;
 
-        public PastebleDataGrid()
+        public DataGridGK()
         {
 
             ContextMenu = new ContextMenu();
@@ -40,33 +42,50 @@ namespace GeKtviWpfToolkit.DataGridGK
             pasteBinding.Mode = BindingMode.OneWay;
             pasteBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             pasteBinding.Converter = new BooleanToVisibilityConverterReverse();
-            paste.SetBinding(MenuItem.VisibilityProperty, pasteBinding);
+            paste.SetBinding(VisibilityProperty, pasteBinding);
 
             Binding deleteBinding = new Binding(nameof(CanUserDeleteRows));
             deleteBinding.Source = this;
             deleteBinding.Mode = BindingMode.OneWay;
             deleteBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             deleteBinding.Converter = new BooleanToVisibilityConverter();
-            delete.SetBinding(MenuItem.VisibilityProperty, deleteBinding);
+            delete.SetBinding(VisibilityProperty, deleteBinding);
 
             CommandManager.RegisterClassCommandBinding(
-                typeof(PastebleDataGrid),
+                typeof(DataGridGK),
                 new CommandBinding(ApplicationCommands.Paste,
                     new ExecutedRoutedEventHandler(OnExecutedPasteInternal),
                     new CanExecuteRoutedEventHandler(OnCanExecutePasteInternal)));
 
             CommandManager.RegisterClassCommandBinding(
-                typeof(PastebleDataGrid),
+                typeof(DataGridGK),
                 new CommandBinding(ApplicationCommands.Delete,
                     new ExecutedRoutedEventHandler(OnExecutedDeleteInternal),
                     new CanExecuteRoutedEventHandler(OnCanExecuteDeleteInternal)));
+        }
+
+
+        protected override void OnAutoGeneratingColumn(DataGridAutoGeneratingColumnEventArgs e)
+        {
+            base.OnAutoGeneratingColumn(e);
+
+            System.ComponentModel.PropertyDescriptor propertyDescriptor = e.PropertyDescriptor as System.ComponentModel.PropertyDescriptor;
+            System.ComponentModel.DataAnnotations.DisplayAttribute displayAttribute =
+                propertyDescriptor.Attributes[typeof(System.ComponentModel.DataAnnotations.DisplayAttribute)] as System.ComponentModel.DataAnnotations.DisplayAttribute;
+
+            if (displayAttribute.Name != null)
+                e.Column.Header = displayAttribute.Name;
+
+
+            if (displayAttribute.GetAutoGenerateField() == false)
+                e.Cancel = true;
         }
 
         #region Clipboard Paste
 
         private static void OnCanExecutePasteInternal(object target, CanExecuteRoutedEventArgs args)
         {
-            ((PastebleDataGrid)target).OnCanExecutePaste(target, args);
+            ((DataGridGK)target).OnCanExecutePaste(target, args);
         }
 
         protected virtual void OnCanExecutePaste(object target, CanExecuteRoutedEventArgs args)
@@ -80,13 +99,13 @@ namespace GeKtviWpfToolkit.DataGridGK
                 }
             }
 
-            args.CanExecute = CurrentCell != null;
+            args.CanExecute = CurrentCell != null && !IsReadOnly;
             args.Handled = true;
         }
 
         private static void OnExecutedPasteInternal(object target, ExecutedRoutedEventArgs args)
         {
-            ((PastebleDataGrid)target).OnExecutedPaste(target, args);
+            ((DataGridGK)target).OnExecutedPaste(target, args);
         }
 
         protected virtual void OnExecutedPaste(object target, ExecutedRoutedEventArgs args)
@@ -94,6 +113,7 @@ namespace GeKtviWpfToolkit.DataGridGK
 
             UnselectAll();
             UnselectAllCells();
+
             if (ExecutePasteEvent != null)
             {
                 ExecutePasteEvent(target, args);
@@ -107,40 +127,50 @@ namespace GeKtviWpfToolkit.DataGridGK
 
             int minRowIndex = Items.IndexOf(CurrentItem);
             int maxRowIndex = Items.Count - 1;
-            int startIndexOfDisplayCol = (SelectionUnit != DataGridSelectionUnit.FullRow) ? CurrentColumn.DisplayIndex : 0;
+            int startIndexOfDisplayCol = SelectionUnit != DataGridSelectionUnit.FullRow ? CurrentColumn.DisplayIndex : 0;
             int clipboardRowIndex = 0;
 
-            BeginEditCommand.Execute(null, this);
 
+            BeginEditCommand.Execute(this, this);
             for (int i = minRowIndex; i <= maxRowIndex && clipboardRowIndex < clipboardData.Count; i++, clipboardRowIndex++)
             {
-                if (i < this.Items.Count)
+                if (i < Items.Count)
                 {
                     CurrentItem = Items[i];
-
 
                     int clipboardColumnIndex = 0;
                     for (int j = startIndexOfDisplayCol; clipboardColumnIndex < clipboardData[clipboardRowIndex].Length; j++, clipboardColumnIndex++)
                     {
                         DataGridColumn column = null;
-                        foreach (DataGridColumn columnIter in this.Columns)
+                        foreach (DataGridColumn columnItem in Columns)
                         {
-                            if (columnIter.DisplayIndex == j)
+                            if (columnItem.DisplayIndex == j)
                             {
-                                column = columnIter;
+                                column = columnItem;
                                 break;
                             }
                         }
 
                         if (column != null)
                         {
-                            column.OnPastingCellClipboardContent(Items[i], clipboardData[clipboardRowIndex][clipboardColumnIndex]);
+                            //object itm = null;
+                            //int y = 0;
+                            //foreach (var item in Items.SourceCollection)
+                            //{
+                            //    if (y == j)
+                            //        itm = item;
+                            //    i++;
+                            //}
 
+                            //var itmT = itm.GetType();
+                            //var prop = itmT.GetProperties();
+                            //prop[j].SetValue(itm, (string)clipboardData[clipboardRowIndex][clipboardColumnIndex]);
+                            column.OnPastingCellClipboardContent(Items[i], clipboardData[clipboardRowIndex][clipboardColumnIndex]);
                             SelectedCells.Add(new DataGridCellInfo(Items[i], column));
                         }
                     }
 
-                    CommitEditCommand.Execute(this, this);
+                    CommitEditCommand.Execute(null, this);
                     if (i == maxRowIndex)
                     {
                         maxRowIndex++;
@@ -165,7 +195,7 @@ namespace GeKtviWpfToolkit.DataGridGK
         /// </summary>
         public static readonly DependencyProperty CanUserPasteToNewRowsProperty =
             DependencyProperty.Register("CanUserPasteToNewRows",
-                                        typeof(bool), typeof(PastebleDataGrid),
+                                        typeof(bool), typeof(DataGridGK),
                                         new FrameworkPropertyMetadata(true, null, null));
 
         // ******************************************************************
@@ -175,7 +205,7 @@ namespace GeKtviWpfToolkit.DataGridGK
 
         private static void OnCanExecuteDeleteInternal(object target, CanExecuteRoutedEventArgs args)
         {
-            ((PastebleDataGrid)target).OnCanExecuteDelete(target, args);
+            ((DataGridGK)target).OnCanExecuteDelete(target, args);
         }
 
         protected virtual void OnCanExecuteDelete(object target, CanExecuteRoutedEventArgs args)
@@ -186,7 +216,7 @@ namespace GeKtviWpfToolkit.DataGridGK
 
         private static void OnExecutedDeleteInternal(object target, ExecutedRoutedEventArgs args)
         {
-            ((PastebleDataGrid)target).OnExecutedDelete(target, args);
+            ((DataGridGK)target).OnExecutedDelete(target, args);
         }
 
         protected virtual void OnExecutedDelete(object target, ExecutedRoutedEventArgs args)

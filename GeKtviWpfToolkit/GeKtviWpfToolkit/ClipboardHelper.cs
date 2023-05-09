@@ -7,11 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace GeKtviWpfToolkit.DataGridGK
+namespace GeKtviWpfToolkit
 {
     public static class ClipboardHelper
     {
         public delegate string[] ParseFormat(string value);
+
+        public static bool IsInClipboardCSV => Clipboard.GetDataObject().GetData(DataFormats.CommaSeparatedValue) != null;
 
         public static List<string[]> ParseClipboardData()
         {
@@ -21,8 +23,8 @@ namespace GeKtviWpfToolkit.DataGridGK
 
             // get the data and set the parsing method based on the format
             // currently works with CSV and Text DataFormats            
-            IDataObject dataObj = System.Windows.Clipboard.GetDataObject();
-            if ((dataObj.GetData(DataFormats.CommaSeparatedValue)) != null)
+            IDataObject dataObj = Clipboard.GetDataObject();
+            if (dataObj.GetData(DataFormats.CommaSeparatedValue) != null)
             {
                 clipboardRawData = Clipboard.GetText(TextDataFormat.Text);
                 parseFormat = ParseCsvFormat;
@@ -57,11 +59,27 @@ namespace GeKtviWpfToolkit.DataGridGK
                 else
                 {
                     Debug.WriteLine("unable to parse row data.  possibly null or contains zero rows.");
-                    return new List<string[]> { new string[] { String.Empty } };
+                    return new List<string[]> { new string[] { string.Empty } };
                 }
             }
 
             return clipboardData;
+        }
+
+        public static void SetClipboardData(List<List<string>> clipboardData)
+        {
+            string textToCB = string.Empty;
+
+            foreach (var row in clipboardData)
+            {
+                foreach (var cell in row)
+                {
+                    textToCB += cell + '\t';
+                }
+                textToCB += "\r\n";
+            }
+
+            Clipboard.SetDataObject(textToCB);
         }
 
         public static string[] ParseCsvFormat(string value)
