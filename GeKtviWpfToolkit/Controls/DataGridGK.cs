@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using GeKtviWpfToolkit.ValueConverters;
+using System.Linq;
 
 namespace GeKtviWpfToolkit.Controls
 {
@@ -18,7 +19,35 @@ namespace GeKtviWpfToolkit.Controls
 
         public DataGridGK()
         {
+            RegisterCommands();
+            CreateContextMenu();
+        }
 
+        #region On create
+
+        protected virtual void RegisterCommands()
+        {
+            CommandManager.RegisterClassCommandBinding(
+                typeof(DataGridGK),
+                new CommandBinding(ApplicationCommands.SelectAll,
+                    new ExecutedRoutedEventHandler(OnExecutedSelectAllInternal),
+                    new CanExecuteRoutedEventHandler(OnCanExecuteSelectAllInternal)));
+
+            CommandManager.RegisterClassCommandBinding(
+                typeof(DataGridGK),
+                new CommandBinding(ApplicationCommands.Paste,
+                    new ExecutedRoutedEventHandler(OnExecutedPasteInternal),
+                    new CanExecuteRoutedEventHandler(OnCanExecutePasteInternal)));
+
+            CommandManager.RegisterClassCommandBinding(
+                typeof(DataGridGK),
+                new CommandBinding(ApplicationCommands.Delete,
+                    new ExecutedRoutedEventHandler(OnExecutedDeleteInternal),
+                    new CanExecuteRoutedEventHandler(OnCanExecuteDeleteInternal)));
+        }
+
+        protected virtual void CreateContextMenu()
+        {
             ContextMenu = new ContextMenu();
 
             MenuItem copy = new MenuItem();
@@ -50,20 +79,21 @@ namespace GeKtviWpfToolkit.Controls
             deleteBinding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             deleteBinding.Converter = new BooleanToVisibilityConverter();
             delete.SetBinding(VisibilityProperty, deleteBinding);
-
-            CommandManager.RegisterClassCommandBinding(
-                typeof(DataGridGK),
-                new CommandBinding(ApplicationCommands.Paste,
-                    new ExecutedRoutedEventHandler(OnExecutedPasteInternal),
-                    new CanExecuteRoutedEventHandler(OnCanExecutePasteInternal)));
-
-            CommandManager.RegisterClassCommandBinding(
-                typeof(DataGridGK),
-                new CommandBinding(ApplicationCommands.Delete,
-                    new ExecutedRoutedEventHandler(OnExecutedDeleteInternal),
-                    new CanExecuteRoutedEventHandler(OnCanExecuteDeleteInternal)));
         }
 
+        #endregion
+
+        #region Behaivior fixes
+
+        protected override void OnMouseRightButtonDown(MouseButtonEventArgs e) //If ui have more then one datagrid provides context menu opening for mouse selected 
+        {
+            base.OnMouseRightButtonDown(e);
+            this.Focus();
+        }
+
+        #endregion
+
+        #region GeneratingColumn
 
         protected override void OnAutoGeneratingColumn(DataGridAutoGeneratingColumnEventArgs e)
         {
@@ -80,6 +110,34 @@ namespace GeKtviWpfToolkit.Controls
             if (displayAttribute.GetAutoGenerateField() == false)
                 e.Cancel = true;
         }
+
+        #endregion
+
+        #region SelectAll
+
+        private static void OnCanExecuteSelectAllInternal(object target, CanExecuteRoutedEventArgs args)
+        {
+            ((DataGridGK)target).OnCanExecuteSelectAll(target, args);
+        }
+
+        protected virtual void OnCanExecuteSelectAll(object target, CanExecuteRoutedEventArgs args)
+        {
+            args.CanExecute = Items != null && Items.Count != 0;
+            args.Handled = true;
+        }
+
+        private static void OnExecutedSelectAllInternal(object target, ExecutedRoutedEventArgs args)
+        {
+            ((DataGridGK)target).OnExecutedSelectAll(target, args);
+        }
+
+        protected virtual void OnExecutedSelectAll(object target, ExecutedRoutedEventArgs args)
+        {
+            Focus();
+            SelectAll();
+        }
+
+        #endregion
 
         #region Clipboard Paste
 
@@ -99,7 +157,7 @@ namespace GeKtviWpfToolkit.Controls
                 }
             }
 
-            args.CanExecute = CurrentCell != null && !IsReadOnly;
+            args.CanExecute = CurrentCell.Column != null && !IsReadOnly;
             args.Handled = true;
         }
 
