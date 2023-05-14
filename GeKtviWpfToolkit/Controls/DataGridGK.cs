@@ -285,7 +285,6 @@ namespace GeKtviWpfToolkit.Controls
                 SelectedItems.CopyTo(items, 0);
                 foreach (var item in items)
                     ((IList)ItemsSource).Remove(item);
-                //Items.Remove(item);
                 return;
             }
 
