@@ -103,6 +103,9 @@ namespace GeKtviWpfToolkit.Controls
             System.ComponentModel.DataAnnotations.DisplayAttribute displayAttribute =
                 propertyDescriptor.Attributes[typeof(System.ComponentModel.DataAnnotations.DisplayAttribute)] as System.ComponentModel.DataAnnotations.DisplayAttribute;
 
+            if (displayAttribute == null)
+                return;
+
             if (displayAttribute.Name != null)
                 e.Column.Header = displayAttribute.Name;
 
