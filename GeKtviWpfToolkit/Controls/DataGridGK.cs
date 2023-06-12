@@ -9,11 +9,36 @@ using System.Windows.Data;
 using System.Windows.Input;
 using GeKtviWpfToolkit.ValueConverters;
 using System.Linq;
+using System;
+using System.Data.Common;
+using System.Data;
+using System.Dynamic;
 
 namespace GeKtviWpfToolkit.Controls
 {
     public class DataGridGK : DataGrid
     {
+        /// <summary>
+        /// Some solution for fix performance issue
+        /// For work must be set ItemsSource
+        /// </summary>
+        public static readonly DependencyProperty UseDirectPasteProperty =
+                DependencyProperty.Register(
+                      name: nameof(UseDirectPaste),
+                      propertyType: typeof(bool),
+                      ownerType: typeof(DataGridGK),
+                      typeMetadata: new FrameworkPropertyMetadata(
+                          defaultValue: false,
+                          flags: FrameworkPropertyMetadataOptions.AffectsRender
+                          )
+                    ); 
+
+        public bool UseDirectPaste
+        {
+            get => (bool)GetValue(UseDirectPasteProperty);
+            set => SetValue(UseDirectPasteProperty, value);
+        }
+
         public event ExecutedRoutedEventHandler ExecutePasteEvent;
         public event CanExecuteRoutedEventHandler CanExecutePasteEvent;
 
@@ -171,10 +196,6 @@ namespace GeKtviWpfToolkit.Controls
 
         protected virtual void OnExecutedPaste(object target, ExecutedRoutedEventArgs args)
         {
-
-            UnselectAll();
-            UnselectAllCells();
-
             if (ExecutePasteEvent != null)
             {
                 ExecutePasteEvent(target, args);
@@ -186,19 +207,42 @@ namespace GeKtviWpfToolkit.Controls
 
             List<string[]> clipboardData = ClipboardHelper.ParseClipboardData();
 
+            if (clipboardData.Count == 1 && clipboardData.Count == 1 && Items.Count != 1)
+            {
+                foreach (var cell in SelectedCells)
+                {
+                    if (ItemsSource == null && UseDirectPaste == false)
+                    {
+                        cell.Column.OnPastingCellClipboardContent(cell.Item, clipboardData[0][0]);
+                    }
+                    else
+                    {
+                        var cellProp = cell.Item.GetType().GetProperty(cell.Column.SortMemberPath);
+                        cellProp.SetValue(cell.Item, clipboardData[0][0]);
+                    }
+                }
+                CommitEditCommand.Execute(null, this);
+                return;
+            }
+
+            UnselectAll();
+            UnselectAllCells();
+
             int minRowIndex = Items.IndexOf(CurrentItem);
             int maxRowIndex = Items.Count - 1;
             int startIndexOfDisplayCol = SelectionUnit != DataGridSelectionUnit.FullRow ? CurrentColumn.DisplayIndex : 0;
             int clipboardRowIndex = 0;
 
+            ///TODO
+            ///Реализовать отмену добавления для при свойстве false CanUserPasteToNewRows
 
-            BeginEditCommand.Execute(this, this);
+            for (int i = 0; i < clipboardData.Count() - (maxRowIndex - minRowIndex ); i++)
+                (ItemsSource as IList).Add(Activator.CreateInstance(ItemsSource.GetType().GenericTypeArguments[0]));
+
             for (int i = minRowIndex; i <= maxRowIndex && clipboardRowIndex < clipboardData.Count; i++, clipboardRowIndex++)
             {
                 if (i < Items.Count)
                 {
-                    CurrentItem = Items[i];
-
                     int clipboardColumnIndex = 0;
                     for (int j = startIndexOfDisplayCol; clipboardColumnIndex < clipboardData[clipboardRowIndex].Length; j++, clipboardColumnIndex++)
                     {
@@ -214,30 +258,26 @@ namespace GeKtviWpfToolkit.Controls
 
                         if (column != null)
                         {
-                            //object itm = null;
-                            //int y = 0;
-                            //foreach (var item in Items.SourceCollection)
-                            //{
-                            //    if (y == j)
-                            //        itm = item;
-                            //    i++;
-                            //}
-
-                            //var itmT = itm.GetType();
-                            //var prop = itmT.GetProperties();
-                            //prop[j].SetValue(itm, (string)clipboardData[clipboardRowIndex][clipboardColumnIndex]);
-                            column.OnPastingCellClipboardContent(Items[i], clipboardData[clipboardRowIndex][clipboardColumnIndex]);
+                            if (ItemsSource == null && UseDirectPaste == false)
+                            {
+                                column.OnPastingCellClipboardContent(Items[i], clipboardData[clipboardRowIndex][clipboardColumnIndex]);
+                            }
+                            else
+                            {
+                                var cellProp = Items[i].GetType().GetProperty(column.SortMemberPath);
+                                cellProp.SetValue(Items[i], clipboardData[clipboardRowIndex][clipboardColumnIndex]);
+                            }
                             SelectedCells.Add(new DataGridCellInfo(Items[i], column));
                         }
                     }
 
-                    CommitEditCommand.Execute(null, this);
                     if (i == maxRowIndex)
                     {
                         maxRowIndex++;
                     }
                 }
             }
+            CommitEditCommand.Execute(null, this);
         }
 
         // ******************************************************************
@@ -297,17 +337,18 @@ namespace GeKtviWpfToolkit.Controls
             {
                 if (cellInfo.IsValid)
                 {
-                    // element will be your DataGridCell Content
-                    var element = cellInfo.Column.GetCellContent(cellInfo.Item);
-
-                    if (element != null)
+                    if (ItemsSource == null && UseDirectPaste == false)
                     {
-                        var myCell = element.Parent as DataGridCell;
                         cellInfo.Column.OnPastingCellClipboardContent(cellInfo.Item, "");
-                        CommitEditCommand.Execute(this, this);
+                    }
+                    else
+                    {
+                        var cellProp = cellInfo.Item.GetType().GetProperty(cellInfo.Column.SortMemberPath);
+                        cellProp.SetValue(cellInfo.Item, "");
                     }
                 }
             }
+            CommitEditCommand.Execute(this, this);
         }
 
         #endregion Clipboard Paste
