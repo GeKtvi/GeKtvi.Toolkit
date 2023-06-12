@@ -31,7 +31,7 @@ namespace GeKtviWpfToolkit.Controls
                           defaultValue: false,
                           flags: FrameworkPropertyMetadataOptions.AffectsRender
                           )
-                    ); 
+                    );
 
         public bool UseDirectPaste
         {
