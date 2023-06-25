@@ -82,53 +82,6 @@ namespace GeKtviWpfToolkit
                 textToCB += "\r\n";
             }
 
-            ///////////////////////////////////////////
-
-            //sb.Append(@"{\rtf1 ");
-
-            ////Prepare the header Row
-            //sb.Append(@"\trowd");
-
-            ////A cell with width 1000.
-            //sb.Append(@"\cellx1000");
-
-            ////sb.Append(@"\intbl   ID");
-
-            ////Another cell with width 1000.Endpoint at 2000(which is 1000+1000).
-            //sb.Append(@"\cellx2000");
-
-            ////sb.Append(@"\cell    Name");
-
-            ////Another cell with width 1000.Ending at 3000 (which is 2000+1000)
-            //sb.Append(@"\cellx3000");
-
-            ////sb.AppendFormat(@"\cell    City");
-
-            ////Another cell with width 1000.End at 4000 (which is 3000+1000)
-            //sb.Append(@"\cellx4000");
-
-            //sb.Append(@"\cell    Country");
-
-            //Add the created row
-            //sb.Append(@"\intbl \cell \row");
-
-            //Add 3 data Rows.Give proper padding space between data.Notice the gap after cell.
-            //sb.Append(@"\intbl 1" + @"\cell Raj" +     @"\cell Bangalore" +     @"\cell India" + @"\cell"+ @"\row");
-            //sb.Append(@"\intbl 2" + @"\cell Peter" +   @"\cell Mumbai" +        @"\cell India" + @"\cell"+ @"\row");
-            //sb.Append(@"\intbl 3" + @"\cell Chris" +   @"\cell Delhi" +         @"\cell India" + @"\cell"+ @"\row");
-
-            //sb.Append(@"\pard");
-
-            //            sb.Append(@"}");
-            //            sb.Clear();
-            //            //new DataObject(DataFormats.Rtf, sb)
-
-            //            //string rtfString = @"{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fnil Microsoft Sans Serif;}}" + "\n" + @"{\colortbl";
-
-            //            sb.Append(
-            //            "{\\rtf1\\ansi \\ansicpg1252\r\n{\\fonttbl{\\f0\\fnil Calibri;}{\\f1\\fnil Calibri;}{\\f2\\fnil Calibri;}{\\f3\\fnil Calibri;}{\\f4\\fnil Calibri;}{\\f5\\fnil Calibri;}{\\f6\\fnil Calibri Light;}{\\f7\\fnil Calibri;}{\\f8\\fnil Calibri;}{\\f9\\fnil Calibri;}{\\f10\\fnil Calibri;}{\\f11\\fnil Calibri;}{\\f12\\fnil Calibri;}{\\f13\\fnil Calibri;}{\\f14\\fnil Calibri;}{\\f15\\fnil Calibri;}{\\f16\\fnil Calibri;}{\\f17\\fnil Calibri;}{\\f18\\fnil Calibri;}{\\f19\\fnil Calibri;}{\\f20\\fnil Calibri;}{\\f21\\fnil Calibri;}{\\f22\\fnil Segoe UI;}{\\f23\\fnil Calibri;}{\\f24\\fnil Calibri;}{\\f25\\fnil Arial;}{\\f26\\fnil Arial;}{\\f27\\fnil Arial;}}\r\n{\\info{\\id220}}\\plain {\\colortbl\\red0\\green0\\blue0;\\red255\\green255\\blue255;\\red255\\green0\\blue0;\\red0\\green255\\blue0;\\red0\\green0\\blue255;\\red255\\green255\\blue0;\\red255\\green0\\blue255;\\red0\\green255\\blue255;\\red0\\green0\\blue0;\\red255\\green255\\blue255;\\red255\\green0\\blue0;\\red0\\green255\\blue0;\\red0\\green0\\blue255;\\red255\\green255\\blue0;\\red255\\green0\\blue255;\\red0\\green255\\blue255;\\red128\\green0\\blue0;\\red0\\green128\\blue0;\\red0\\green0\\blue128;\\red128\\green128\\blue0;\\red128\\green0\\blue128;\\red0\\green128\\blue128;\\red192\\green192\\blue192;\\red128\\green128\\blue128;\\red153\\green153\\blue255;\\red153\\green51\\blue102;\\red255\\green255\\blue204;\\red204\\green255\\blue255;\\red102\\green0\\blue102;\\red255\\green128\\blue128;\\red0\\green102\\blue204;\\red204\\green204\\blue255;\\red0\\green0\\blue128;\\red255\\green0\\blue255;\\red255\\green255\\blue0;\\red0\\green255\\blue255;\\red128\\green0\\blue128;\\red128\\green0\\blue0;\\red0\\green128\\blue128;\\red0\\green0\\blue255;\\red0\\green204\\blue255;\\red204\\green255\\blue255;\\red204\\green255\\blue204;\\red255\\green255\\blue153;\\red153\\green204\\blue255;\\red255\\green153\\blue204;\\red204\\green153\\blue255;\\red255\\green204\\blue153;\\red51\\green102\\blue255;\\red51\\green204\\blue204;\\red153\\green204\\blue0;\\red255\\green204\\blue0;\\red255\\green153\\blue0;\\red255\\green102\\blue0;\\red102\\green102\\blue153;\\red150\\green150\\blue150;\\red0\\green51\\blue102;\\red51\\green153\\blue102;\\red0\\green51\\blue0;\\red51\\green51\\blue0;\\red153\\green51\\blue0;\\red153\\green51\\blue102;\\red51\\green51\\blue153;\\red51\\green51\\blue51;;\\red255\\green255\\blue255;\\red100\\green100\\blue100;\\red240\\green240\\blue240;\\red0\\green0\\blue0;\\red255\\green255\\blue255;\\red160\\green160\\blue160;\\red0\\green120\\blue215;\\red0\\green0\\blue0;\\red200\\green200\\blue200;\\red55\\green55\\blue55;\\red255\\green255\\blue255;\\red100\\green100\\blue100;\\red0\\green0\\blue0;\\red255\\green255\\blue255;\\red0\\green0\\blue0;\\red255\\green255\\blue225;\\red0\\green0\\blue0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;\\red192\\green192\\blue192;\\red150\\green150\\blue150;\\red128\\green128\\blue128;\\red102\\green102\\blue102;\\red51\\green51\\blue51;\\red91\\green151\\blue255;\\red255\\green97\\blue107;\\red183\\green124\\blue255;\\red0\\green176\\blue44;\\red252\\green88\\blue190;\\red255\\green144\\blue0;\\red46\\green176\\blue179;\\red51\\green102\\blue153;\\red128\\green0\\blue0;\\red0\\green128\\blue0;\\red0\\green0\\blue128;\\red128\\green128\\blue0;\\red128\\green0\\blue128;\\red0\\green128\\blue128;\\red0\\green0\\blue208;\\red212\\green212\\blue212;\\red50\\green106\\blue199;\\red0\\green120\\blue212;\\red136\\green23\\blue152;\\red227\\green0\\blue140;\\red0\\green78\\blue140;\\red209\\green52\\blue56;\\red202\\green80\\blue16;\\red3\\green131\\blue135;\\red152\\green111\\blue11;\\red164\\green38\\blue44;\\red194\\green57\\blue179;\\red57\\green57\\blue57;\\red79\\green107\\blue237;\\red117\\green11\\blue28;\\red135\\green100\\blue184;\\red122\\green117\\blue116;\\red0\\green91\\blue112;\\red92\\green46\\blue145;\\red105\\green121\\blue126;\\red142\\green86\\blue46;\\red170\\green170\\blue170;}\r\n\\trowd \\trgaph30\\trleft-30\\trrh290\\cellx7189\\cellx12911\\pard \\intbl \\ql \\f0\\fs22 \\cf8 A12-1(1)\\cell \\ql \\u1055\\'cf\\u1059\\'d3\\u1043\\'c3\\u1042\\'c2\\u1085\\'ed\\u1075\\'e3(\\u1040\\'c0)-LS 1\\u1093\\'f50,5\\cell \r\n\\pard \\intbl \\row\\trowd \\trgaph30\\trleft-30\\trrh290\\cellx7189\\cellx12911\\pard \\intbl \\ql N(49)\\cell \\ql \\u1055\\'cf\\u1059\\'d3\\u1043\\'c3\\u1042\\'c2\\u1085\\'ed\\u1075\\'e3(\\u1040\\'c0)-LS 1\\u1093\\'f50,5\\cell \\pard \\intbl \\row}\r\n"
-            //);
-            //string s = sb.ToString();
             var dataObj = new DataObject();
             dataObj.SetData(DataFormats.Rtf, sb);
             dataObj.SetData(DataFormats.Text, textToCB);

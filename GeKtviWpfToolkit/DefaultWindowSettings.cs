@@ -96,6 +96,16 @@ namespace GeKtviWpfToolkit
             WindowState = WindowState.Normal;
         }
 
+        public DefaultWindowSettings(Window window)
+        {
+            Top = window.Top;
+            Left = window.Left;
+            Width = window.Width;
+            Height = window.Height;
+            Scale = 1;
+            WindowState = window.WindowState;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged(string propertyName)
