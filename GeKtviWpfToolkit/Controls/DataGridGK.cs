@@ -207,17 +207,18 @@ namespace GeKtviWpfToolkit.Controls
 
             List<string[]> clipboardData = ClipboardHelper.ParseClipboardData();
 
-            if (clipboardData.Count == 1 && clipboardData.Count == 1 && Items.Count != 1)
+            if (clipboardData.Count == 1 && clipboardData.First().Count() == 1 && Items.Count != 1)
             {
                 foreach (var cell in SelectedCells)
                 {
-                    if (ItemsSource == null && UseDirectPaste == false)
+                    if ((ItemsSource == null && UseDirectPaste == false) || cell.Item == Items[Items.Count - 1])
                     {
                         cell.Column.OnPastingCellClipboardContent(cell.Item, clipboardData[0][0]);
                     }
                     else
                     {
                         var cellProp = cell.Item.GetType().GetProperty(cell.Column.SortMemberPath);
+
                         cellProp.SetValue(cell.Item, clipboardData[0][0]);
                     }
                 }
@@ -235,7 +236,7 @@ namespace GeKtviWpfToolkit.Controls
 
             ///TODO
             ///Реализовать отмену добавления для при свойстве false CanUserPasteToNewRows
-
+            ///
             for (int i = 0; i < clipboardData.Count() - (maxRowIndex - minRowIndex ); i++)
                 (ItemsSource as IList).Add(Activator.CreateInstance(ItemsSource.GetType().GenericTypeArguments[0]));
 

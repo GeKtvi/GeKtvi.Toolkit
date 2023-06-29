@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,8 +22,6 @@ namespace GeKtviWpfToolkit
             object clipboardRawData = null;
             ParseFormat parseFormat = null;
 
-            IDataObject dataObjtst = Clipboard.GetDataObject();
-            var rert = dataObjtst.GetData(DataFormats.Rtf);
             // get the data and set the parsing method based on the format
             // currently works with CSV and Text DataFormats            
             IDataObject dataObj = Clipboard.GetDataObject();
@@ -49,7 +48,7 @@ namespace GeKtviWpfToolkit
                 }
                 Debug.Assert(rawDataStr != null, string.Format("clipboardRawData: {0}, could not be converted to a string or memorystream.", clipboardRawData));
 
-                string[] rows = rawDataStr.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                string[] rows = rawDataStr.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
                 if (rows != null && rows.Length > 0)
                 {
                     clipboardData = new List<string[]>();
@@ -112,21 +111,22 @@ namespace GeKtviWpfToolkit
                 {
                     if (i > row.Count)
                         break;
-                    if (row[i].Length * 125 > maxLenInColumn[i])
-                        maxLenInColumn[i] = row[i].Length * 125;
+                    int length = row[i].Length * 95;
+                    if (length > maxLenInColumn[i])
+                        maxLenInColumn[i] = length;
                 }
             }
 
-            int curLenth = 0;
+            int curLength = 0;
             foreach (var len in maxLenInColumn) //set len width
             {
-                curLenth += len;
-                sb.Append(@"\cellx" + curLenth);
+                curLength += len;
+                sb.Append(@"\cellx" + curLength); //+ curLength
             }
 
             foreach (var row in clipboardData) //fill columns
             {
-                sb.Append(@"\intbl"); //Start the row
+                sb.Append(@"\intbl " + "\\fs18"); //Start the row
 
                 for (int i = 0; i < maxRowLen; i++)
                 {
