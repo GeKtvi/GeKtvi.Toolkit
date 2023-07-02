@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace GeKtviWpfToolkit
@@ -18,19 +16,24 @@ namespace GeKtviWpfToolkit
 
         public static List<string[]> ParseClipboardData()
         {
+            return ParseClipboardData(Clipboard.GetDataObject());
+        }
+
+        public static List<string[]> ParseClipboardData(IDataObject dataObject)
+        {
             List<string[]> clipboardData = null;
             object clipboardRawData = null;
             ParseFormat parseFormat = null;
 
             // get the data and set the parsing method based on the format
             // currently works with CSV and Text DataFormats            
-            IDataObject dataObj = Clipboard.GetDataObject();
-            if (dataObj.GetData(DataFormats.CommaSeparatedValue) != null)
+            
+            if (dataObject.GetData(DataFormats.CommaSeparatedValue) != null)
             {
                 clipboardRawData = Clipboard.GetText(TextDataFormat.Text);
                 parseFormat = ParseCsvFormat;
             }
-            else if ((clipboardRawData = dataObj.GetData(DataFormats.Text)) != null)
+            else if ((clipboardRawData = dataObject.GetData(DataFormats.Text)) != null)
             {
                 parseFormat = ParseTextFormat;
             }
@@ -69,6 +72,13 @@ namespace GeKtviWpfToolkit
 
         public static void SetClipboardData(List<List<string>> clipboardData)
         {
+            DataObject dataObj = ToDataObject(clipboardData);
+
+            Clipboard.SetDataObject(dataObj);
+        }
+
+        public static DataObject ToDataObject(List<List<string>> clipboardData)
+        {
             string textToCB = string.Empty;
             StringBuilder sb = ToRTF(clipboardData);
 
@@ -84,14 +94,15 @@ namespace GeKtviWpfToolkit
             var dataObj = new DataObject();
             dataObj.SetData(DataFormats.Rtf, sb);
             dataObj.SetData(DataFormats.Text, textToCB);
-
-
-            Clipboard.SetDataObject(dataObj);
+            return dataObj;
         }
 
         private static StringBuilder ToRTF(List<List<string>> clipboardData)
         {
             StringBuilder sb = new StringBuilder();
+
+            if (clipboardData.Count == 0)
+                return sb;
 
             int maxRowLen = clipboardData.Max(x => x.Count);
 
