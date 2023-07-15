@@ -212,7 +212,8 @@ namespace GeKtviWpfToolkit.Controls
             }
 
             List<string[]> clipboardData = ClipboardHelper.ParseClipboardData();
-            PasteInSelection(clipboardData);
+            if (clipboardData != null)
+                PasteInSelection(clipboardData);
         }
 
         private void PasteInSelection(List<string[]> clipboardData)
