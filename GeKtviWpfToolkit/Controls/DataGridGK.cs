@@ -14,6 +14,7 @@ using System.Data.Common;
 using System.Data;
 using System.Dynamic;
 using System.Windows.Markup;
+using System.Windows.Media;
 
 namespace GeKtviWpfToolkit.Controls
 {
@@ -117,6 +118,12 @@ namespace GeKtviWpfToolkit.Controls
         #region Behaivior fixes
 
         protected override void OnMouseRightButtonDown(MouseButtonEventArgs e) //If ui have more then one datagrid provides context menu opening for mouse selected 
+        {
+            base.OnMouseRightButtonDown(e);
+            this.Focus();
+        }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) //Fixes not focus on click 
         {
             base.OnMouseRightButtonDown(e);
             this.Focus();
@@ -341,6 +348,7 @@ namespace GeKtviWpfToolkit.Controls
         protected virtual void OnCanExecuteDelete(object target, CanExecuteRoutedEventArgs args)
         {
             args.CanExecute = CurrentCell != null && CanUserDeleteRows;
+            args.CanExecute = SelectedItems.Count > 0;
             args.Handled = true;
         }
 
@@ -493,5 +501,51 @@ namespace GeKtviWpfToolkit.Controls
         }
 
         #endregion DragDrop
+
+        #region Content Scroll
+
+        protected override void  OnPreviewMouseWheel(MouseWheelEventArgs e)
+        {
+            base.OnPreviewMouseWheel(e);
+
+            ScrollViewer scrollViewer = GetChildOfType<ScrollViewer>(this);
+
+            double offsetProportion;
+            if (scrollViewer == null)
+                offsetProportion = e.Delta > 0 ? 0 : 1;
+            else
+                offsetProportion = (scrollViewer.ScrollableHeight == 0) ? 0 : (scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight);
+
+            if (((offsetProportion == 0 && e.Delta > 0) || (offsetProportion == 1 && e.Delta < 0)) == false)
+                if ((scrollViewer.VerticalOffset == 0 && scrollViewer.ScrollableHeight == 0) == false)
+                    return;
+
+            if (e.Handled)
+                return;
+
+            e.Handled = true;
+            var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
+            eventArg.RoutedEvent = MouseWheelEvent;
+            eventArg.Source = this;
+            var parent = Parent as UIElement;
+            parent?.RaiseEvent(eventArg);
+        }
+
+        public static T GetChildOfType<T>(DependencyObject depObj)
+            where T : DependencyObject
+        {
+            if (depObj == null) return null;
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+            {
+                var child = VisualTreeHelper.GetChild(depObj, i);
+
+                var result = (child as T) ?? GetChildOfType<T>(child);
+                if (result != null) return result;
+            }
+            return null;
+        }
+
+        #endregion
     }
 }

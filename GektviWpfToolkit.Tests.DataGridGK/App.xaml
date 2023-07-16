@@ -3,12 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:GektviWpfToolkit.Tests.DataGridGK"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             xmlns:tk="clr-namespace:GeKtviWpfToolkit;assembly=GeKtviWpfToolkit"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ui:ThemesDictionary Theme="Dark" />
+                <ui:ThemesDictionary Theme="Light" />
                 <ui:ControlsDictionary />
+                <tk:ControlsStyles/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
