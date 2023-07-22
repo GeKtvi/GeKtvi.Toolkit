@@ -13,7 +13,8 @@
     Title="MainWindow"
     Width="800"
     Height="450"
-    ExtendsContentIntoTitleBar="True">
+    ExtendsContentIntoTitleBar="True"
+    >
     
         <Grid>
             <Grid.RowDefinitions>
@@ -35,7 +36,7 @@
             <TextBlock Grid.ColumnSpan="99"  HorizontalAlignment="Center" VerticalAlignment="Center">asdf</TextBlock>
             </Grid>
         <ScrollViewer CanContentScroll="True" Grid.Row="1">
-            <Grid>
+            <Grid MouseLeftButtonDown="DataGridGK1_MouseDown">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="750" />
@@ -43,10 +44,10 @@
                 </Grid.RowDefinitions>
                 <TextBox Grid.Row="0" Visibility="Visible" Margin="10"/>
 
-                <tk:DataGridGK Grid.Row="1" ItemsSource="{Binding Value, UpdateSourceTrigger=PropertyChanged}" x:Name="DataGridGK1" AllowDrop="True" EnableRowVirtualization="True" ScrollViewer.CanContentScroll="True">
+                <tk:DataGridGK  Grid.Row="1" ItemsSource="{Binding Value, UpdateSourceTrigger=PropertyChanged}" x:Name="DataGridGK1" AllowDrop="True" EnableRowVirtualization="True" ScrollViewer.CanContentScroll="True">
                 </tk:DataGridGK>
 
-                <tk:DataGridGK Grid.Row="2" ItemsSource="{Binding Value, UpdateSourceTrigger=PropertyChanged}" x:Name="DataGridGK2" AllowDrop="True" EnableRowVirtualization="True" SelectionUnit="CellOrRowHeader" SelectionMode="Extended">
+                <tk:DataGridGK Grid.Row="2" ItemsSource="{Binding Value, UpdateSourceTrigger=PropertyChanged}" x:Name="DataGridGK2" AllowDrop="True" EnableRowVirtualization="True" SelectionUnit="CellOrRowHeader" SelectionMode="Extended" CanUserAddRows="True">
                 </tk:DataGridGK>
             </Grid>
             </ScrollViewer>

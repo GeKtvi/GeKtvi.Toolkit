@@ -115,18 +115,42 @@ namespace GeKtviWpfToolkit.Controls
 
         #endregion
 
-        #region Behaivior fixes
+        #region Behavior fixes
 
-        protected override void OnMouseRightButtonDown(MouseButtonEventArgs e) //If ui have more then one datagrid provides context menu opening for mouse selected 
+        protected override void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e) //If ui have more then one datagrid provides context menu opening for mouse selected 
         {
-            base.OnMouseRightButtonDown(e);
+            base.OnPreviewMouseRightButtonDown(e);
             this.Focus();
         }
 
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e) //Fixes not focus on click 
+        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e) //Fixes not focus on click  (TODO: Find why Focus not works)
         {
-            base.OnMouseRightButtonDown(e);
-            this.Focus();
+            base.OnPreviewMouseLeftButtonDown(e);
+            MouseLeftButtonDownForDrag();
+
+            //if(SelectedCells.Count > 0)
+            //{
+            //    var column = SelectedCells.First().Column;
+            //    if(column != null)
+            //        (column.GetCellContent(SelectedItem).Parent as DataGridCell).Focus();
+            //}
+            //if(SelectedItems.Count > 0)
+            //{
+            //    CurrentCell = SelectedCells[SelectedItems.Count - 1];
+            //    //ItemContainerGenerator.ContainerFromIndex(0).
+            //    BeginEdit();
+            //}
+            //if (this.IsFocused == false)
+            //{
+            //    this.Focus();
+            //    e.Handled = true;
+            //}
+        }
+
+        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)  //Fixes not focus on click
+        {
+            base.OnMouseRightButtonUp(e);
+            //this.Focus();
         }
 
         #endregion
@@ -239,13 +263,13 @@ namespace GeKtviWpfToolkit.Controls
             InsertValues(clipboardData, minRowIndex, maxRowIndex);
         }
 
-        private void InsertValue(string clipboardData, bool createNewRows)
+        private void InsertValue(string value, bool createNewRows)
         {
             foreach (var cell in SelectedCells)
             {
-                if ((ItemsSource == null && UseDirectPaste == false))
+                if ((ItemsSource != null && UseDirectPaste == false))
                 {
-                    cell.Column.OnPastingCellClipboardContent(cell.Item, clipboardData);
+                    cell.Column.OnPastingCellClipboardContent(cell.Item, value);
                 }
                 else
                 {
@@ -254,12 +278,11 @@ namespace GeKtviWpfToolkit.Controls
                     if (cellProp is null)
                     {
                         if (createNewRows == true && cell.Item == Items[Items.Count - 1]) // Не создавать последнюю строку если выбрана временная строка
-                            cell.Column.OnPastingCellClipboardContent(cell.Item, clipboardData);
+                            cell.Column.OnPastingCellClipboardContent(cell.Item, value);
                     }
                     else
                     {
-                        cellProp.SetValue(cell.Item, clipboardData);
-
+                        cellProp.SetValue(cell.Item, value);
                     }
                 }
             }
@@ -348,7 +371,7 @@ namespace GeKtviWpfToolkit.Controls
         protected virtual void OnCanExecuteDelete(object target, CanExecuteRoutedEventArgs args)
         {
             args.CanExecute = CurrentCell != null && CanUserDeleteRows;
-            args.CanExecute = SelectedItems.Count > 0;
+            args.CanExecute = SelectedCells.Count > 0;
             args.Handled = true;
         }
 
@@ -423,10 +446,8 @@ namespace GeKtviWpfToolkit.Controls
             }
         }
 
-        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected void MouseLeftButtonDownForDrag()
         {
-            base.OnPreviewMouseDown(e);
-            
             if (AllowDrag == false)
                 return;
 
@@ -436,7 +457,7 @@ namespace GeKtviWpfToolkit.Controls
         protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseLeftButtonUp(e);
-            
+
             if (AllowDrag == false)
                 return;
 
