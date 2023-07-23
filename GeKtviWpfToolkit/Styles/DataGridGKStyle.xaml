@@ -691,7 +691,7 @@
                         </Grid.ColumnDefinitions>
                         <Border
                             x:Name="CHR_Border"
-                            Margin="1"
+                            Margin="1,1,1,2"
                             Background="Transparent"
                             CornerRadius="5" />
 
@@ -749,8 +749,8 @@
                             Visibility="{TemplateBinding SeparatorVisibility}" />
 
                         <Rectangle
-                            Height="0.5"
                             Width="Auto"
+                            Height="1"
                             Margin="0,0,0,0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Bottom"
@@ -931,7 +931,7 @@
 
     <!--#endregion-->
 
-    <!--#region DataGridRowGroupContainerStyle -->
+    <!--#region DataGridRowGroupContainerStyle-->
 
     <Style x:Key="DataGridRowGroupContainerStyle" TargetType="GroupItem">
         <Setter Property="Template">
@@ -939,12 +939,12 @@
                 <ControlTemplate TargetType="GroupItem">
                     <Expander
                         x:Name="PART_Header"
-                        Foreground="{DynamicResource DataGridRowGroupHeaderForegroundBrush}"
                         FontSize="{DynamicResource ControlContentThemeFontSize}"
+                        Foreground="{DynamicResource DataGridRowGroupHeaderForegroundBrush}"
                         Header="{TemplateBinding Content}"
+                        HeaderStringFormat="{TemplateBinding ContentStringFormat}"
                         HeaderTemplate="{TemplateBinding ContentTemplate}"
                         HeaderTemplateSelector="{TemplateBinding ContentTemplateSelector}"
-                        HeaderStringFormat="{TemplateBinding ContentStringFormat}"
                         IsExpanded="True">
                         <Expander.Template>
                             <ControlTemplate TargetType="Expander">
@@ -973,8 +973,7 @@
                                             FontWeight="{TemplateBinding FontWeight}"
                                             Foreground="{TemplateBinding Foreground}"
                                             IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                            Style="{StaticResource DataGridRowGroupHeaderStyle}"
- />
+                                            Style="{StaticResource DataGridRowGroupHeaderStyle}" />
                                         <ContentPresenter
                                             x:Name="ExpandSite"
                                             Margin="{TemplateBinding Padding}"
@@ -1000,7 +999,7 @@
     </Style>
 
     <!--#endregion-->
-    
+
     <!--#region DataGridTextBlockStyle-->
 
     <Style x:Key="DataGridTextBlockStyle" TargetType="TextBlock">
@@ -1045,10 +1044,13 @@
 
     <!--#endregion-->
 
-    <!--#region DataGridCheckBoxStyle -->
+    <!--#region DataGridCheckBoxStyle-->
 
-    <Style x:Key="DataGridCheckBoxStyle" BasedOn="{StaticResource DefaultCheckBoxStyle}" TargetType="CheckBox">
-        <Setter Property="Padding" Value="0"/>
+    <Style
+        x:Key="DataGridCheckBoxStyle"
+        BasedOn="{StaticResource DefaultCheckBoxStyle}"
+        TargetType="CheckBox">
+        <Setter Property="Padding" Value="0" />
         <Setter Property="Margin" Value="0" />
         <Setter Property="MinWidth" Value="22" />
         <Setter Property="MinHeight" Value="22" />
@@ -1060,6 +1062,8 @@
 
     <!--#endregion-->
 
+    <!--#region ColumnHeaderGripperStyle-->
+
     <Style x:Key="ColumnHeaderGripperStyle" TargetType="Thumb">
         <Setter Property="Width" Value="2" />
         <Setter Property="Background" Value="Transparent" />
@@ -1067,13 +1071,15 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
-                    <Border
-                        Padding="{TemplateBinding Padding}"
-                        Background="{TemplateBinding Background}" />
+                    <Border Padding="{TemplateBinding Padding}" Background="{TemplateBinding Background}" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <!--#endregion-->
+
+    <!--#region DataGridSelectAllButtonStyle-->
 
     <Style x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type DataGrid}, ResourceId=DataGridSelectAllButtonStyle}" TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
@@ -1083,7 +1089,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid>
-                        <Border x:Name="AllButton_Border" Margin="1" CornerRadius="5"/>
+                        <Border
+                            x:Name="AllButton_Border"
+                            Margin="1,1,1,2"
+                            CornerRadius="5" />
                         <Rectangle
                             x:Name="BackgroundRectangle"
                             Fill="{TemplateBinding Background}"
@@ -1093,20 +1102,20 @@
                             HorizontalAlignment="Right"
                             Fill="{TemplateBinding BorderBrush}" />
                         <Rectangle
-                            Height="1"
                             Width="Auto"
+                            Height="1"
                             Margin="3,0,0,0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Bottom"
                             Fill="{TemplateBinding BorderBrush}" />
                         <Polygon
                             x:Name="Arrow"
+                            Margin="8,8,3,3"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom"
-                            Margin="8,8,3,3"
                             Fill="{TemplateBinding Foreground}"
-                            Stretch="Uniform"
-                            Points="0,10 10,10 10,0" />
+                            Points="0,10 10,10 10,0"
+                            Stretch="Uniform" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <!--<Trigger Property="IsMouseOver" Value="True">
@@ -1141,5 +1150,6 @@
         </Setter>
     </Style>
 
+    <!--#endregion-->
 
 </ResourceDictionary>
