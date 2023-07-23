@@ -78,6 +78,7 @@ namespace GektviWpfToolkit.Tests.DataGridGK
         public Visibility Value2 { get; set; }
         public string Value3 { get; set; }
         public int Value4 { get; set; }
+        public bool Value5 { get; set; }
     }
 
 }
