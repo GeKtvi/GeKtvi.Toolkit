@@ -6,6 +6,6 @@ namespace GeKtviWpfToolkit
     public class ControlsStyles : ResourceDictionary
     {
         public ControlsStyles()
-            => Source = new Uri($"pack://application:,,,/GeKtviWpfToolkit;component/Styles/DataGridGKStyle.xaml", UriKind.Absolute);
+            => Source = new Uri($"pack://application:,,,/GeKtviWpfToolkit;component/Markup/ControlsStyles.xaml", UriKind.Absolute);
     }
 }

@@ -1037,7 +1037,7 @@
         TargetType="TextBox">
         <Setter Property="MinHeight" Value="{DynamicResource ContentMinHeight}" />
         <Setter Property="MinWidth" Value="0" />
-        <Setter Property="Padding" Value="9,0,6,0" />
+        <Setter Property="Padding" Value="9,-1,6,0" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Stretch" />
     </Style>
