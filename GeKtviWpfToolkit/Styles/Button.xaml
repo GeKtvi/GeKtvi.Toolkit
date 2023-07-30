@@ -15,7 +15,10 @@
 
     <Thickness x:Key="TitleBarButtonIconMargin">-99</Thickness>
 
-    <Style x:Key="TitleBarUiButtonStyle" TargetType="{x:Type controls:Button}" BasedOn="{StaticResource DefaultUiButtonStyle}">
+    <Style
+        x:Key="TitleBarUiButtonStyle"
+        BasedOn="{StaticResource DefaultUiButtonStyle}"
+        TargetType="{x:Type controls:Button}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="FontSize" Value="20" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -46,14 +49,13 @@
                             <controls:SymbolIcon
                                 x:Name="ControlIcon"
                                 Grid.Column="0"
+                                Margin="{DynamicResource TitleBarButtonIconMargin}"
+                                Padding="0"
                                 Filled="{TemplateBinding IconFilled}"
                                 FontSize="{TemplateBinding FontSize}"
                                 FontWeight="{TemplateBinding FontWeight}"
                                 Foreground="{TemplateBinding IconForeground}"
-                                Symbol="{TemplateBinding Icon}" 
-                                Margin="{DynamicResource TitleBarButtonIconMargin}"
-                                Padding="0"
-                                />
+                                Symbol="{TemplateBinding Icon}" />
                             <ContentPresenter
                                 x:Name="ContentPresenter"
                                 Grid.Column="1"

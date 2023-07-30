@@ -11,6 +11,7 @@
     Title="MainWindow"
     Width="800"
     Height="450"
+    MinWidth="0"
     ExtendsContentIntoTitleBar="True"
     WindowBackdropType="Mica"
     mc:Ignorable="d">
