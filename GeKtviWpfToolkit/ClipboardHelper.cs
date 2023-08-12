@@ -30,10 +30,10 @@ namespace GeKtviWpfToolkit
             
             if (dataObject.GetData(DataFormats.CommaSeparatedValue) != null)
             {
-                clipboardRawData = Clipboard.GetText(TextDataFormat.Text);
+                clipboardRawData = Clipboard.GetText(TextDataFormat.UnicodeText);
                 parseFormat = ParseCsvFormat;
             }
-            else if ((clipboardRawData = dataObject.GetData(DataFormats.Text)) != null)
+            else if ((clipboardRawData = dataObject.GetData(DataFormats.UnicodeText)) != null)
             {
                 parseFormat = ParseTextFormat;
             }

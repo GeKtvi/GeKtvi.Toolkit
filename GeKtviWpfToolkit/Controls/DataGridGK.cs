@@ -1,19 +1,13 @@
-﻿using System.Collections;
+﻿using GeKtviWpfToolkit.ValueConverters;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Reflection;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using GeKtviWpfToolkit.ValueConverters;
-using System.Linq;
-using System;
-using System.Data.Common;
-using System.Data;
-using System.Dynamic;
-using System.Windows.Markup;
+using System.Windows.Media;
 
 namespace GeKtviWpfToolkit.Controls
 {
@@ -39,8 +33,6 @@ namespace GeKtviWpfToolkit.Controls
             get => (bool)GetValue(UseDirectPasteProperty);
             set => SetValue(UseDirectPasteProperty, value);
         }
-
-
 
         public event ExecutedRoutedEventHandler ExecutePasteEvent;
         public event CanExecuteRoutedEventHandler CanExecutePasteEvent;
@@ -114,12 +106,42 @@ namespace GeKtviWpfToolkit.Controls
 
         #endregion
 
-        #region Behaivior fixes
+        #region Behavior fixes
 
-        protected override void OnMouseRightButtonDown(MouseButtonEventArgs e) //If ui have more then one datagrid provides context menu opening for mouse selected 
+        protected override void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e) //If ui have more then one datagrid provides context menu opening for mouse selected 
         {
-            base.OnMouseRightButtonDown(e);
+            base.OnPreviewMouseRightButtonDown(e);
             this.Focus();
+        }
+
+        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e) //Fixes not focus on click  (TODO: Find why Focus not works)
+        {
+            base.OnPreviewMouseLeftButtonDown(e);
+            MouseLeftButtonDownForDrag();
+
+            //if(SelectedCells.Count > 0)
+            //{
+            //    var column = SelectedCells.First().Column;
+            //    if(column != null)
+            //        (column.GetCellContent(SelectedItem).Parent as DataGridCell).Focus();
+            //}
+            //if(SelectedItems.Count > 0)
+            //{
+            //    CurrentCell = SelectedCells[SelectedItems.Count - 1];
+            //    //ItemContainerGenerator.ContainerFromIndex(0).
+            //    BeginEdit();
+            //}
+            //if (this.IsFocused == false)
+            //{
+            //    this.Focus();
+            //    e.Handled = true;
+            //}
+        }
+
+        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)  //Fixes not focus on click
+        {
+            base.OnMouseRightButtonUp(e);
+            //this.Focus();
         }
 
         #endregion
@@ -169,6 +191,20 @@ namespace GeKtviWpfToolkit.Controls
         {
             Focus();
             SelectAll();
+        }
+
+        #endregion
+
+        #region Unselect
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            if(e.Key == Key.Escape)
+            {
+                UnselectAll();
+                UnselectAllCells();
+            }
         }
 
         #endregion
@@ -232,13 +268,13 @@ namespace GeKtviWpfToolkit.Controls
             InsertValues(clipboardData, minRowIndex, maxRowIndex);
         }
 
-        private void InsertValue(string clipboardData, bool createNewRows)
+        private void InsertValue(string value, bool createNewRows)
         {
             foreach (var cell in SelectedCells)
             {
-                if ((ItemsSource == null && UseDirectPaste == false))
+                if ((ItemsSource != null && UseDirectPaste == false))
                 {
-                    cell.Column.OnPastingCellClipboardContent(cell.Item, clipboardData);
+                    cell.Column.OnPastingCellClipboardContent(cell.Item, value);
                 }
                 else
                 {
@@ -247,19 +283,18 @@ namespace GeKtviWpfToolkit.Controls
                     if (cellProp is null)
                     {
                         if (createNewRows == true && cell.Item == Items[Items.Count - 1]) // Не создавать последнюю строку если выбрана временная строка
-                            cell.Column.OnPastingCellClipboardContent(cell.Item, clipboardData);
+                            cell.Column.OnPastingCellClipboardContent(cell.Item, value);
                     }
                     else
                     {
-                        cellProp.SetValue(cell.Item, clipboardData);
-
+                        cellProp.SetValue(cell.Item, value);
                     }
                 }
             }
             CommitEditCommand.Execute(null, this);
         }
 
-        private void InsertValues(List<string[]> values, int minRowInGridIndex, int maxRowInGridIndex)
+        private void InsertValues(List<string[]> values, int minRowInGridIndex, int maxRowInGridIndex, bool selectAfterInsert = true)
         {
             int startIndexOfDisplayCol = (SelectionUnit != DataGridSelectionUnit.FullRow && CurrentColumn is null == false) ? CurrentColumn.DisplayIndex : 0;
             int clipboardRowIndex = 0;
@@ -299,7 +334,8 @@ namespace GeKtviWpfToolkit.Controls
                                 var cellProp = Items[i].GetType().GetProperty(column.SortMemberPath);
                                 cellProp.SetValue(Items[i], values[clipboardRowIndex][clipboardColumnIndex]);
                             }
-                            SelectedCells.Add(new DataGridCellInfo(Items[i], column));
+                            if (selectAfterInsert)
+                                SelectedCells.Add(new DataGridCellInfo(Items[i], column));
                         }
                     }
 
@@ -341,6 +377,7 @@ namespace GeKtviWpfToolkit.Controls
         protected virtual void OnCanExecuteDelete(object target, CanExecuteRoutedEventArgs args)
         {
             args.CanExecute = CurrentCell != null && CanUserDeleteRows;
+            args.CanExecute = SelectedCells.Count > 0;
             args.Handled = true;
         }
 
@@ -411,14 +448,12 @@ namespace GeKtviWpfToolkit.Controls
             var data = ClipboardHelper.ParseClipboardData(e.Data);
             if (data is null == false)
             {
-                InsertValues(data, 0, Items.Count - 1);
+                InsertValues(data, 0, Items.Count - 1, false);
             }
         }
 
-        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected void MouseLeftButtonDownForDrag()
         {
-            base.OnPreviewMouseDown(e);
-            
             if (AllowDrag == false)
                 return;
 
@@ -428,7 +463,7 @@ namespace GeKtviWpfToolkit.Controls
         protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseLeftButtonUp(e);
-            
+
             if (AllowDrag == false)
                 return;
 
@@ -493,5 +528,51 @@ namespace GeKtviWpfToolkit.Controls
         }
 
         #endregion DragDrop
+
+        #region Content Scroll
+
+        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        {
+            base.OnPreviewMouseWheel(e);
+
+            ScrollViewer scrollViewer = GetChildOfType<ScrollViewer>(this);
+
+            double offsetProportion;
+            if (scrollViewer == null)
+                offsetProportion = e.Delta > 0 ? 0 : 1;
+            else
+                offsetProportion = (scrollViewer.ScrollableHeight == 0) ? 0 : (scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight);
+
+            if (((offsetProportion == 0 && e.Delta > 0) || (offsetProportion == 1 && e.Delta < 0)) == false)
+                if ((scrollViewer.VerticalOffset == 0 && scrollViewer.ScrollableHeight == 0) == false)
+                    return;
+
+            if (e.Handled)
+                return;
+
+            e.Handled = true;
+            var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
+            eventArg.RoutedEvent = MouseWheelEvent;
+            eventArg.Source = this;
+            var parent = Parent as UIElement;
+            parent?.RaiseEvent(eventArg);
+        }
+
+        public static T GetChildOfType<T>(DependencyObject depObj)
+            where T : DependencyObject
+        {
+            if (depObj == null) return null;
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
+            {
+                var child = VisualTreeHelper.GetChild(depObj, i);
+
+                var result = (child as T) ?? GetChildOfType<T>(child);
+                if (result != null) return result;
+            }
+            return null;
+        }
+
+        #endregion
     }
 }
