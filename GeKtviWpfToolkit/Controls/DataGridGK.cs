@@ -1,19 +1,12 @@
-﻿using System.Collections;
+﻿using GeKtviWpfToolkit.ValueConverters;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Reflection;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using GeKtviWpfToolkit.ValueConverters;
-using System.Linq;
-using System;
-using System.Data.Common;
-using System.Data;
-using System.Dynamic;
-using System.Windows.Markup;
 using System.Windows.Media;
 
 namespace GeKtviWpfToolkit.Controls
@@ -40,8 +33,6 @@ namespace GeKtviWpfToolkit.Controls
             get => (bool)GetValue(UseDirectPasteProperty);
             set => SetValue(UseDirectPasteProperty, value);
         }
-
-
 
         public event ExecutedRoutedEventHandler ExecutePasteEvent;
         public event CanExecuteRoutedEventHandler CanExecutePasteEvent;
@@ -204,6 +195,20 @@ namespace GeKtviWpfToolkit.Controls
 
         #endregion
 
+        #region Unselect
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            base.OnKeyDown(e);
+            if(e.Key == Key.Escape)
+            {
+                UnselectAll();
+                UnselectAllCells();
+            }
+        }
+
+        #endregion
+
         #region Clipboard Paste
 
         private static void OnCanExecutePasteInternal(object target, CanExecuteRoutedEventArgs args)
@@ -289,7 +294,7 @@ namespace GeKtviWpfToolkit.Controls
             CommitEditCommand.Execute(null, this);
         }
 
-        private void InsertValues(List<string[]> values, int minRowInGridIndex, int maxRowInGridIndex)
+        private void InsertValues(List<string[]> values, int minRowInGridIndex, int maxRowInGridIndex, bool selectAfterInsert = true)
         {
             int startIndexOfDisplayCol = (SelectionUnit != DataGridSelectionUnit.FullRow && CurrentColumn is null == false) ? CurrentColumn.DisplayIndex : 0;
             int clipboardRowIndex = 0;
@@ -329,7 +334,8 @@ namespace GeKtviWpfToolkit.Controls
                                 var cellProp = Items[i].GetType().GetProperty(column.SortMemberPath);
                                 cellProp.SetValue(Items[i], values[clipboardRowIndex][clipboardColumnIndex]);
                             }
-                            SelectedCells.Add(new DataGridCellInfo(Items[i], column));
+                            if (selectAfterInsert)
+                                SelectedCells.Add(new DataGridCellInfo(Items[i], column));
                         }
                     }
 
@@ -442,7 +448,7 @@ namespace GeKtviWpfToolkit.Controls
             var data = ClipboardHelper.ParseClipboardData(e.Data);
             if (data is null == false)
             {
-                InsertValues(data, 0, Items.Count - 1);
+                InsertValues(data, 0, Items.Count - 1, false);
             }
         }
 
@@ -525,7 +531,7 @@ namespace GeKtviWpfToolkit.Controls
 
         #region Content Scroll
 
-        protected override void  OnPreviewMouseWheel(MouseWheelEventArgs e)
+        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
         {
             base.OnPreviewMouseWheel(e);
 
