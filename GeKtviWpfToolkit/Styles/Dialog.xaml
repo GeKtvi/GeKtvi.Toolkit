@@ -1,8 +1,8 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml">
 
     <CornerRadius x:Key="DialogFooterCornerRadius">8</CornerRadius>
 
@@ -30,6 +30,8 @@
 
                         <Border
                             x:Name="DialogBorder"
+                            MinWidth="{TemplateBinding MinWidth}"
+                            MinHeight="{TemplateBinding MinHeight}"
                             MaxWidth="{TemplateBinding DialogWidth}"
                             MaxHeight="{TemplateBinding DialogHeight}"
                             Margin="25"

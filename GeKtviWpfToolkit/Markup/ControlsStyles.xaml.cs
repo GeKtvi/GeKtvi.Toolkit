@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace GeKtviWpfToolkit
+namespace GeKtviWpfToolkit.Markup
 {
     public class ControlsStyles : ResourceDictionary
     {

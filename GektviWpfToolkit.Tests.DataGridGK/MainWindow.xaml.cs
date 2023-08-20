@@ -11,57 +11,105 @@ namespace GektviWpfToolkit.Tests.DataGridGK
     /// </summary>
     public partial class MainWindow
     {
+        public ObservableCollection<TestData0> TestData0 { get; set; }
+        public ObservableCollection<TestData1> TestData1 { get; set; }
+
         public MainWindow()
         {
             Wpf.Ui.Appearance.Watcher.Watch(this);
 
-            InitializeComponent();
-            var testData = new ObservableCollection<object>()
+
+            TestData0 = new ObservableCollection<TestData0>()
             {
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
-               new TestData(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"}
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"},
+               new TestData0(){Value1 = 123, Value2 = Visibility.Visible, Value3 = "asdfg"}
             };
 
-            DataContext = new { Value = testData };
+            TestData1 = new ObservableCollection<TestData1>()
+            {
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"},
+               new TestData1(){Value1 = "asdfg", Value2 = "asdfg"}
+            };
+
+            InitializeComponent();
             //DataGridGK1.ItemsSource = testData;
             //DataGridGK2.ItemsSource = testData;
         }
@@ -72,13 +120,19 @@ namespace GektviWpfToolkit.Tests.DataGridGK
         }
     }
 
-    public class TestData
+    public class TestData0
     {
         public int Value1 { get; set; }
         public Visibility Value2 { get; set; }
         public string Value3 { get; set; }
         public int Value4 { get; set; }
         public bool Value5 { get; set; }
+    }
+
+    public class TestData1
+    {
+        public string Value1 { get; set; }
+        public string Value2 { get; set; }
     }
 
 }

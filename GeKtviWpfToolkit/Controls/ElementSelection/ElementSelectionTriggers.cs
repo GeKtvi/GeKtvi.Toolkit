@@ -10,7 +10,7 @@ namespace GeKtviWpfToolkit.Controls.ElementSelection
     public class ElementSelectionTrigger : Trigger
     {
         //public string TargetName { get; set; } = "DGR_Border";
-       // public string TargetProperty { get; set; } = "(Control.Background).(SolidColorBrush.Opacity)";
+        // public string TargetProperty { get; set; } = "(Control.Background).(SolidColorBrush.Opacity)";
 
 
 
@@ -70,7 +70,7 @@ namespace GeKtviWpfToolkit.Controls.ElementSelection
 
             try
             {
-                
+
                 BeginStoryboard beginStoryboardEnter = CreateStoryboard(Info.EnterAnimation.Clone());
                 BeginStoryboard beginStoryboardExit = CreateStoryboard(Info.ExitAnimation.Clone());
 
@@ -99,9 +99,9 @@ namespace GeKtviWpfToolkit.Controls.ElementSelection
                 throw new InvalidOperationException("");
 
             if (Storyboard.GetTargetName(animation) == null)
-                    Storyboard.SetTargetName(animation, TargetName);
+                Storyboard.SetTargetName(animation, TargetName);
             if (Storyboard.GetTargetProperty(animation) == null)
-                    Storyboard.SetTargetProperty(animation, new PropertyPath(TargetProperty));
+                Storyboard.SetTargetProperty(animation, new PropertyPath(TargetProperty));
 
             storyboard.Children.Add(animation);
             beginStoryboard.Storyboard = storyboard;

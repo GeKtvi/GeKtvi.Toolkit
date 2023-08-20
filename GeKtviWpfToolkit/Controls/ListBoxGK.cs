@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Windows.Controls;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Windows;
-using System.Collections;
+using System.Windows.Controls;
 
 namespace GeKtviWpfToolkit.Controls
 {
@@ -32,13 +32,13 @@ namespace GeKtviWpfToolkit.Controls
             if (e.AddedItems.Count > 0)
                 if (!string.IsNullOrWhiteSpace(SelectedValuePath))
                 {
-                    foreach (var item in e.AddedItems)
+                    foreach (object item in e.AddedItems)
                         if (!selectedItems.Contains(item.GetType().GetProperty(SelectedValuePath).GetValue(item, null)))
                             selectedItems.Add(item.GetType().GetProperty(SelectedValuePath).GetValue(item, null));
                 }
                 else
                 {
-                    foreach (var item in e.AddedItems)
+                    foreach (object item in e.AddedItems)
                         if (!selectedItems.Contains(item))
                             selectedItems.Add(item);
                 }
@@ -46,13 +46,13 @@ namespace GeKtviWpfToolkit.Controls
             if (e.RemovedItems.Count > 0)
                 if (!string.IsNullOrWhiteSpace(SelectedValuePath))
                 {
-                    foreach (var item in e.RemovedItems)
+                    foreach (object item in e.RemovedItems)
                         if (selectedItems.Contains(item.GetType().GetProperty(SelectedValuePath).GetValue(item, null)))
                             selectedItems.Remove(item.GetType().GetProperty(SelectedValuePath).GetValue(item, null));
                 }
                 else
                 {
-                    foreach (var item in e.RemovedItems)
+                    foreach (object item in e.RemovedItems)
                         if (selectedItems.Contains(item))
                             selectedItems.Remove(item);
                 }
@@ -64,11 +64,11 @@ namespace GeKtviWpfToolkit.Controls
             {
                 List<dynamic> newSelection = new List<dynamic>();
                 if (!string.IsNullOrWhiteSpace(listBox.SelectedValuePath))
-                    foreach (var item in listBox.BindableSelectedItems)
+                    foreach (object item in listBox.BindableSelectedItems)
                     {
-                        foreach (var lbItem in listBox.Items)
+                        foreach (object lbItem in listBox.Items)
                         {
-                            var lbItemValue = lbItem.GetType().GetProperty(listBox.SelectedValuePath).GetValue(lbItem, null);
+                            object lbItemValue = lbItem.GetType().GetProperty(listBox.SelectedValuePath).GetValue(lbItem, null);
                             if (lbItemValue == item)
                                 newSelection.Add(lbItem);
                         }

@@ -46,6 +46,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="750" />
                     <RowDefinition Height="500" />
+                    <RowDefinition Height="500" />
                 </Grid.RowDefinitions>
                 <TextBox
                     Grid.Row="0"
@@ -53,20 +54,28 @@
                     Visibility="Visible" />
 
                 <tk:DataGridGK
-                    x:Name="DataGridGK1"
+                    x:Name="DataGridGK0"
                     Grid.Row="1"
                     AllowDrop="True"
                     EnableRowVirtualization="True"
-                    ItemsSource="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                    ItemsSource="{Binding ElementName=Window, Path=TestData1, UpdateSourceTrigger=PropertyChanged}"
+                    ScrollViewer.CanContentScroll="True" />
+
+                <tk:DataGridGK
+                    x:Name="DataGridGK1"
+                    Grid.Row="2"
+                    AllowDrop="True"
+                    EnableRowVirtualization="True"
+                    ItemsSource="{Binding ElementName=Window, Path=TestData0, UpdateSourceTrigger=PropertyChanged}"
                     ScrollViewer.CanContentScroll="True" />
 
                 <tk:DataGridGK
                     x:Name="DataGridGK2"
-                    Grid.Row="2"
+                    Grid.Row="3"
                     AllowDrop="True"
                     CanUserAddRows="True"
                     EnableRowVirtualization="True"
-                    ItemsSource="{Binding Value, UpdateSourceTrigger=PropertyChanged}"
+                    ItemsSource="{Binding ElementName=Window, Path=TestData0, UpdateSourceTrigger=PropertyChanged}"
                     SelectionMode="Extended"
                     SelectionUnit="CellOrRowHeader" />
             </Grid>

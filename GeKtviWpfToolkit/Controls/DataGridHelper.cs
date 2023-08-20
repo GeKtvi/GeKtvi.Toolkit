@@ -29,7 +29,7 @@ namespace GeKtviWpfToolkit.Controls
 
         private static void OnIsEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var dataGrid = (DataGrid)d;
+            DataGrid dataGrid = (DataGrid)d;
             if ((bool)e.NewValue)
             {
                 dataGrid.LoadingRow += OnLoadingRow;
@@ -45,7 +45,7 @@ namespace GeKtviWpfToolkit.Controls
         private static void OnLoadingRow(object sender, DataGridRowEventArgs e)
         {
             Debug.Assert(sender is DataGrid);
-            var row = e.Row;
+            DataGridRow row = e.Row;
 
             if (row.ReadLocalValue(DataGridRowHelper.AreRowDetailsFrozenInternalProperty) == DependencyProperty.UnsetValue)
             {
@@ -58,7 +58,7 @@ namespace GeKtviWpfToolkit.Controls
                 row.SetBinding(DataGridRowHelper.HeadersVisibilityInternalProperty,
                     new Binding { Path = new PropertyPath(DataGrid.HeadersVisibilityProperty), Source = sender });
             }
-        } 
+        }
 
         public static readonly DependencyProperty IsAnimationEnabledProperty =
             DependencyProperty.RegisterAttached(
@@ -295,7 +295,7 @@ namespace GeKtviWpfToolkit.Controls
 
         private static void OnUseModernColumnStylesChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var dataGrid = (DataGrid)d;
+            DataGrid dataGrid = (DataGrid)d;
             if ((bool)e.NewValue)
             {
                 dataGrid.SetValue(ColumnStylesHelperProperty, new ColumnStylesHelper(dataGrid));
@@ -345,7 +345,7 @@ namespace GeKtviWpfToolkit.Controls
             {
                 _dataGrid.Columns.CollectionChanged += OnColumnsCollectionChanged;
 
-                foreach (var column in _dataGrid.Columns)
+                foreach (DataGridColumn column in _dataGrid.Columns)
                 {
                     BindColumnStyleProperties(column);
                 }
@@ -355,7 +355,7 @@ namespace GeKtviWpfToolkit.Controls
             {
                 _dataGrid.Columns.CollectionChanged -= OnColumnsCollectionChanged;
 
-                foreach (var column in _dataGrid.Columns)
+                foreach (DataGridColumn column in _dataGrid.Columns)
                 {
                     ClearColumnStyleProperties(column);
                 }
@@ -365,7 +365,7 @@ namespace GeKtviWpfToolkit.Controls
             {
                 if (e.NewItems != null)
                 {
-                    foreach (var item in e.NewItems)
+                    foreach (object item in e.NewItems)
                     {
                         BindColumnStyleProperties(item as DataGridColumn);
                     }
@@ -440,7 +440,7 @@ namespace GeKtviWpfToolkit.Controls
                 DependencyObject source,
                 DependencyProperty sourceDP)
             {
-                var binding = BindingOperations.GetBinding(target, targetDP);
+                Binding binding = BindingOperations.GetBinding(target, targetDP);
                 if (binding != null && binding.Source == source)
                 {
                     target.ClearValue(targetDP);

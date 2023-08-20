@@ -200,13 +200,14 @@
                                             Value="{TemplateBinding VerticalOffset}" />
 
                                         <ScrollBar
-                                            Grid.Row="2" Grid.Column="1"
-                                                x:Name="PART_HorizontalScrollBar"
-                                                Maximum="{TemplateBinding ScrollableWidth}"
-                                                Orientation="Horizontal"
-                                                ViewportSize="{TemplateBinding ViewportWidth}"
-                                                Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
-                                                Value="{TemplateBinding HorizontalOffset}" />
+                                            x:Name="PART_HorizontalScrollBar"
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            Maximum="{TemplateBinding ScrollableWidth}"
+                                            Orientation="Horizontal"
+                                            ViewportSize="{TemplateBinding ViewportWidth}"
+                                            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                            Value="{TemplateBinding HorizontalOffset}" />
                                         <!--<Grid x:Name ="dfgsdfgdsfg"  Height="Auto" Grid.Row="2" Grid.Column="1">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="{Binding NonFrozenColumnsViewportHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" />
@@ -885,7 +886,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
-                    <Border Background="{DynamicResource ControlFillColorSecondaryBrush}" CornerRadius="{DynamicResource ControlCornerRadius}">
+                    <Border
+                        Background="{DynamicResource ControlFillColorSecondaryBrush}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{DynamicResource ControlCornerRadius}">
                         <Grid x:Name="RowGroupHeaderRoot" SnapsToDevicePixels="False">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -992,6 +997,7 @@
                                             Padding="{TemplateBinding Padding}"
                                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            BorderBrush="{DynamicResource ControlElevationBorderBrush}"
                                             Content="{TemplateBinding Header}"
                                             ContentTemplate="{TemplateBinding HeaderTemplate}"
                                             ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"

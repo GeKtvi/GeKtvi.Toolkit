@@ -5,6 +5,10 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>0.0.2</Version>
+    <Title>GeKtviWpfToolkit</Title>
+    <Description>Extended WPF controls and some reuse classes</Description>
   </PropertyGroup>
 
   <ItemGroup>

@@ -27,7 +27,7 @@ namespace GeKtviWpfToolkit
 
             // get the data and set the parsing method based on the format
             // currently works with CSV and Text DataFormats            
-            
+
             if (dataObject.GetData(DataFormats.CommaSeparatedValue) != null)
             {
                 clipboardRawData = Clipboard.GetText(TextDataFormat.UnicodeText);
@@ -82,16 +82,20 @@ namespace GeKtviWpfToolkit
             string textToCB = string.Empty;
             StringBuilder sb = ToRTF(clipboardData);
 
-            foreach (var row in clipboardData)
+            for (int i = 0; i < clipboardData.Count; i++)
             {
-                foreach (var cell in row)
+                for (int y = 0; y < clipboardData[i].Count; y++)
                 {
-                    textToCB += cell + '\t';
+                    if (y != clipboardData[i].Count - 1)
+                        textToCB += clipboardData[i][y] + '\t';
+                    else
+                        textToCB += clipboardData[i][y];
                 }
-                textToCB += "\r\n";
+                if (i != clipboardData.Count - 1)
+                    textToCB += "\r\n";
             }
 
-            var dataObj = new DataObject();
+            DataObject dataObj = new DataObject();
             dataObj.SetData(DataFormats.Rtf, sb);
             dataObj.SetData(DataFormats.Text, textToCB);
             return dataObj;
@@ -118,7 +122,7 @@ namespace GeKtviWpfToolkit
 
             for (int i = 0; i < maxRowLen; i++) //find max cell len
             {
-                foreach (var row in clipboardData)
+                foreach (List<string> row in clipboardData)
                 {
                     if (i > row.Count)
                         break;
@@ -129,13 +133,13 @@ namespace GeKtviWpfToolkit
             }
 
             int curLength = 0;
-            foreach (var len in maxLenInColumn) //set len width
+            foreach (int len in maxLenInColumn) //set len width
             {
                 curLength += len;
                 sb.Append(@"\cellx" + curLength); //+ curLength
             }
 
-            foreach (var row in clipboardData) //fill columns
+            foreach (List<string> row in clipboardData) //fill columns
             {
                 sb.Append(@"\intbl " + "\\fs18"); //Start the row
 
@@ -178,7 +182,7 @@ namespace GeKtviWpfToolkit
                 char ch = value[i];
                 if (ch == separator)
                 {
-                    outputList.Add(value.Substring(startIndex, endIndex - startIndex));
+                    outputList.Add(value[startIndex..endIndex]);
 
                     startIndex = endIndex + 1;
                     endIndex = startIndex;
@@ -200,7 +204,7 @@ namespace GeKtviWpfToolkit
                 else if (i + 1 == value.Length)
                 {
                     // add the last value
-                    outputList.Add(value.Substring(startIndex));
+                    outputList.Add(value[startIndex..]);
                     break;
                 }
                 else

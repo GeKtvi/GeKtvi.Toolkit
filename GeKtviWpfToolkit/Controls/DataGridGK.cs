@@ -111,7 +111,7 @@ namespace GeKtviWpfToolkit.Controls
         protected override void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e) //If ui have more then one datagrid provides context menu opening for mouse selected 
         {
             base.OnPreviewMouseRightButtonDown(e);
-            this.Focus();
+            Focus();
         }
 
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e) //Fixes not focus on click  (TODO: Find why Focus not works)
@@ -153,10 +153,8 @@ namespace GeKtviWpfToolkit.Controls
             base.OnAutoGeneratingColumn(e);
 
             System.ComponentModel.PropertyDescriptor propertyDescriptor = e.PropertyDescriptor as System.ComponentModel.PropertyDescriptor;
-            System.ComponentModel.DataAnnotations.DisplayAttribute displayAttribute =
-                propertyDescriptor.Attributes[typeof(System.ComponentModel.DataAnnotations.DisplayAttribute)] as System.ComponentModel.DataAnnotations.DisplayAttribute;
 
-            if (displayAttribute == null)
+            if (propertyDescriptor.Attributes[typeof(System.ComponentModel.DataAnnotations.DisplayAttribute)] is not System.ComponentModel.DataAnnotations.DisplayAttribute displayAttribute)
                 return;
 
             if (displayAttribute.Name != null)
@@ -200,7 +198,7 @@ namespace GeKtviWpfToolkit.Controls
         protected override void OnKeyDown(KeyEventArgs e)
         {
             base.OnKeyDown(e);
-            if(e.Key == Key.Escape)
+            if (e.Key == Key.Escape)
             {
                 UnselectAll();
                 UnselectAllCells();
@@ -270,7 +268,7 @@ namespace GeKtviWpfToolkit.Controls
 
         private void InsertValue(string value, bool createNewRows)
         {
-            foreach (var cell in SelectedCells)
+            foreach (DataGridCellInfo cell in SelectedCells)
             {
                 if ((ItemsSource != null && UseDirectPaste == false))
                 {
@@ -278,11 +276,11 @@ namespace GeKtviWpfToolkit.Controls
                 }
                 else
                 {
-                    var cellProp = cell.Item.GetType().GetProperty(cell.Column.SortMemberPath);
+                    System.Reflection.PropertyInfo cellProp = cell.Item.GetType().GetProperty(cell.Column.SortMemberPath);
 
                     if (cellProp is null)
                     {
-                        if (createNewRows == true && cell.Item == Items[Items.Count - 1]) // Не создавать последнюю строку если выбрана временная строка
+                        if (createNewRows == true && cell.Item == Items[^1]) // Не создавать последнюю строку если выбрана временная строка
                             cell.Column.OnPastingCellClipboardContent(cell.Item, value);
                     }
                     else
@@ -331,7 +329,7 @@ namespace GeKtviWpfToolkit.Controls
                             }
                             else
                             {
-                                var cellProp = Items[i].GetType().GetProperty(column.SortMemberPath);
+                                System.Reflection.PropertyInfo cellProp = Items[i].GetType().GetProperty(column.SortMemberPath);
                                 cellProp.SetValue(Items[i], values[clipboardRowIndex][clipboardColumnIndex]);
                             }
                             if (selectAfterInsert)
@@ -392,7 +390,7 @@ namespace GeKtviWpfToolkit.Controls
             {
                 object[] items = new object[SelectedItems.Count];
                 SelectedItems.CopyTo(items, 0);
-                foreach (var item in items)
+                foreach (object item in items)
                     ((IList)ItemsSource).Remove(item);
                 return;
             }
@@ -445,7 +443,7 @@ namespace GeKtviWpfToolkit.Controls
             else
                 Items.Clear();
 
-            var data = ClipboardHelper.ParseClipboardData(e.Data);
+            List<string[]> data = ClipboardHelper.ParseClipboardData(e.Data);
             if (data is null == false)
             {
                 InsertValues(data, 0, Items.Count - 1, false);
@@ -490,7 +488,7 @@ namespace GeKtviWpfToolkit.Controls
             }
 
             Cursor = Cursors.No;
-            var dataObject = ClipboardHelper.ToDataObject(GetGridValues());
+            DataObject dataObject = ClipboardHelper.ToDataObject(GetGridValues());
 
             DragDrop.DoDragDrop(this, dataObject, DragDropEffects.Copy);
 
@@ -504,15 +502,15 @@ namespace GeKtviWpfToolkit.Controls
         {
             List<List<string>> values = new();
 
-            foreach (var row in Items)
+            foreach (object row in Items)
             {
                 values.Add(new List<string>());
-                foreach (var column in Columns)
+                foreach (DataGridColumn column in Columns)
                 {
                     string value = string.Empty;
                     if (ItemsSource is null == false)
                     {
-                        var cellProp = row.GetType().GetProperty(column.SortMemberPath);
+                        System.Reflection.PropertyInfo cellProp = row.GetType().GetProperty(column.SortMemberPath);
                         if (cellProp is null == false)
                             value = cellProp.GetValue(row).ToString();
                     }
@@ -537,12 +535,9 @@ namespace GeKtviWpfToolkit.Controls
 
             ScrollViewer scrollViewer = GetChildOfType<ScrollViewer>(this);
 
-            double offsetProportion;
-            if (scrollViewer == null)
-                offsetProportion = e.Delta > 0 ? 0 : 1;
-            else
-                offsetProportion = (scrollViewer.ScrollableHeight == 0) ? 0 : (scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight);
-
+            double offsetProportion = scrollViewer == null
+                ? e.Delta > 0 ? 0 : 1
+                : (scrollViewer.ScrollableHeight == 0) ? 0 : (scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight);
             if (((offsetProportion == 0 && e.Delta > 0) || (offsetProportion == 1 && e.Delta < 0)) == false)
                 if ((scrollViewer.VerticalOffset == 0 && scrollViewer.ScrollableHeight == 0) == false)
                     return;
@@ -551,10 +546,10 @@ namespace GeKtviWpfToolkit.Controls
                 return;
 
             e.Handled = true;
-            var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
+            MouseWheelEventArgs eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
             eventArg.RoutedEvent = MouseWheelEvent;
             eventArg.Source = this;
-            var parent = Parent as UIElement;
+            UIElement parent = Parent as UIElement;
             parent?.RaiseEvent(eventArg);
         }
 
@@ -565,9 +560,9 @@ namespace GeKtviWpfToolkit.Controls
 
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(depObj); i++)
             {
-                var child = VisualTreeHelper.GetChild(depObj, i);
+                DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
 
-                var result = (child as T) ?? GetChildOfType<T>(child);
+                T result = (child as T) ?? GetChildOfType<T>(child);
                 if (result != null) return result;
             }
             return null;

@@ -8,7 +8,7 @@ namespace GeKtviWpfToolkit
     {
         public event EventHandler HoldPressSuccess;
         public Control Parent { get; set; }
-        public double HoldTime 
+        public double HoldTime
         {
             get => _timer.Interval;
             set => _timer.Interval = value;
