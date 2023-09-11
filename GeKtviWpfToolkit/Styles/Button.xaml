@@ -40,7 +40,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding Border.CornerRadius}">
+                        CornerRadius="{TemplateBinding CornerRadius}">
                         <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -54,7 +54,7 @@
                                 Filled="{TemplateBinding IconFilled}"
                                 FontSize="{TemplateBinding FontSize}"
                                 FontWeight="{TemplateBinding FontWeight}"
-                                Foreground="{TemplateBinding IconForeground}"
+                                Foreground="{TemplateBinding Foreground}"
                                 Symbol="{TemplateBinding Icon}" />
                             <ContentPresenter
                                 x:Name="ContentPresenter"
@@ -87,6 +87,19 @@
                             <Setter TargetName="ContentBorder" Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
                             <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
                             <Setter TargetName="ControlIcon" Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+                        </Trigger>
+                        <Trigger Property="Visibility" Value="Visible">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            Storyboard.TargetProperty="Opacity"
+                                            From="0"
+                                            To="1"
+                                            Duration="0:0:0.75" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -125,7 +138,7 @@
                         <SolidColorBrush Color="{DynamicResource TextOnAccentFillColorSecondary}" />
                     </Setter.Value>
                 </Setter>
-                <Setter Property="IconForeground">
+                <Setter Property="Foreground">
                     <Setter.Value>
                         <SolidColorBrush Color="{DynamicResource TextOnAccentFillColorPrimary}" />
                     </Setter.Value>

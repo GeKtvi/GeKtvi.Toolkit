@@ -2,6 +2,9 @@
 
 namespace GeKtviWpfToolkit.Controls
 {
+    /// <summary>
+    /// Copied from https://github.com/Kinnara/ModernWpf/blob/master/ModernWpf/Controls/Primitives/VisualStateGroupListener.cs
+    /// </summary>
     public class VisualStateGroupListener : FrameworkElement
     {
         static VisualStateGroupListener()

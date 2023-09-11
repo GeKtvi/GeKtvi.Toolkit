@@ -3,6 +3,9 @@ using System.Windows.Controls;
 
 namespace GeKtviWpfToolkit.Controls
 {
+    /// <summary>
+    /// Copied from https://github.com/Kinnara/ModernWpf/blob/master/ModernWpf/Controls/Primitives/DataGridRowHelper.cs
+    /// </summary>
     public static class DataGridRowHelper
     {
         #region AreRowDetailsFrozen

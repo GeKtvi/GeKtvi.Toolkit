@@ -6,6 +6,9 @@ using System.Windows.Data;
 
 namespace GeKtviWpfToolkit.Controls
 {
+    /// <summary>
+    /// Copied from https://github.com/Kinnara/ModernWpf/blob/master/ModernWpf/Controls/Primitives/DataGridHelper.cs
+    /// </summary>
     public static class DataGridHelper
     {
         #region IsEnabled

@@ -6,6 +6,7 @@ namespace GeKtviWpfToolkit.Controls
 {
     /// <summary>
     /// Represents the visual elements of a DataGridCell.
+    /// Copied from https://github.com/Kinnara/ModernWpf/blob/master/ModernWpf/Controls/Primitives/DataGridCellPresenter.cs
     /// </summary>
     public class DataGridCellPresenter : ContentPresenter
     {
