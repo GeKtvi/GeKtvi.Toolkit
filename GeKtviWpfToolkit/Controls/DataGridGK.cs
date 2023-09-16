@@ -376,6 +376,7 @@ namespace GeKtviWpfToolkit.Controls
         {
             args.CanExecute = CurrentCell != null && CanUserDeleteRows;
             args.CanExecute = SelectedCells.Count > 0;
+            args.CanExecute = !IsReadOnly;
             args.Handled = true;
         }
 

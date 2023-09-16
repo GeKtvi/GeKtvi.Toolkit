@@ -19,7 +19,7 @@ namespace GeKtviWpfToolkit
             List<string[]> data = null;
             try
             {
-                data = ParseClipboardData(Clipboard.GetDataObject());
+                return ParseClipboardData(Clipboard.GetDataObject());
             }
             catch (System.Runtime.InteropServices.COMException e)
             {
