@@ -443,7 +443,18 @@ namespace GeKtviWpfToolkit.Controls
             else
                 Items.Clear();
 
-            List<string[]> data = ClipboardHelper.ParseClipboardData(e.Data);
+            List<string[]> data = null;
+            try
+            {
+                data = ClipboardHelper.ParseClipboardData(e.Data);
+            }
+            catch (System.Runtime.InteropServices.COMException ex)
+            {
+                if (ex.HResult != -2147221040)
+                    throw;
+                data = new();
+            }
+
             if (data is null == false)
             {
                 InsertValues(data, 0, Items.Count - 1, false);

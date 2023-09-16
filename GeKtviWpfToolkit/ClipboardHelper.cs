@@ -16,7 +16,17 @@ namespace GeKtviWpfToolkit
 
         public static List<string[]> ParseClipboardData()
         {
-            return ParseClipboardData(Clipboard.GetDataObject());
+            List<string[]> data = null;
+            try
+            {
+                data = ParseClipboardData(Clipboard.GetDataObject());
+            }
+            catch (System.Runtime.InteropServices.COMException e)
+            {
+                if (e.HResult != -2147221040)
+                    throw;
+            }
+            return new();
         }
 
         public static List<string[]> ParseClipboardData(IDataObject dataObject)
