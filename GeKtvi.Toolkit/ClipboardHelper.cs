@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Windows;
 
-namespace GeKtvi.Toolkit.Wpf
+namespace GeKtvi.Toolkit
 {
     public static class ClipboardHelper
     {

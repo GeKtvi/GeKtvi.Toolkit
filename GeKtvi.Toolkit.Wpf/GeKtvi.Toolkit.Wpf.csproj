@@ -6,14 +6,18 @@
     <Nullable>disable</Nullable>
     <UseWPF>true</UseWPF>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>0.0.6</Version>
-    <Title>GeKtviWpfToolkit</Title>
+    <Version>0.0.7</Version>
+    <Title>GeKtvi.Toolkit.Wpf</Title>
     <Description>Extended WPF controls and some reuse classes</Description>
     <RepositoryUrl>https://github.com/GeKtvi/GeKtviWpfToolkit</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Reactive" Version="6.0.0"/>
+    <PackageReference Include="System.Reactive" Version="6.0.0" />
     <PackageReference Include="WPF-UI" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GeKtvi.Toolkit\GeKtvi.Toolkit.csproj" />
   </ItemGroup> 
 </Project>

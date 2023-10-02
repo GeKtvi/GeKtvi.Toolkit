@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml.Serialization;
 
-namespace GeKtvi.Toolkit.Wpf
+namespace GeKtvi.Toolkit
 {
     public class AppConfigHelper
     {

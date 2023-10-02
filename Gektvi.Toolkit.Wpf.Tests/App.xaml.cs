@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace GektviWpfToolkit.Tests.DataGridGK
+namespace GeKtvi.Toolkit.Wpf.Tests
 {
     /// <summary>
     /// Interaction logic for App.xaml

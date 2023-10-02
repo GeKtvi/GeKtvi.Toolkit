@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:GektviWpfToolkit.Tests.DataGridGK"
-    xmlns:tk="clr-namespace:GeKtviWpfToolkit;assembly=GeKtviWpfToolkit"
+    xmlns:tk="clr-namespace:GeKtvi.Toolkit.Wpf.Controls;assembly=GeKtvi.Toolkit.Wpf"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     StartupUri="MainWindow.xaml">
     <Application.Resources>

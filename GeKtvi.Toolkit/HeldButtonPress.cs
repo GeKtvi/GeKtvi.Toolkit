@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Timers;
-using System.Windows.Controls;
 
-namespace GeKtvi.Toolkit.Wpf
+namespace GeKtvi.Toolkit
 {
     internal class HoldButtonPress
     {

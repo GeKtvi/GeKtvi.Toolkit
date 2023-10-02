@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reactive.Disposables;
 
-namespace GeKtvi.Toolkit.Wpf.Reactive.NotifyPropertyChanged
+namespace GeKtvi.Toolkit.Reactive.NotifyPropertyChanged
 {
     internal class ObservableNotifyPropertyChanged<TObject> : IObservable<TObject?>, IDisposable
         where TObject : INotifyPropertyChanged

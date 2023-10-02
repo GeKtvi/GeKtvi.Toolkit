@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 
-namespace GektviWpfToolkit.Tests.DataGridGK
+namespace GeKtvi.Toolkit.Wpf.Tests
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Timers;
 
-namespace GeKtvi.Toolkit.Wpf
+namespace GeKtvi.Toolkit
 {
     public class DeferredOperation
     {
