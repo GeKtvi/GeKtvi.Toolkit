@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 
-namespace GeKtviWpfToolkit
+namespace GeKtvi.Toolkit.Wpf
 {
     public class DefaultWindowSettings : INotifyPropertyChanged
     {

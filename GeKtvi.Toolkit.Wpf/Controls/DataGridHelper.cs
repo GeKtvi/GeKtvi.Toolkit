@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace GeKtviWpfToolkit.Controls
+namespace GeKtvi.Toolkit.Wpf.Controls
 {
     /// <summary>
     /// Copied from https://github.com/Kinnara/ModernWpf/blob/master/ModernWpf/Controls/Primitives/DataGridHelper.cs
@@ -379,14 +379,14 @@ namespace GeKtviWpfToolkit.Controls
             {
                 if (column is DataGridTextColumn textColumn)
                 {
-                    Bind(textColumn, DataGridTextColumn.ElementStyleProperty, _dataGrid, TextColumnElementStyleProperty);
-                    Bind(textColumn, DataGridTextColumn.EditingElementStyleProperty, _dataGrid, TextColumnEditingElementStyleProperty);
+                    Bind(textColumn, DataGridBoundColumn.ElementStyleProperty, _dataGrid, TextColumnElementStyleProperty);
+                    Bind(textColumn, DataGridBoundColumn.EditingElementStyleProperty, _dataGrid, TextColumnEditingElementStyleProperty);
                     Bind(textColumn, DataGridTextColumn.FontSizeProperty, _dataGrid, TextColumnFontSizeProperty);
                 }
                 else if (column is DataGridCheckBoxColumn checkBoxColumn)
                 {
-                    Bind(checkBoxColumn, DataGridCheckBoxColumn.ElementStyleProperty, _dataGrid, CheckBoxColumnElementStyleProperty);
-                    Bind(checkBoxColumn, DataGridCheckBoxColumn.EditingElementStyleProperty, _dataGrid, CheckBoxColumnEditingElementStyleProperty);
+                    Bind(checkBoxColumn, DataGridBoundColumn.ElementStyleProperty, _dataGrid, CheckBoxColumnElementStyleProperty);
+                    Bind(checkBoxColumn, DataGridBoundColumn.EditingElementStyleProperty, _dataGrid, CheckBoxColumnEditingElementStyleProperty);
                 }
                 else if (column is DataGridComboBoxColumn comboBoxColumn)
                 {
@@ -395,8 +395,8 @@ namespace GeKtviWpfToolkit.Controls
                 }
                 else if (column is DataGridHyperlinkColumn hyperlinkColumn)
                 {
-                    Bind(hyperlinkColumn, DataGridHyperlinkColumn.ElementStyleProperty, _dataGrid, HyperlinkColumnElementStyleProperty);
-                    Bind(hyperlinkColumn, DataGridHyperlinkColumn.EditingElementStyleProperty, _dataGrid, HyperlinkColumnEditingElementStyleProperty);
+                    Bind(hyperlinkColumn, DataGridBoundColumn.ElementStyleProperty, _dataGrid, HyperlinkColumnElementStyleProperty);
+                    Bind(hyperlinkColumn, DataGridBoundColumn.EditingElementStyleProperty, _dataGrid, HyperlinkColumnEditingElementStyleProperty);
                 }
             }
 
@@ -404,14 +404,14 @@ namespace GeKtviWpfToolkit.Controls
             {
                 if (column is DataGridTextColumn textColumn)
                 {
-                    Clear(textColumn, DataGridTextColumn.ElementStyleProperty, _dataGrid, TextColumnElementStyleProperty);
-                    Clear(textColumn, DataGridTextColumn.EditingElementStyleProperty, _dataGrid, TextColumnEditingElementStyleProperty);
+                    Clear(textColumn, DataGridBoundColumn.ElementStyleProperty, _dataGrid, TextColumnElementStyleProperty);
+                    Clear(textColumn, DataGridBoundColumn.EditingElementStyleProperty, _dataGrid, TextColumnEditingElementStyleProperty);
                     Clear(textColumn, DataGridTextColumn.FontSizeProperty, _dataGrid, TextColumnFontSizeProperty);
                 }
                 else if (column is DataGridCheckBoxColumn checkBoxColumn)
                 {
-                    Clear(checkBoxColumn, DataGridCheckBoxColumn.ElementStyleProperty, _dataGrid, CheckBoxColumnElementStyleProperty);
-                    Clear(checkBoxColumn, DataGridCheckBoxColumn.EditingElementStyleProperty, _dataGrid, CheckBoxColumnEditingElementStyleProperty);
+                    Clear(checkBoxColumn, DataGridBoundColumn.ElementStyleProperty, _dataGrid, CheckBoxColumnElementStyleProperty);
+                    Clear(checkBoxColumn, DataGridBoundColumn.EditingElementStyleProperty, _dataGrid, CheckBoxColumnEditingElementStyleProperty);
                 }
                 else if (column is DataGridComboBoxColumn comboBoxColumn)
                 {
@@ -420,8 +420,8 @@ namespace GeKtviWpfToolkit.Controls
                 }
                 else if (column is DataGridHyperlinkColumn hyperlinkColumn)
                 {
-                    Clear(hyperlinkColumn, DataGridHyperlinkColumn.ElementStyleProperty, _dataGrid, HyperlinkColumnElementStyleProperty);
-                    Clear(hyperlinkColumn, DataGridHyperlinkColumn.EditingElementStyleProperty, _dataGrid, HyperlinkColumnEditingElementStyleProperty);
+                    Clear(hyperlinkColumn, DataGridBoundColumn.ElementStyleProperty, _dataGrid, HyperlinkColumnElementStyleProperty);
+                    Clear(hyperlinkColumn, DataGridBoundColumn.EditingElementStyleProperty, _dataGrid, HyperlinkColumnEditingElementStyleProperty);
                 }
             }
 

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media.Animation;
 
-namespace GeKtviWpfToolkit.Controls.ElementSelection
+namespace GeKtvi.Toolkit.Wpf.Controls.ElementSelection
 {
     public static class DoubleAnimationExtensions
     {

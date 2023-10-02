@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace GeKtviWpfToolkit.Controls
+namespace GeKtvi.Toolkit.Wpf.Controls
 {
     public class ListBoxGK : ListBox
     {

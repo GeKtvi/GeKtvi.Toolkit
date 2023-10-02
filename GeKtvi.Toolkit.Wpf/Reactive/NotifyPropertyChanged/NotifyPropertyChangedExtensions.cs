@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reactive.Linq;
 
-namespace GeKtviWpfToolkit.Reactive.NotifyPropertyChanged
+namespace GeKtvi.Toolkit.Wpf.Reactive.NotifyPropertyChanged
 {
     public static class NotifyPropertyChangedExtensions
     {
@@ -16,13 +16,11 @@ namespace GeKtviWpfToolkit.Reactive.NotifyPropertyChanged
         public static IObservable<TObject?> WhenAnyPropertyChangedLight<TObject>(this TObject source, TimeSpan? throttle = null)
             where TObject : INotifyPropertyChanged
         {
-            if (source is null)
-                throw new ArgumentNullException(nameof(source));
-
-            if (throttle is null)
-                return new ObservableNotifyPropertyChanged<TObject?>(source);
-
-            return new ObservableNotifyPropertyChanged<TObject?>(source).Throttle(throttle.Value);
+            return source is null
+                ? throw new ArgumentNullException(nameof(source))
+                : throttle is null
+                ? (IObservable<TObject?>)new ObservableNotifyPropertyChanged<TObject?>(source)
+                : new ObservableNotifyPropertyChanged<TObject?>(source).Throttle(throttle.Value);
         }
     }
 }

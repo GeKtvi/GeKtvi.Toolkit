@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 
-namespace GeKtviWpfToolkit
+namespace GeKtvi.Toolkit.Wpf
 {
     public static class ClipboardHelper
     {
@@ -16,7 +16,6 @@ namespace GeKtviWpfToolkit
 
         public static List<string[]> ParseClipboardData()
         {
-            List<string[]> data = null;
             try
             {
                 return ParseClipboardData(Clipboard.GetDataObject());

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media.Animation;
 
-namespace GeKtviWpfToolkit.Controls.ElementSelection
+namespace GeKtvi.Toolkit.Wpf.Controls.ElementSelection
 {
     public class ElementSelectionTrigger : Trigger
     {

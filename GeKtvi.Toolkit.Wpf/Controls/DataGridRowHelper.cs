@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace GeKtviWpfToolkit.Controls
+namespace GeKtvi.Toolkit.Wpf.Controls
 {
     /// <summary>
     /// Copied from https://github.com/Kinnara/ModernWpf/blob/master/ModernWpf/Controls/Primitives/DataGridRowHelper.cs

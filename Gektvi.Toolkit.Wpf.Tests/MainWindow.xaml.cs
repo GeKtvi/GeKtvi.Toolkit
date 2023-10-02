@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using Wpf.Ui;
 
 namespace GektviWpfToolkit.Tests.DataGridGK
 {
@@ -116,7 +114,7 @@ namespace GektviWpfToolkit.Tests.DataGridGK
 
         private void DataGridGK1_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var asdf = FocusManager.GetFocusedElement(this);
+            IInputElement asdf = FocusManager.GetFocusedElement(this);
         }
     }
 

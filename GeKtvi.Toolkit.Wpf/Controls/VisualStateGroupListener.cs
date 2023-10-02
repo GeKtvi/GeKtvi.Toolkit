@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace GeKtviWpfToolkit.Controls
+namespace GeKtvi.Toolkit.Wpf.Controls
 {
     /// <summary>
     /// Copied from https://github.com/Kinnara/ModernWpf/blob/master/ModernWpf/Controls/Primitives/VisualStateGroupListener.cs

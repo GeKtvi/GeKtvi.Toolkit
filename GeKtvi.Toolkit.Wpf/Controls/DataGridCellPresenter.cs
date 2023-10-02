@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 
-namespace GeKtviWpfToolkit.Controls
+namespace GeKtvi.Toolkit.Wpf.Controls
 {
     /// <summary>
     /// Represents the visual elements of a DataGridCell.

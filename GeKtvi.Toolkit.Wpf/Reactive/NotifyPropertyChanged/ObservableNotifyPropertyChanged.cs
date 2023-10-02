@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reactive.Disposables;
 
-namespace GeKtviWpfToolkit.Reactive.NotifyPropertyChanged
+namespace GeKtvi.Toolkit.Wpf.Reactive.NotifyPropertyChanged
 {
-    internal class ObservableNotifyPropertyChanged<TObject> : IObservable<TObject?>, IDisposable 
+    internal class ObservableNotifyPropertyChanged<TObject> : IObservable<TObject?>, IDisposable
         where TObject : INotifyPropertyChanged
     {
         private TObject? _source;
@@ -28,7 +28,7 @@ namespace GeKtviWpfToolkit.Reactive.NotifyPropertyChanged
             _source.PropertyChanged -= RiseOnNext;
         }
 
-        private void RiseOnNext(object? sender, PropertyChangedEventArgs e)
+        private void RiseOnNext(object sender, PropertyChangedEventArgs e)
         {
             _observers.ForEach(subscriber => subscriber.OnNext(_source));
         }

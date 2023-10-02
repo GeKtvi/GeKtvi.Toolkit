@@ -1,5 +1,4 @@
-﻿using GeKtviWpfToolkit.ValueConverters;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace GeKtviWpfToolkit.Controls
+namespace GeKtvi.Toolkit.Wpf.Controls
 {
     public class DataGridGK : DataGrid
     {
@@ -270,7 +269,7 @@ namespace GeKtviWpfToolkit.Controls
         {
             foreach (DataGridCellInfo cell in SelectedCells)
             {
-                if ((ItemsSource != null && UseDirectPaste == false))
+                if (ItemsSource != null && UseDirectPaste == false)
                 {
                     cell.Column.OnPastingCellClipboardContent(cell.Item, value);
                 }
@@ -294,7 +293,7 @@ namespace GeKtviWpfToolkit.Controls
 
         private void InsertValues(List<string[]> values, int minRowInGridIndex, int maxRowInGridIndex, bool selectAfterInsert = true)
         {
-            int startIndexOfDisplayCol = (SelectionUnit != DataGridSelectionUnit.FullRow && CurrentColumn is null == false) ? CurrentColumn.DisplayIndex : 0;
+            int startIndexOfDisplayCol = SelectionUnit != DataGridSelectionUnit.FullRow && CurrentColumn is null == false ? CurrentColumn.DisplayIndex : 0;
             int clipboardRowIndex = 0;
 
             ///TODO
@@ -549,8 +548,8 @@ namespace GeKtviWpfToolkit.Controls
 
             double offsetProportion = scrollViewer == null
                 ? e.Delta > 0 ? 0 : 1
-                : (scrollViewer.ScrollableHeight == 0) ? 0 : (scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight);
-            if (((offsetProportion == 0 && e.Delta > 0) || (offsetProportion == 1 && e.Delta < 0)) == false)
+                : scrollViewer.ScrollableHeight == 0 ? 0 : scrollViewer.VerticalOffset / scrollViewer.ScrollableHeight;
+            if ((offsetProportion == 0 && e.Delta > 0 || offsetProportion == 1 && e.Delta < 0) == false)
                 if ((scrollViewer.VerticalOffset == 0 && scrollViewer.ScrollableHeight == 0) == false)
                     return;
 
@@ -574,7 +573,7 @@ namespace GeKtviWpfToolkit.Controls
             {
                 DependencyObject child = VisualTreeHelper.GetChild(depObj, i);
 
-                T result = (child as T) ?? GetChildOfType<T>(child);
+                T result = child as T ?? GetChildOfType<T>(child);
                 if (result != null) return result;
             }
             return null;

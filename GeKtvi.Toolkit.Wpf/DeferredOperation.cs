@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Timers;
 
-namespace GeKtviWpfToolkit
+namespace GeKtvi.Toolkit.Wpf
 {
     public class DeferredOperation
     {
@@ -27,7 +27,7 @@ namespace GeKtviWpfToolkit
             _timer.Start();
         }
 
-        private void Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void Elapsed(object sender, ElapsedEventArgs e)
         {
             _operation.Invoke();
         }
