@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace GeKtvi.Toolkit
+namespace GeKtvi.Toolkit.Window
 {
-    public class DefaultWindowSettings : INotifyPropertyChanged
+    public class WindowSettings : INotifyPropertyChanged
     {
         private double _top;
         public double Top
@@ -10,7 +10,7 @@ namespace GeKtvi.Toolkit
             get => _top;
             set
             {
-                if (WindowState == WindowState.Minimized)
+                if (WindowState.IsMinimized)
                     return;
                 _top = value;
                 OnPropertyChanged(nameof(Width));
@@ -23,7 +23,7 @@ namespace GeKtvi.Toolkit
             get => _left;
             set
             {
-                if (WindowState == WindowState.Minimized)
+                if (WindowState.IsMinimized)
                     return;
                 _left = value;
                 OnPropertyChanged(nameof(Width));
@@ -36,7 +36,7 @@ namespace GeKtvi.Toolkit
             get => _width;
             set
             {
-                if (WindowState == WindowState.Minimized)
+                if (WindowState.IsMinimized)
                     return;
                 _width = value;
                 OnPropertyChanged(nameof(Width));
@@ -49,7 +49,7 @@ namespace GeKtvi.Toolkit
             get => _height;
             set
             {
-                if (WindowState == WindowState.Minimized)
+                if (WindowState.IsMinimized)
                     return;
                 _height = value;
                 OnPropertyChanged(nameof(Height));
@@ -62,15 +62,13 @@ namespace GeKtvi.Toolkit
             get => _scale;
             set
             {
-                if (WindowState == WindowState.Minimized)
-                    return;
                 _scale = value;
                 OnPropertyChanged(nameof(Scale));
             }
         }
 
-        private WindowState _windowState;
-        public WindowState WindowState
+        private WindowStateAdapter _windowState;
+        public WindowStateAdapter WindowState
         {
             get => _windowState;
             set
@@ -80,27 +78,23 @@ namespace GeKtvi.Toolkit
             }
         }
 
-        public DefaultWindowSettings()
+        public WindowSettings()
         {
             Top = 0;
             Left = 0;
             Width = 500;
             Height = 500;
             Scale = 1;
-            WindowState = WindowState.Normal;
-        }
-
-        public DefaultWindowSettings(Window window)
-        {
-            Top = window.Top;
-            Left = window.Left;
-            Width = window.Width;
-            Height = window.Height;
-            Scale = 1;
-            WindowState = window.WindowState;
+            WindowState.SetNormalState();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnLoad()
+        {
+            if (WindowState.IsMinimized)
+                WindowState.SetNormalState();
+        }
 
         protected virtual void OnPropertyChanged(string propertyName)
         {

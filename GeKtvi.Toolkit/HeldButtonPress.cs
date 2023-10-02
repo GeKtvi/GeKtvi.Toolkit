@@ -3,10 +3,10 @@ using System.Timers;
 
 namespace GeKtvi.Toolkit
 {
-    internal class HoldButtonPress
+    public class HoldButtonPress
     {
         public event EventHandler HoldPressSuccess;
-        public Control Parent { get; set; }
+        public Action<Action> _invokeInDispatcher { get; set; }
         public double HoldTime
         {
             get => _timer.Interval;
@@ -15,9 +15,9 @@ namespace GeKtvi.Toolkit
 
         private Timer _timer;
 
-        public HoldButtonPress(Control parent, double holdTime)
+        public HoldButtonPress(Action<Action> invokeInDispatcher, double holdTime)
         {
-            Parent = parent;
+            _invokeInDispatcher = invokeInDispatcher;
             _timer = new Timer();
             _timer.AutoReset = false;
             _timer.Interval = holdTime;
@@ -26,7 +26,7 @@ namespace GeKtvi.Toolkit
 
         private void OnHoldPressSuccess(object sender, ElapsedEventArgs e)
         {
-            Parent.Dispatcher.Invoke(() => HoldPressSuccess?.Invoke(this, e));
+            _invokeInDispatcher.Invoke(() => HoldPressSuccess?.Invoke(this, e));
         }
 
         public void OnPress()

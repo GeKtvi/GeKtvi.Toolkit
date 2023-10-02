@@ -12,7 +12,6 @@ namespace GeKtvi.Toolkit.Clipboard
     {
         public ClipboardAdapter Clipboard { get; init; }
         public DataObjectAdapter DataObject { get; init; }
-        public bool IsInClipboardCSV => Clipboard.GetDataObject().GetData(DataFormats.CommaSeparatedValue) != null;
 
         public List<string[]> ParseClipboardData()
         {
