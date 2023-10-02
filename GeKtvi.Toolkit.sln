@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtviWpfToolkit", "GeKtviWpfToolkit\GeKtviWpfToolkit.csproj", "{87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gektvi.Toolk.Wpf.Tests", "Gektvi.Toolkit.Wpf.Tests\Gektvi.Toolk.Wpf.Tests.csproj", "{87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GektviWpfToolk.Tests.DataGridGK", "GektviWpfToolkit.Tests.DataGridGK\GektviWpfToolk.Tests.DataGridGK.csproj", "{BB2D9BCF-08ED-4CC5-914A-BEB04BC857F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.Wpf", "GeKtvi.Toolkit.Wpf\GeKtvi.Toolkit.Wpf.csproj", "{BB2D9BCF-08ED-4CC5-914A-BEB04BC857F3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC} = {87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC}
 	EndProjectSection
