@@ -10,6 +10,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.Wpf", "GeKtv
 		{87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC} = {87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeKtvi.Toolkit", "GeKtvi.Toolkit\GeKtvi.Toolkit.csproj", "{47C86DC5-8057-421F-9517-9C2ACEAF6191}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,6 +26,10 @@ Global
 		{BB2D9BCF-08ED-4CC5-914A-BEB04BC857F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB2D9BCF-08ED-4CC5-914A-BEB04BC857F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB2D9BCF-08ED-4CC5-914A-BEB04BC857F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47C86DC5-8057-421F-9517-9C2ACEAF6191}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47C86DC5-8057-421F-9517-9C2ACEAF6191}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47C86DC5-8057-421F-9517-9C2ACEAF6191}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47C86DC5-8057-421F-9517-9C2ACEAF6191}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
