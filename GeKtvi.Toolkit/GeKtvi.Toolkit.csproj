@@ -4,7 +4,6 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <UseWPF>true</UseWPF>
     <Title>GeKtvi.Toolkit</Title>
   </PropertyGroup>
   

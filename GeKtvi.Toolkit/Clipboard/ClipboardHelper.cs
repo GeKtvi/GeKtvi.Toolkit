@@ -5,17 +5,16 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
-using System.Windows;
 
-namespace GeKtvi.Toolkit
+namespace GeKtvi.Toolkit.Clipboard
 {
-    public static class ClipboardHelper
+    public class ClipboardHelper
     {
-        public delegate string[] ParseFormat(string value);
+        public ClipboardAdapter Clipboard { get; init; }
+        public DataObjectAdapter DataObject { get; init; }
+        public bool IsInClipboardCSV => Clipboard.GetDataObject().GetData(DataFormats.CommaSeparatedValue) != null;
 
-        public static bool IsInClipboardCSV => Clipboard.GetDataObject().GetData(DataFormats.CommaSeparatedValue) != null;
-
-        public static List<string[]> ParseClipboardData()
+        public List<string[]> ParseClipboardData()
         {
             try
             {
@@ -29,21 +28,21 @@ namespace GeKtvi.Toolkit
             return new();
         }
 
-        public static List<string[]> ParseClipboardData(IDataObject dataObject)
+        public List<string[]> ParseClipboardData(DataObjectAdapter dataObject)
         {
             List<string[]> clipboardData = null;
             object clipboardRawData = null;
-            ParseFormat parseFormat = null;
+            Func <string, string[]> parseFormat = null;
 
             // get the data and set the parsing method based on the format
             // currently works with CSV and Text DataFormats            
 
-            if (dataObject.GetData(DataFormats.CommaSeparatedValue) != null)
+            if (dataObject.GetCvsData() is not null)
             {
-                clipboardRawData = Clipboard.GetText(TextDataFormat.UnicodeText);
+                clipboardRawData = Clipboard.GetText();
                 parseFormat = ParseCsvFormat;
             }
-            else if ((clipboardRawData = dataObject.GetData(DataFormats.UnicodeText)) != null)
+            else if ((clipboardRawData = dataObject.GetUnicodeData()) is not null)
             {
                 parseFormat = ParseTextFormat;
             }
@@ -80,14 +79,14 @@ namespace GeKtvi.Toolkit
             return clipboardData;
         }
 
-        public static void SetClipboardData(List<List<string>> clipboardData)
+        public void SetClipboardData(List<List<string>> clipboardData)
         {
-            DataObject dataObj = ToDataObject(clipboardData);
+            DataObjectAdapter dataObj = ToDataObject(clipboardData);
 
             Clipboard.SetDataObject(dataObj);
         }
 
-        public static DataObject ToDataObject(List<List<string>> clipboardData)
+        public DataObjectAdapter ToDataObject(List<List<string>> clipboardData)
         {
             string textToCB = string.Empty;
             StringBuilder sb = ToRTF(clipboardData);
@@ -105,13 +104,13 @@ namespace GeKtvi.Toolkit
                     textToCB += "\r\n";
             }
 
-            DataObject dataObj = new DataObject();
-            dataObj.SetData(DataFormats.Rtf, sb);
-            dataObj.SetData(DataFormats.Text, textToCB);
+            DataObjectAdapter dataObj = DataObjectAdapter.GetNewDataObject();
+            dataObj.SetRtfData(sb.ToString());
+            dataObj.SetTextData(textToCB.ToString());
             return dataObj;
         }
 
-        private static StringBuilder ToRTF(List<List<string>> clipboardData)
+        private StringBuilder ToRTF(List<List<string>> clipboardData)
         {
             StringBuilder sb = new StringBuilder();
 
@@ -169,17 +168,17 @@ namespace GeKtvi.Toolkit
             return sb;
         }
 
-        public static string[] ParseCsvFormat(string value)
+        public string[] ParseCsvFormat(string value)
         {
             return ParseCsvOrTextFormat(value, true);
         }
 
-        public static string[] ParseTextFormat(string value)
+        public string[] ParseTextFormat(string value)
         {
             return ParseCsvOrTextFormat(value, false);
         }
 
-        private static string[] ParseCsvOrTextFormat(string value, bool isCSV)
+        private string[] ParseCsvOrTextFormat(string value, bool isCSV)
         {
             List<string> outputList = new List<string>();
 
