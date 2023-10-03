@@ -5,29 +5,20 @@ namespace GeKtvi.Toolkit.Clipboard
 {
     public class DataObjectAdapter : IDataObjectAdapter
     {
-        public void SetRtfData(string sb)
-        {
-            throw new NotImplementedException();
-        }
+        public Action? SetRtfDataAction {  get; init; }
+        public Action? SetSetTextDataAction { get; init; }
+        public Func<object>? GetCvsDataFunc { get; init; }
+        public Func<object>? GetDataFunc { get; init; }
+        public Func<object>? GetUnicodeDataFunc { get; init; }
 
-        public void SetTextData(string sb)
-        {
-            throw new NotImplementedException();
-        }
+        public void SetRtfData(string sb) => SetRtfDataAction?.Invoke();
 
-        public object GetCvsData()
-        {
-            throw new NotImplementedException();
-        }
+        public void SetTextData(string sb) => SetSetTextDataAction?.Invoke();
 
-        public object GetData()
-        {
-            throw new NotImplementedException();
-        }
+        public object? GetCvsData() => GetCvsDataFunc?.Invoke();
 
-        public object GetUnicodeData()
-        {
-            throw new NotImplementedException();
-        }
+        public object? GetData() => GetDataFunc?.Invoke();
+
+        public object? GetUnicodeData() => GetUnicodeDataFunc?.Invoke();
     }
 }

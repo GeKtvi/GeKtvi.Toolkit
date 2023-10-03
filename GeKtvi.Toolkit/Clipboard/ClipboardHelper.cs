@@ -10,7 +10,7 @@ namespace GeKtvi.Toolkit.Clipboard
 {
     public class ClipboardHelper
     {
-        public IClipboardAdapter _clipboard { get; init; }
+        private IClipboardAdapter _clipboard;
 
         private Func<IDataObjectAdapter> _dataObjectAdapterFactory;
 
@@ -38,9 +38,9 @@ namespace GeKtvi.Toolkit.Clipboard
 
         public List<string[]> ParseClipboardData(IDataObjectAdapter dataObject)
         {
-            List<string[]> clipboardData = null;
-            object clipboardRawData = null;
-            Func <string, string[]> parseFormat = null;
+            List<string[]> clipboardData = new List<string[]>();
+            object? clipboardRawData;
+            Func <string, string[]>? parseFormat = null;
 
             // get the data and set the parsing method based on the format
             // currently works with CSV and Text DataFormats            
@@ -57,12 +57,12 @@ namespace GeKtvi.Toolkit.Clipboard
 
             if (parseFormat != null)
             {
-                string rawDataStr = clipboardRawData as string;
+                string? rawDataStr = clipboardRawData as string;
 
                 if (rawDataStr == null && clipboardRawData is MemoryStream)
                 {
                     // cannot convert to a string so try a MemoryStream
-                    MemoryStream ms = clipboardRawData as MemoryStream;
+                    MemoryStream? ms = clipboardRawData as MemoryStream ?? throw new NullReferenceException();
                     StreamReader sr = new StreamReader(ms);
                     rawDataStr = sr.ReadToEnd();
                 }
@@ -71,7 +71,6 @@ namespace GeKtvi.Toolkit.Clipboard
                 string[] rows = rawDataStr.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
                 if (rows != null && rows.Length > 0)
                 {
-                    clipboardData = new List<string[]>();
                     foreach (string row in rows)
                     {
                         clipboardData.Add(parseFormat(row));
@@ -112,7 +111,7 @@ namespace GeKtvi.Toolkit.Clipboard
                     textToCB += "\r\n";
             }
 
-            IDataObjectAdapter dataObj = IDataObjectAdapter.GetNewDataObject();
+            IDataObjectAdapter dataObj = _dataObjectAdapterFactory.Invoke();
             dataObj.SetRtfData(sb.ToString());
             dataObj.SetTextData(textToCB.ToString());
             return dataObj;
