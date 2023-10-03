@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace GeKtvi.Toolkit.Clipboard
 {
-    public class ClipboardAdapter
+    public class ClipboardAdapter : IClipboardAdapter
     {
         public DataObjectAdapter GetDataObject()
         {
             throw new NotImplementedException();
         }
 
-        public void SetDataObject(DataObjectAdapter dataObj)
+        public void SetDataObject(IDataObjectAdapter dataObj)
         {
             throw new NotImplementedException();
         }
 
-        internal object GetText()
+        public object GetText()
         {
             throw new NotImplementedException();
         }

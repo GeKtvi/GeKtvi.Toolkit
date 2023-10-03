@@ -67,8 +67,8 @@ namespace GeKtvi.Toolkit.Window
             }
         }
 
-        private WindowStateAdapter _windowState;
-        public WindowStateAdapter WindowState
+        private IWindowStateAdapter _windowState;
+        public IWindowStateAdapter WindowState
         {
             get => _windowState;
             set

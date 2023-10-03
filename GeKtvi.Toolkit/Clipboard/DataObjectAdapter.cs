@@ -3,13 +3,8 @@ using System.Text;
 
 namespace GeKtvi.Toolkit.Clipboard
 {
-    public class DataObjectAdapter
+    public class DataObjectAdapter : IDataObjectAdapter
     {
-        public static DataObjectAdapter GetNewDataObject()
-        {
-            throw new NotImplementedException();
-        }
-
         public void SetRtfData(string sb)
         {
             throw new NotImplementedException();
@@ -20,17 +15,17 @@ namespace GeKtvi.Toolkit.Clipboard
             throw new NotImplementedException();
         }
 
-        internal object GetCvsData()
+        public object GetCvsData()
         {
             throw new NotImplementedException();
         }
 
-        internal object GetData()
+        public object GetData()
         {
             throw new NotImplementedException();
         }
 
-        internal object GetUnicodeData()
+        public object GetUnicodeData()
         {
             throw new NotImplementedException();
         }

@@ -10,14 +10,23 @@ namespace GeKtvi.Toolkit.Clipboard
 {
     public class ClipboardHelper
     {
-        public ClipboardAdapter Clipboard { get; init; }
-        public DataObjectAdapter DataObject { get; init; }
+        public IClipboardAdapter _clipboard { get; init; }
+
+        private Func<IDataObjectAdapter> _dataObjectAdapterFactory;
+
+        public ClipboardHelper(IClipboardAdapter clipboard, Func<IDataObjectAdapter> dataObjectAdapterFactory)
+        {
+            ArgumentNullException.ThrowIfNull(dataObjectAdapterFactory);
+
+            _clipboard = clipboard;
+            _dataObjectAdapterFactory = dataObjectAdapterFactory;
+        }
 
         public List<string[]> ParseClipboardData()
         {
             try
             {
-                return ParseClipboardData(Clipboard.GetDataObject());
+                return ParseClipboardData(_clipboard.GetDataObject());
             }
             catch (System.Runtime.InteropServices.COMException e)
             {
@@ -27,7 +36,7 @@ namespace GeKtvi.Toolkit.Clipboard
             return new();
         }
 
-        public List<string[]> ParseClipboardData(DataObjectAdapter dataObject)
+        public List<string[]> ParseClipboardData(IDataObjectAdapter dataObject)
         {
             List<string[]> clipboardData = null;
             object clipboardRawData = null;
@@ -38,7 +47,7 @@ namespace GeKtvi.Toolkit.Clipboard
 
             if (dataObject.GetCvsData() is not null)
             {
-                clipboardRawData = Clipboard.GetText();
+                clipboardRawData = _clipboard.GetText();
                 parseFormat = ParseCsvFormat;
             }
             else if ((clipboardRawData = dataObject.GetUnicodeData()) is not null)
@@ -80,12 +89,12 @@ namespace GeKtvi.Toolkit.Clipboard
 
         public void SetClipboardData(List<List<string>> clipboardData)
         {
-            DataObjectAdapter dataObj = ToDataObject(clipboardData);
+            IDataObjectAdapter dataObj = ToDataObject(clipboardData);
 
-            Clipboard.SetDataObject(dataObj);
+            _clipboard.SetDataObject(dataObj);
         }
 
-        public DataObjectAdapter ToDataObject(List<List<string>> clipboardData)
+        public IDataObjectAdapter ToDataObject(List<List<string>> clipboardData)
         {
             string textToCB = string.Empty;
             StringBuilder sb = ToRTF(clipboardData);
@@ -103,7 +112,7 @@ namespace GeKtvi.Toolkit.Clipboard
                     textToCB += "\r\n";
             }
 
-            DataObjectAdapter dataObj = DataObjectAdapter.GetNewDataObject();
+            IDataObjectAdapter dataObj = IDataObjectAdapter.GetNewDataObject();
             dataObj.SetRtfData(sb.ToString());
             dataObj.SetTextData(textToCB.ToString());
             return dataObj;

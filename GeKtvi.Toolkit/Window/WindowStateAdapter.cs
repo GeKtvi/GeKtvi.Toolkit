@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GeKtvi.Toolkit.Window
 {
-    public class WindowStateAdapter
+    public class WindowStateAdapter : IWindowStateAdapter
     {
         public Func<bool> _checkMaximized;
         public Func<bool> _checkMinimized;
@@ -16,9 +16,9 @@ namespace GeKtvi.Toolkit.Window
         public Func<bool> _setMinimized;
         public Func<bool> _setNormal;
 
-        public bool IsMaximized { get => _checkMaximized();}
-        public bool IsMinimized { get => _checkMinimized();}
-        public bool IsNormal { get => _checkNormal();}
+        public bool IsMaximized { get => _checkMaximized(); }
+        public bool IsMinimized { get => _checkMinimized(); }
+        public bool IsNormal { get => _checkNormal(); }
 
         public void SetMaximizedState() => _setMaximized();
         public void SetMinimizedState() => _setMinimized();
