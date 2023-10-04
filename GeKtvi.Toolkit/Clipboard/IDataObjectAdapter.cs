@@ -4,9 +4,9 @@ namespace GeKtvi.Toolkit.Clipboard
 {
     public interface IDataObjectAdapter
     {
-        object? GetCvsData();
-        object? GetData();
-        object? GetUnicodeData();
+        bool? HasCvsData();
+        object? GetUnicodeText();
+        bool? HasUnicodeData();
         void SetRtfData(string sb);
         void SetTextData(string sb);
     }

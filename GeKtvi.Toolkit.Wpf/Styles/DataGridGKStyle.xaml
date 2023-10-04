@@ -3,8 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:iconElements="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:tk="clr-namespace:GeKtviWpfToolkit.Controls"
-    xmlns:tkES="clr-namespace:GeKtviWpfToolkit.Controls.ElementSelection">
+    xmlns:tk="clr-namespace:GeKtvi.Toolkit.Wpf.Controls"
+    xmlns:tkES="clr-namespace:GeKtvi.Toolkit.Wpf.Controls.ElementSelection">
 
     <sys:Double x:Key="MinRowHeight">22</sys:Double>
     <sys:Double x:Key="ContentMinHeight">20</sys:Double>

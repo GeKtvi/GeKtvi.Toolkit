@@ -9,19 +9,14 @@ namespace GeKtvi.Toolkit.Clipboard
 {
     public class ClipboardAdapter : IClipboardAdapter
     {
-        public DataObjectAdapter GetDataObject()
-        {
-            throw new NotImplementedException();
-        }
+        public Func<IDataObjectAdapter>? GetDataObjectFunc {  get; init; }
+        public Action<IDataObjectAdapter>? SetDataObjectAction { get; init; }
+        public Action? GetTextAction { get; init; }
 
-        public void SetDataObject(IDataObjectAdapter dataObj)
-        {
-            throw new NotImplementedException();
-        }
+        public IDataObjectAdapter? GetDataObject() => GetDataObjectFunc?.Invoke();
 
-        public object GetText()
-        {
-            throw new NotImplementedException();
-        }
+        public void SetDataObject(IDataObjectAdapter dataObj) => SetDataObjectAction?.Invoke(dataObj);
+
+        public object? GetText() => GetDataObjectFunc?.Invoke();
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace GeKtvi.Toolkit.Clipboard
@@ -39,19 +38,20 @@ namespace GeKtvi.Toolkit.Clipboard
         public List<string[]> ParseClipboardData(IDataObjectAdapter dataObject)
         {
             List<string[]> clipboardData = new List<string[]>();
-            object? clipboardRawData;
-            Func <string, string[]>? parseFormat = null;
+            object? clipboardRawData = null;
+            Func<string, string[]>? parseFormat = null;
 
             // get the data and set the parsing method based on the format
             // currently works with CSV and Text DataFormats            
 
-            if (dataObject.GetCvsData() is not null)
+            if (dataObject.HasCvsData() ?? false)
             {
                 clipboardRawData = _clipboard.GetText();
                 parseFormat = ParseCsvFormat;
             }
-            else if ((clipboardRawData = dataObject.GetUnicodeData()) is not null)
+            else if (dataObject.HasUnicodeData() ?? false)
             {
+                clipboardRawData = dataObject.GetUnicodeText();
                 parseFormat = ParseTextFormat;
             }
 

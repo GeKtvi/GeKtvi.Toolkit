@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GeKtvi.Toolkit.Clipboard;
+using GeKtvi.Toolkit.Wpf.Clipboard;
+using GeKtvi.Toolkit.Wpf.ValueConverters;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +10,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
-using GeKtvi.Toolkit.Clipboard;
 
 namespace GeKtvi.Toolkit.Wpf.Controls
 {
@@ -42,7 +44,7 @@ namespace GeKtvi.Toolkit.Wpf.Controls
         {
             RegisterCommands();
             CreateContextMenu();
-            _HoldPressForDrag = new HoldButtonPress(this, HoldForDragTime);
+            _HoldPressForDrag = new HoldButtonPress((a) => Dispatcher.Invoke(a), HoldForDragTime);
             _HoldPressForDrag.HoldPressSuccess += StartDrag;
         }
 
@@ -245,7 +247,7 @@ namespace GeKtvi.Toolkit.Wpf.Controls
                 }
             }
 
-            List<string[]> clipboardData = ClipboardHelper.ParseClipboardData();
+            List<string[]> clipboardData = new ClipboardHelperWpf().ParseClipboardData();
             if (clipboardData != null)
                 PasteInSelection(clipboardData);
         }
@@ -447,7 +449,7 @@ namespace GeKtvi.Toolkit.Wpf.Controls
             List<string[]> data = null;
             try
             {
-                data = ClipboardHelper.ParseClipboardData(e.Data);
+                data = new ClipboardHelperWpf().ParseClipboardData(e.Data);
             }
             catch (System.Runtime.InteropServices.COMException ex)
             {
@@ -500,7 +502,7 @@ namespace GeKtvi.Toolkit.Wpf.Controls
             }
 
             Cursor = Cursors.No;
-            DataObject dataObject = ClipboardHelper.ToDataObject(GetGridValues());
+            DataObject dataObject = ((DataObjectAdapterWpf)(new ClipboardHelperWpf().ToDataObject(GetGridValues()))).DataObject as DataObject;
 
             DragDrop.DoDragDrop(this, dataObject, DragDropEffects.Copy);
 

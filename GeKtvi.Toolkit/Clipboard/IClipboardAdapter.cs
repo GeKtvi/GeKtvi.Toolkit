@@ -2,8 +2,8 @@
 {
     public interface IClipboardAdapter
     {
-        DataObjectAdapter GetDataObject();
-        object GetText();
+        IDataObjectAdapter? GetDataObject();
+        object? GetText();
         void SetDataObject(IDataObjectAdapter dataObj);
     }
 }
