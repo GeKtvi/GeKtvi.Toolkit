@@ -3,16 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gektvi.Toolkit.Wpf.Tests.App", "Gektvi.Toolkit.Wpf.Tests.App\Gektvi.Toolkit.Wpf.Tests.App.csproj", "{87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gektvi.Toolkit.WpfKit.Tests.App", "Gektvi.Toolkit.WpfKit.Tests.App\Gektvi.Toolkit.WpfKit.Tests.App.csproj", "{87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.Wpf", "GeKtvi.Toolkit.Wpf\GeKtvi.Toolkit.Wpf.csproj", "{BB2D9BCF-08ED-4CC5-914A-BEB04BC857F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.WpfKit", "GeKtvi.Toolkit.WpfKit\GeKtvi.Toolkit.WpfKit.csproj", "{BB2D9BCF-08ED-4CC5-914A-BEB04BC857F3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC} = {87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit", "GeKtvi.Toolkit\GeKtvi.Toolkit.csproj", "{47C86DC5-8057-421F-9517-9C2ACEAF6191}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeKtvi.Toolkit.Wpf.Tests", "GeKtvi.Toolkit.Wpf.Tests\GeKtvi.Toolkit.Wpf.Tests.csproj", "{9CDD6C4A-12B9-4C92-B384-2515EB125C81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.WpfKit.Tests", "GeKtvi.Toolkit.WpfKit.Tests\GeKtvi.Toolkit.WpfKit.Tests.csproj", "{9CDD6C4A-12B9-4C92-B384-2515EB125C81}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
