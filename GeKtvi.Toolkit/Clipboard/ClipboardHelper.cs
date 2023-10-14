@@ -68,7 +68,7 @@ namespace GeKtvi.Toolkit.Clipboard
                 }
                 Debug.Assert(rawDataStr != null, string.Format("clipboardRawData: {0}, could not be converted to a string or memorystream.", clipboardRawData));
 
-                string[] rows = rawDataStr.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+                string[] rows = rawDataStr.Split(new string[] { "\r\n", "\n"/*TODO Environment*/ }, StringSplitOptions.RemoveEmptyEntries);
                 if (rows != null && rows.Length > 0)
                 {
                     foreach (string row in rows)
