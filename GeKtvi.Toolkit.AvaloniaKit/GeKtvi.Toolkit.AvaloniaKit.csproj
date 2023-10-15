@@ -4,6 +4,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>GeKtvi.Toolkit.Avalonia</Title>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>0.0.7</Version>
+    <Description>Extended Avalonia controls and some reuse classes</Description>
+    <RepositoryUrl>https://github.com/GeKtvi/GeKtvi.Toolkit</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

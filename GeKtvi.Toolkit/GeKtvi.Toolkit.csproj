@@ -4,7 +4,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>0.0.7</Version>
     <Title>GeKtvi.Toolkit</Title>
+    <RepositoryUrl>https://github.com/GeKtvi/GeKtvi.Toolkit</RepositoryUrl>
   </PropertyGroup>
   
   <ItemGroup>
