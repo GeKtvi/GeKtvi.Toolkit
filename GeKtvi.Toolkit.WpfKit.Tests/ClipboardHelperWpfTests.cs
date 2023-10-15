@@ -14,11 +14,11 @@ namespace GeKtvi.Toolkit.WpfKit.Tests
         [WpfTestMethod]
         public void SetClipboardDataAndParseClipboardData_TestData_CorrectSetData()
         {
-            var clipboard = new ClipboardHelperWpf();
+            ClipboardHelperWpf clipboard = new ClipboardHelperWpf();
 
             clipboard.SetClipboardData(TestData);
 
-            foreach (var item in clipboard.ParseClipboardData().Zip(TestData))
+            foreach ((string[] First, List<string> Second) item in clipboard.ParseClipboardData().Zip(TestData))
                 CollectionAssert.AreEqual(item.First, item.Second);
         }
     }

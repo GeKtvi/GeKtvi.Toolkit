@@ -7,7 +7,7 @@ public class WpfTestMethodAttribute : TestMethodAttribute
             return Invoke(testMethod);
 
         TestResult[]? result = null;
-        var thread = new Thread(() => result = Invoke(testMethod));
+        Thread thread = new Thread(() => result = Invoke(testMethod));
         thread.SetApartmentState(ApartmentState.STA);
         thread.Start();
         thread.Join();

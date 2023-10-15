@@ -2,21 +2,20 @@
 using Avalonia.Input.Platform;
 using GeKtvi.Toolkit.Clipboard;
 
-namespace GeKtvi.Toolkit.WpfKit.Clipboard
+namespace GeKtvi.Toolkit.AvaloniaKit.Clipboard
 {
     internal class DataObjectAdapterAvalonia : IDataObjectAdapter
     {
-        public IClipboard Clipboard => _clipboard;
+        public IClipboard Clipboard { get; }
         public DataObject DataObject { get; init; } = new();
 
-        private IClipboard _clipboard;
-        public DataObjectAdapterAvalonia(IClipboard clipboard) => _clipboard = clipboard;
+        public DataObjectAdapterAvalonia(IClipboard clipboard) => Clipboard = clipboard;
 
-        public object GetUnicodeText() => _clipboard.GetTextAsync().Result ?? "";
+        public object GetUnicodeText() => Clipboard.GetTextAsync().Result ?? "";
 
-        public bool? HasCvsData() => _clipboard.GetFormatsAsync().Result.Any(x => x == "CSV");
+        public bool? HasCvsData() => Clipboard.GetFormatsAsync().Result.Any(x => x == "CSV");
 
-        public bool? HasUnicodeData() => _clipboard.GetFormatsAsync().Result.Any(x => x == "Text");
+        public bool? HasUnicodeData() => Clipboard.GetFormatsAsync().Result.Any(x => x == "Text");
 
         public void SetRtfData(string sb)
         {

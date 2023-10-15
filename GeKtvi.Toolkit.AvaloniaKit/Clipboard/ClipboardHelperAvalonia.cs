@@ -1,19 +1,15 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Input;
-using GeKtvi.Toolkit.AvaloniaKit.Clipboard;
 using GeKtvi.Toolkit.Clipboard;
-using System;
-using System.Collections.Generic;
 
-namespace GeKtvi.Toolkit.WpfKit.Clipboard
+namespace GeKtvi.Toolkit.AvaloniaKit.Clipboard
 {
     public class ClipboardHelperAvalonia : ClipboardHelper
     {
         private WindowBase? _window;
         public ClipboardHelperAvalonia(WindowBase window)
-            : this(InitializeClipboardAdapter(window),  
-                   () =>  new DataObjectAdapterAvalonia(window.Clipboard ?? ThrowHelperClipboard.ThrowClipboardIsNull()))
+            : this(InitializeClipboardAdapter(window),
+                   () => new DataObjectAdapterAvalonia(window.Clipboard ?? ThrowHelperClipboard.ThrowClipboardIsNull()))
         {
             _window = window;
         }
@@ -30,9 +26,9 @@ namespace GeKtvi.Toolkit.WpfKit.Clipboard
             {
                 GetDataObjectFunc = () => new DataObjectAdapterAvalonia(window.Clipboard ?? ThrowHelperClipboard.ThrowClipboardIsNull()),
                 GetTextAction = () => window.Clipboard?.GetTextAsync().Result,
-                SetDataObjectAction = (IDataAdapter) => 
+                SetDataObjectAction = (IDataAdapter) =>
                     window.Clipboard?.SetDataObjectAsync(
-                        ((IDataAdapter as DataObjectAdapterAvalonia) ?? ThrowHelperClipboard.ThrowDataObjectAdapterHasIncorrectType()).DataObject
+                        (IDataAdapter as DataObjectAdapterAvalonia ?? ThrowHelperClipboard.ThrowDataObjectAdapterHasIncorrectType()).DataObject
                     ).Wait()
             };
     }

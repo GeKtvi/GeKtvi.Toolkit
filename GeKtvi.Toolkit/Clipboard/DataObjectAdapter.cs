@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Text;
 
 namespace GeKtvi.Toolkit.Clipboard
 {
     public class DataObjectAdapter : IDataObjectAdapter
     {
-        public Action? SetRtfDataAction {  get; init; }
+        public Action? SetRtfDataAction { get; init; }
         public Action? SetSetTextDataAction { get; init; }
         public Func<bool>? HasCvsDataFunc { get; init; }
         public Func<object>? GetDataFunc { get; init; }

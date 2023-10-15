@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace GeKtvi.Toolkit.Clipboard
+﻿namespace GeKtvi.Toolkit.Clipboard
 {
     public interface IDataObjectAdapter
     {

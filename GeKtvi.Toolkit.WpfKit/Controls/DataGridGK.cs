@@ -1,5 +1,4 @@
-﻿using GeKtvi.Toolkit.Clipboard;
-using GeKtvi.Toolkit.WpfKit.Clipboard;
+﻿using GeKtvi.Toolkit.WpfKit.Clipboard;
 using GeKtvi.Toolkit.WpfKit.ValueConverters;
 using System;
 using System.Collections;
