@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
+using GeKtvi.Toolkit.AvaloniaKit.Clipboard;
 using GeKtvi.Toolkit.Clipboard;
 using System;
 using System.Collections.Generic;
@@ -9,10 +10,10 @@ namespace GeKtvi.Toolkit.WpfKit.Clipboard
 {
     public class ClipboardHelperAvalonia : ClipboardHelper
     {
-        private WindowBase _window;
+        private WindowBase? _window;
         public ClipboardHelperAvalonia(WindowBase window)
             : this(InitializeClipboardAdapter(window),  
-                   () =>  new DataObjectAdapterAvalonia(window.Clipboard ?? throw new NullReferenceException("WindowBase.Clipboard is null")))
+                   () =>  new DataObjectAdapterAvalonia(window.Clipboard ?? ThrowHelperClipboard.ThrowClipboardIsNull()))
         {
             _window = window;
         }
@@ -22,14 +23,17 @@ namespace GeKtvi.Toolkit.WpfKit.Clipboard
         { }
 
         public List<string[]> ParseClipboardData(IDataObject dataObject) =>
-            ParseClipboardData(new DataObjectAdapterAvalonia(_window.Clipboard ?? throw new NullReferenceException("WindowBase.Clipboard is null")));
+            ParseClipboardData(new DataObjectAdapterAvalonia(_window?.Clipboard ?? ThrowHelperClipboard.ThrowClipboardIsNull()));
 
         private static IClipboardAdapter InitializeClipboardAdapter(WindowBase window) =>
             new ClipboardAdapter()
             {
-                GetDataObjectFunc = () => new DataObjectAdapterAvalonia(window.Clipboard ?? throw new NullReferenceException("WindowBase.Clipboard is null")),
-                GetTextAction = () => window.Clipboard.GetTextAsync().Result,
-                //SetDataObjectAction = (IDataAdapter) => System.Windows.Clipboard.SetDataObject((IDataAdapter as DataObjectAdapterAvalonia).DataObject)
+                GetDataObjectFunc = () => new DataObjectAdapterAvalonia(window.Clipboard ?? ThrowHelperClipboard.ThrowClipboardIsNull()),
+                GetTextAction = () => window.Clipboard?.GetTextAsync().Result,
+                SetDataObjectAction = (IDataAdapter) => 
+                    window.Clipboard?.SetDataObjectAsync(
+                        ((IDataAdapter as DataObjectAdapterAvalonia) ?? ThrowHelperClipboard.ThrowDataObjectAdapterHasIncorrectType()).DataObject
+                    ).Wait()
             };
     }
 }

@@ -1,13 +1,13 @@
-﻿using Avalonia.Input.Platform;
+﻿using Avalonia.Input;
+using Avalonia.Input.Platform;
 using GeKtvi.Toolkit.Clipboard;
-using System.Windows;
-using Avalonia.Input;
 
 namespace GeKtvi.Toolkit.WpfKit.Clipboard
 {
     internal class DataObjectAdapterAvalonia : IDataObjectAdapter
     {
-        public IClipboard DataObject => _clipboard;
+        public IClipboard Clipboard => _clipboard;
+        public DataObject DataObject { get; init; } = new();
 
         private IClipboard _clipboard;
         public DataObjectAdapterAvalonia(IClipboard clipboard) => _clipboard = clipboard;
@@ -16,20 +16,16 @@ namespace GeKtvi.Toolkit.WpfKit.Clipboard
 
         public bool? HasCvsData() => _clipboard.GetFormatsAsync().Result.Any(x => x == "CSV");
 
-        public bool? HasUnicodeData() => _clipboard.GetFormatsAsync().Result.Any(x => x == "CSV");
+        public bool? HasUnicodeData() => _clipboard.GetFormatsAsync().Result.Any(x => x == "Text");
 
         public void SetRtfData(string sb)
         {
-            var obj = new DataObject();
-
-            obj.Set(DataFormats.Text, sb);
+            DataObject.Set("Rich Text Format", sb);
         }
 
         public void SetTextData(string sb)
         {
-            var obj = new DataObject();
-
-            obj.Set(DataFormats.Text, sb);
+            DataObject.Set(DataFormats.Text, sb);
         }
     }
 }
