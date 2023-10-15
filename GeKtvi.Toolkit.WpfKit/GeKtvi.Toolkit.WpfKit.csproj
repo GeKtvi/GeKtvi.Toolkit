@@ -7,7 +7,7 @@
     <UseWPF>true</UseWPF>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Version>0.0.7</Version>
-    <Title>GeKtvi.Toolkit.Wpf</Title>
+    <Title>GeKtvi.Toolkit.WpfKit</Title>
     <Description>Extended WPF controls and some reuse classes</Description>
     <RepositoryUrl>https://github.com/GeKtvi/GeKtvi.Toolkit</RepositoryUrl>
   </PropertyGroup>
