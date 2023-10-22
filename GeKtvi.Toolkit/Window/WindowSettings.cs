@@ -10,7 +10,7 @@ namespace GeKtvi.Toolkit.Window
             get => _top;
             set
             {
-                if (WindowState.IsMinimized)
+                if (WindowState?.IsMinimized ?? false)
                     return;
                 _top = value;
                 OnPropertyChanged(nameof(Width));
@@ -23,7 +23,7 @@ namespace GeKtvi.Toolkit.Window
             get => _left;
             set
             {
-                if (WindowState.IsMinimized)
+                if (WindowState?.IsMinimized ?? false)
                     return;
                 _left = value;
                 OnPropertyChanged(nameof(Width));
@@ -36,7 +36,7 @@ namespace GeKtvi.Toolkit.Window
             get => _width;
             set
             {
-                if (WindowState.IsMinimized)
+                if (WindowState?.IsMinimized ?? false)
                     return;
                 _width = value;
                 OnPropertyChanged(nameof(Width));
@@ -49,7 +49,7 @@ namespace GeKtvi.Toolkit.Window
             get => _height;
             set
             {
-                if (WindowState.IsMinimized)
+                if (WindowState?.IsMinimized ?? false)
                     return;
                 _height = value;
                 OnPropertyChanged(nameof(Height));
@@ -67,8 +67,8 @@ namespace GeKtvi.Toolkit.Window
             }
         }
 
-        private IWindowStateAdapter _windowState;
-        public IWindowStateAdapter WindowState
+        private IWindowStateAdapter? _windowState;
+        public IWindowStateAdapter? WindowState
         {
             get => _windowState;
             set
@@ -85,14 +85,14 @@ namespace GeKtvi.Toolkit.Window
             Width = 500;
             Height = 500;
             Scale = 1;
-            WindowState.SetNormalState();
+            WindowState?.SetNormalState();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         public void OnLoad()
         {
-            if (WindowState.IsMinimized)
+            if (WindowState?.IsMinimized ?? false)
                 WindowState.SetNormalState();
         }
 
