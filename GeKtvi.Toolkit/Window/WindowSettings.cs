@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 
 namespace GeKtvi.Toolkit.Window
 {
+    [XmlInclude(typeof(WindowState))]
     public class WindowSettings : INotifyPropertyChanged
     {
         private double _top;
@@ -13,7 +16,7 @@ namespace GeKtvi.Toolkit.Window
                 if (State == WindowState.Minimized)
                     return;
                 _top = value;
-                OnPropertyChanged(nameof(Width));
+                OnPropertyChanged();
             }
         }
 
@@ -26,7 +29,7 @@ namespace GeKtvi.Toolkit.Window
                 if (State == WindowState.Minimized)
                     return;
                 _left = value;
-                OnPropertyChanged(nameof(Width));
+                OnPropertyChanged();
             }
         }
 
@@ -39,7 +42,7 @@ namespace GeKtvi.Toolkit.Window
                 if (State == WindowState.Minimized)
                     return;
                 _width = value;
-                OnPropertyChanged(nameof(Width));
+                OnPropertyChanged();
             }
         }
 
@@ -52,7 +55,7 @@ namespace GeKtvi.Toolkit.Window
                 if (State == WindowState.Minimized)
                     return;
                 _height = value;
-                OnPropertyChanged(nameof(Height));
+                OnPropertyChanged();
             }
         }
 
@@ -63,7 +66,7 @@ namespace GeKtvi.Toolkit.Window
             set
             {
                 _scale = value;
-                OnPropertyChanged(nameof(Scale));
+                OnPropertyChanged();
             }
         }
 
@@ -74,7 +77,7 @@ namespace GeKtvi.Toolkit.Window
             set
             {
                 _state = value;
-                OnPropertyChanged(nameof(_state));
+                OnPropertyChanged();
             }
         }
 
@@ -95,7 +98,7 @@ namespace GeKtvi.Toolkit.Window
                 State = WindowState.Normal;
         }
 
-        protected virtual void OnPropertyChanged(string propertyName)
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName ="")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

@@ -1,7 +1,4 @@
-﻿using Avalonia.Controls;
-using GeKtvi.Toolkit.Window;
-
-namespace GeKtvi.Toolkit.AvaloniaKit.Window
+﻿namespace GeKtvi.Toolkit.AvaloniaKit.Window
 {
     public class WindowSettings : Toolkit.Window.WindowSettings
     {
