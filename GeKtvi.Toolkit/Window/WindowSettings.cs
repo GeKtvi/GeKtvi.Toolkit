@@ -94,7 +94,7 @@ namespace GeKtvi.Toolkit.Window
 
         public void OnLoad()
         {
-            if (State == WindowState.Maximized || State == WindowState.FullScreen)
+            if (State == WindowState.Minimized)
                 State = WindowState.Normal;
         }
 

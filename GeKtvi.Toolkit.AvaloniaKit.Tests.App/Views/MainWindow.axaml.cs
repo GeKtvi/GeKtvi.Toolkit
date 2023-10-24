@@ -1,4 +1,5 @@
 ﻿using GeKtvi.Toolkit.AvaloniaKit.Clipboard;
+using GeKtvi.Toolkit.AvaloniaKit.Window;
 using System.Collections.Generic;
 
 namespace GeKtvi.Toolkit.AvaloniaKit.Tests.App.Views;
@@ -20,10 +21,14 @@ public partial class MainWindow : Avalonia.Controls.Window
 
     private void MainWindow_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        var clipboard = new ClipboardHelperAvalonia(this);
+        //var clipboard = new ClipboardHelperAvalonia(this);
 
-        clipboard.SetClipboardData(TestData);
+        //clipboard.SetClipboardData(TestData);
 
-        var data = clipboard.ParseClipboardData();
+        //var data = clipboard.ParseClipboardData();
+
+        var manager = new SettingsManager<WindowSettingsAvalonia>("AvaloniaKit.Tests.App", () => new WindowSettingsAvalonia());
+        manager.Load().SubscribeWindow(this);
+        Closed += (s, e) => manager.Save();
     }
 }

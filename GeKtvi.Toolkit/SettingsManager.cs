@@ -7,6 +7,7 @@ namespace GeKtvi.Toolkit
     public class SettingsManager<SettingsType>
     {
         private readonly string _saveFileName;
+        private readonly string _saveDirectory;
         private readonly Func<SettingsType> _settingsFactory;
         private SettingsType? _settings;
 
@@ -16,7 +17,8 @@ namespace GeKtvi.Toolkit
 
             fileName ??= typeof(SettingsType).ToString() + ".save";
 
-            _saveFileName = $@"{folderDirectory}\{folder}\{fileName}";
+            _saveDirectory = $@"{folderDirectory}\{folder}";
+            _saveFileName = $@"{_saveDirectory}\{fileName}";
 
             _settingsFactory = settingsFactory;
         }
@@ -33,11 +35,16 @@ namespace GeKtvi.Toolkit
             {
                 _settings = _settingsFactory.Invoke();
             }
+            catch (InvalidOperationException)
+            {
+                _settings = _settingsFactory.Invoke();
+            }
             return _settings;
         }
 
         public void Save()
         {
+            Directory.CreateDirectory(_saveDirectory);
             using FileStream fs = new(_saveFileName, FileMode.OpenOrCreate);
             fs.SetLength(0);
             new XmlSerializer(typeof(SettingsType)).Serialize(fs, _settings);
