@@ -1,4 +1,6 @@
-﻿namespace GeKtvi.Toolkit.AvaloniaKit.Window
+﻿using Avalonia;
+
+namespace GeKtvi.Toolkit.AvaloniaKit.Window
 {
     public class WindowSettings : Toolkit.Window.WindowSettings
     {
@@ -26,6 +28,21 @@
                     _ => Toolkit.Window.WindowState.Normal
                 };
             }
+        }
+
+        public void SetWindowFromSettings(Avalonia.Controls.Window window)
+        {
+            window.Position = new PixelPoint((int)Left, (int)Top);
+            window.Height = Height;
+            window.Width = Width;
+        }
+
+        public void SetFromWindow(Avalonia.Controls.Window window)
+        {
+            Top = window.Position.Y;
+            Left = window.Position.X;
+            Height = window.Height;
+            Width = window.Width;
         }
     }
 }
