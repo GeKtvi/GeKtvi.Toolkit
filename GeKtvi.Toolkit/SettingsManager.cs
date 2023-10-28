@@ -6,6 +6,8 @@ namespace GeKtvi.Toolkit
 {
     public class SettingsManager<SettingsType>
     {
+        public Action<SettingsType>? AfterLoadAction { get; init; } 
+
         private readonly string _saveFileName;
         private readonly string _saveDirectory;
         private readonly Func<SettingsType> _settingsFactory;
@@ -39,6 +41,7 @@ namespace GeKtvi.Toolkit
             {
                 _settings = _settingsFactory.Invoke();
             }
+            AfterLoadAction?.Invoke(_settings);
             return _settings;
         }
 
