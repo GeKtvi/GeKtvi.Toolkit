@@ -47,10 +47,7 @@ namespace GeKtvi.Toolkit.AvaloniaKit.Window
         public void SubscribeWindow(Avalonia.Controls.Window window)
         {
             _windowField = window;
-            if (window.IsLoaded)
-                SetWindowFromSettingsIfNotDefaultCrated();
-            else
-                _windowField.Loaded += (s, e) => SetWindowFromSettingsIfNotDefaultCrated();
+            SetWindowFromSettingsIfNotDefaultCrated();
 
             _windowField.Closing += (s, e) => PrepareForSaving();
         }
@@ -74,15 +71,14 @@ namespace GeKtvi.Toolkit.AvaloniaKit.Window
 
         private void PrepareForSaving()
         {
-            var tempTop = Top;
-            var tempLeft = Left;
-            SetFromWindow();
             if (_window.WindowState == Avalonia.Controls.WindowState.Minimized)
-            {
                 State = Avalonia.Controls.WindowState.Normal;
-                Top = tempTop;
-                Left = tempLeft;
-            }
+            else if(_window.WindowState == Avalonia.Controls.WindowState.Maximized)
+                State = Avalonia.Controls.WindowState.Maximized;
+            else if (_window.WindowState == Avalonia.Controls.WindowState.FullScreen)
+                State = Avalonia.Controls.WindowState.FullScreen;
+            else
+                SetFromWindow();
         }
 
         private void SetWindowFromSettingsIfNotDefaultCrated()

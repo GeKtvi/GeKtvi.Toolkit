@@ -6,14 +6,19 @@ namespace GeKtvi.Toolkit
 {
     public class SettingsManager<SettingsType>
     {
-        public Action<SettingsType>? AfterLoadAction { get; init; } 
+        public event EventHandler<SettingsType>? AfterLoad;
 
         private readonly string _saveFileName;
         private readonly string _saveDirectory;
         private readonly Func<SettingsType> _settingsFactory;
         private SettingsType? _settings;
 
-        public SettingsManager(string folder, Func<SettingsType> settingsFactory, string? folderDirectory = null, string? fileName = null)
+        public SettingsManager(
+            string folder,
+            Func<SettingsType> settingsFactory,
+            string? folderDirectory = null,
+            string? fileName = null,
+            Action<SettingsType>? afterLoad = null)
         {
             folderDirectory ??= Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
@@ -23,6 +28,9 @@ namespace GeKtvi.Toolkit
             _saveFileName = $@"{_saveDirectory}\{fileName}";
 
             _settingsFactory = settingsFactory;
+
+            if (afterLoad is not null)
+                AfterLoad += (s, e) => afterLoad(e);
         }
 
         public SettingsType Load()
@@ -41,7 +49,7 @@ namespace GeKtvi.Toolkit
             {
                 _settings = _settingsFactory.Invoke();
             }
-            AfterLoadAction?.Invoke(_settings);
+            AfterLoad?.Invoke(this, _settings);
             return _settings;
         }
 
