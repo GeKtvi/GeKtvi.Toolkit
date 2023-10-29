@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 
 namespace GeKtvi.Toolkit
@@ -31,6 +33,18 @@ namespace GeKtvi.Toolkit
 
             using FileStream fs = new(fullPath, FileMode.OpenOrCreate, FileAccess.Write);
             xml.Serialize(fs, config);
+        }
+
+        public static IEnumerable<T> LoadArrayConfigs<T>(string folder = "Configs", string filePattern = "*.config")
+        {
+            var files = Directory.GetFiles(folder, filePattern);
+            if (files.Any() == false)
+                throw new InvalidDataException("Folder does not contains matching elements");
+
+            List<T> list = new();
+            foreach (var file in files)
+                list.AddRange(LoadConfig<T[]>(file, string.Empty));
+            return list;
         }
     }
 }

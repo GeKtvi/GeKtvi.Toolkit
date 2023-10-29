@@ -26,4 +26,13 @@
   <ItemGroup>
     <ProjectReference Include="..\GeKtvi.Toolkit.AvaloniaKit\GeKtvi.Toolkit.AvaloniaKit.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Configs\OtherSomeFile.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Configs\SomeFile.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>
