@@ -5,7 +5,7 @@
     <LangVersion>12</LangVersion>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>0.0.8</Version>
+    <Version>0.0.9</Version>
     <Title>GeKtvi.Toolkit</Title>
     <RepositoryUrl>https://github.com/GeKtvi/GeKtvi.Toolkit</RepositoryUrl>
   </PropertyGroup>
