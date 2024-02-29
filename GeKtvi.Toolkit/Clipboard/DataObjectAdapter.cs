@@ -2,6 +2,7 @@
 
 namespace GeKtvi.Toolkit.Clipboard
 {
+#if NET6_0_OR_GREATER
     public class DataObjectAdapter : IDataObjectAdapter
     {
         public Action? SetRtfDataAction { get; init; }
@@ -26,4 +27,5 @@ namespace GeKtvi.Toolkit.Clipboard
 
         public bool? HasUnicodeData() => HasUnicodeDataFunc?.Invoke();
     }
+#endif
 }

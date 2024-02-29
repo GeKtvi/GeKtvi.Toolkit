@@ -7,6 +7,7 @@ using System.Text;
 
 namespace GeKtvi.Toolkit.Clipboard
 {
+#if NET6_0_OR_GREATER
     public class ClipboardHelper
     {
         private IClipboardAdapter _clipboard;
@@ -15,8 +16,9 @@ namespace GeKtvi.Toolkit.Clipboard
 
         public ClipboardHelper(IClipboardAdapter clipboard, Func<IDataObjectAdapter> dataObjectAdapterFactory)
         {
+#if NET6_0_OR_GREATER
             ArgumentNullException.ThrowIfNull(dataObjectAdapterFactory);
-
+#endif
             _clipboard = clipboard;
             _dataObjectAdapterFactory = dataObjectAdapterFactory;
         }
@@ -232,4 +234,5 @@ namespace GeKtvi.Toolkit.Clipboard
             return outputList.ToArray();
         }
     }
+#endif
 }

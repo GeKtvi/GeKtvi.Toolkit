@@ -7,6 +7,23 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="GeKtvi.Toolkit.AvaloniaKit.Tests.App.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
-        Title="GeKtvi.Toolkit.AvaloniaKit.Tests.App">
-        <views:MainView />
+        Title="GeKtvi.Toolkit.AvaloniaKit.Tests.App"
+        Height="600"
+        Width="600"
+        MinHeight="600"
+        MinWidth="600">
+        <!--<views:MainView />-->
+  <Grid ColumnDefinitions="* Auto">
+    <Border Grid.Column="0" Background="Red">
+      <Button Background="Bisque" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+    </Border>
+    <Border Grid.Column="1" Background="AliceBlue">
+      <Border.Styles>
+        <Style Selector="Button">
+          <Setter Property="Width" Value="80"/>
+        </Style>
+      </Border.Styles>
+      <Button Background="Bisque"/>
+    </Border>
+  </Grid>
 </Window>
