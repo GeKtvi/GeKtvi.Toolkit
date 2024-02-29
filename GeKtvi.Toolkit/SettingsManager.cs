@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Xml.Serialization;
 
@@ -22,7 +23,7 @@ namespace GeKtvi.Toolkit
         {
             folderDirectory ??= Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
-            fileName ??= typeof(SettingsType).ToString() + ".save";
+            fileName ??= typeof(SettingsType).Name + ".save";
 
             _saveDirectory = $@"{folderDirectory}\{folder}";
             _saveFileName = $@"{_saveDirectory}\{fileName}";
@@ -33,13 +34,11 @@ namespace GeKtvi.Toolkit
                 AfterLoad += (s, e) => afterLoad(e);
         }
 
-        public SettingsType Load()
+        public SettingsType TryLoad()
         {
             try
             {
-                using FileStream fs = new(_saveFileName, FileMode.OpenOrCreate);
-                _settings = (SettingsType)(new XmlSerializer(typeof(SettingsType)).Deserialize(fs)
-                    ?? throw new InvalidDataException($"Cant cast serialized object to {nameof(SettingsType)}"));
+                LoadFile();
             }
             catch (IOException)
             {
@@ -51,6 +50,23 @@ namespace GeKtvi.Toolkit
             }
             AfterLoad?.Invoke(this, _settings);
             return _settings;
+        }
+
+        public SettingsType Load()
+        {
+            LoadFile();
+            AfterLoad?.Invoke(this, _settings);
+            return _settings;
+        }
+
+#if NET6_0_OR_GREATER
+        [MemberNotNull(nameof(_settings))]
+#endif
+        private void LoadFile()
+        {
+            FileStream fs = new(_saveFileName, FileMode.OpenOrCreate);
+            _settings = (SettingsType)(new XmlSerializer(typeof(SettingsType)).Deserialize(fs)
+                ?? throw new InvalidDataException($"Cant cast serialized object to {nameof(SettingsType)}"));
         }
 
         public void Save()
