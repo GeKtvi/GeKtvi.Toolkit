@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33516.290
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gektvi.Toolkit.WpfKit.Tests.App", "Gektvi.Toolkit.WpfKit.Tests.App\Gektvi.Toolkit.WpfKit.Tests.App.csproj", "{87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.WpfKit", "GeKtvi.Toolkit.WpfKit\GeKtvi.Toolkit.WpfKit.csproj", "{BB2D9BCF-08ED-4CC5-914A-BEB04BC857F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit", "GeKtvi.Toolkit\GeKtvi.Toolkit.csproj", "{47C86DC5-8057-421F-9517-9C2ACEAF6191}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.WpfKit.Tests", "GeKtvi.Toolkit.WpfKit.Tests\GeKtvi.Toolkit.WpfKit.Tests.csproj", "{9CDD6C4A-12B9-4C92-B384-2515EB125C81}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.AvaloniaKit", "GeKtvi.Toolkit.AvaloniaKit\GeKtvi.Toolkit.AvaloniaKit.csproj", "{4B7A002B-6FE9-4C59-85BC-75A7BA9827F2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.AvaloniaKit.Tests.App", "GeKtvi.Toolkit.AvaloniaKit.Tests.App\GeKtvi.Toolkit.AvaloniaKit.Tests.App.csproj", "{35DD98EE-EAFC-423A-9DC9-54B6A75D6544}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87CCCF08-F5AD-4E8A-83BE-0A57490BBBDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB2D9BCF-08ED-4CC5-914A-BEB04BC857F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB2D9BCF-08ED-4CC5-914A-BEB04BC857F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB2D9BCF-08ED-4CC5-914A-BEB04BC857F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB2D9BCF-08ED-4CC5-914A-BEB04BC857F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47C86DC5-8057-421F-9517-9C2ACEAF6191}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47C86DC5-8057-421F-9517-9C2ACEAF6191}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47C86DC5-8057-421F-9517-9C2ACEAF6191}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47C86DC5-8057-421F-9517-9C2ACEAF6191}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CDD6C4A-12B9-4C92-B384-2515EB125C81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CDD6C4A-12B9-4C92-B384-2515EB125C81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CDD6C4A-12B9-4C92-B384-2515EB125C81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CDD6C4A-12B9-4C92-B384-2515EB125C81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B7A002B-6FE9-4C59-85BC-75A7BA9827F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B7A002B-6FE9-4C59-85BC-75A7BA9827F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B7A002B-6FE9-4C59-85BC-75A7BA9827F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B7A002B-6FE9-4C59-85BC-75A7BA9827F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35DD98EE-EAFC-423A-9DC9-54B6A75D6544}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35DD98EE-EAFC-423A-9DC9-54B6A75D6544}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35DD98EE-EAFC-423A-9DC9-54B6A75D6544}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35DD98EE-EAFC-423A-9DC9-54B6A75D6544}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {89443174-322A-497E-8C44-68B282986701}
+	EndGlobalSection
+EndGlobal

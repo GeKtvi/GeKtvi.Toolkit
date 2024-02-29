@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+    <LangVersion>12</LangVersion>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>0.0.9</Version>
+    <Title>GeKtvi.Toolkit</Title>
+    <RepositoryUrl>https://github.com/GeKtvi/GeKtvi.Toolkit</RepositoryUrl>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="System.Reactive" Version="6.0.0" />
+  </ItemGroup>
+</Project>

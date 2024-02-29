@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <StartupObject>GeKtvi.Toolkit.WpfKit.Tests.App.App</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="WPF-UI" Version="2.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GeKtvi.Toolkit\GeKtvi.Toolkit.csproj" />
+    <ProjectReference Include="..\GeKtvi.Toolkit.WpfKit\GeKtvi.Toolkit.WpfKit.csproj" />
+
+  </ItemGroup>
+
+</Project>
