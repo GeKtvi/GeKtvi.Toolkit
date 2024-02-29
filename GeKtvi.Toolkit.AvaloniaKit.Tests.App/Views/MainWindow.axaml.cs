@@ -22,11 +22,8 @@ public partial class MainWindow : Avalonia.Controls.Window
             () => new WindowSettingsAvalonia(),
             afterLoad: ws => ws.SubscribeWindow(this));
 
-        manager.Load();
-        InitializeComponent();
         Loaded += MainWindow_Loaded;
 
-        Closed += (s, e) => manager.Save();
     }
 
     private void MainWindow_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
