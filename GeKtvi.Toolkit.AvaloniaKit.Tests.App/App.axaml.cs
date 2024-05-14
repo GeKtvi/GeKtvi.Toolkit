@@ -29,9 +29,9 @@ public partial class App : Application
                 () => new WindowSettingsAvalonia(),
                 afterLoad: ws => ws.SubscribeWindow(desktop.MainWindow));
 
-            desktop.MainWindow.Closed += (s, e) => manager.Save();
+            desktop.MainWindow.Closed += (s, e) => manager.Dispose();
 
-            manager.Load();
+            manager.TryLoad();
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
