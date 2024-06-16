@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Runtime.InteropServices;
 
 namespace GeKtvi.Toolkit.Win32Kit
 {
     public class WindowRectangleListener : IDisposable
     {
-        public event EventHandler<Rectangle> RectangleChanged;
+        public IObservable<Rectangle> RectangleChanged => _rectangleChanged.AsObservable();
+        private Subject<Rectangle> _rectangleChanged = new();   
         private readonly IntPtr _targetWindow;
-        private readonly WindowThreadListener _threadListener;
+        private readonly WindowEventListener _threadListener;
         private readonly bool _isDisposed = false;
 
         public WindowRectangleListener(IntPtr targetWindow)
         {
             _targetWindow = targetWindow;
-            _threadListener = new WindowThreadListener(_targetWindow);
-            _threadListener.AnyEventInvoked += OnWindowChanges;
+            _threadListener = new WindowEventListener(_targetWindow);
+            _threadListener.EventInvoked.Subscribe(OnWindowChanges);
         }
 
         public Rectangle GetRectangle()
@@ -32,19 +35,16 @@ namespace GeKtvi.Toolkit.Win32Kit
         public void Dispose()
         {
             if (_isDisposed)
-                throw new ObjectDisposedException(GetType().FullName);
+                return;
             _threadListener.Dispose();
         }
 
-        protected virtual void OnWindowChanges(IntPtr hwnd, WinUserEventType eventType)
+        protected virtual void OnWindowChanges(WinUserEventType eventType)
         {
-            if (_targetWindow != hwnd)
-                return;
-
             #region DEBUG
 #if DEBUG
-            var location = GetWindowLocation(hwnd);
-            Debug.WriteLine($"{eventType,35} Left={location.Left,5}, Top={location.Top,5}, Right={location.Right,5}, Bottom={location.Bottom,5} \"{WindowTitleReader.ReadWindowTitle(hwnd),20}\" {hwnd,10}");
+            var location = GetWindowLocation(_targetWindow);
+            Debug.WriteLine($"{eventType,35} Left={location.Left,5}, Top={location.Top,5}, Right={location.Right,5}, Bottom={location.Bottom,5} \"{WindowTitleReader.ReadWindowTitle(_targetWindow),20}\" {_targetWindow,10}");
 #endif
             #endregion
 
@@ -67,7 +67,7 @@ namespace GeKtvi.Toolkit.Win32Kit
 
         private void OnMainWindowChanged()
         {
-            RectangleChanged?.Invoke(this, GetRectangle());
+            _rectangleChanged.OnNext(GetRectangle());
         }
 
         [StructLayout(LayoutKind.Sequential)]

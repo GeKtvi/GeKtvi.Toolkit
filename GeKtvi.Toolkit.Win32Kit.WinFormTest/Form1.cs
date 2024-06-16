@@ -39,10 +39,10 @@ public partial class Form1 : Form
         new WindowAttacher(dialog, subSubForm.Handle).AttachToWindow();
 
         CalculateFormTransform(rectanglListener.GetRectangle(), subSubForm);
-        rectanglListener.RectangleChanged += (s, e) =>
+        rectanglListener.RectangleChanged.Subscribe(x =>
         {
-            CalculateFormTransform(e, subSubForm);
-        };
+            CalculateFormTransform(x, subSubForm);
+        });
     }
 
     private static void CalculateFormTransform(Rectangle e, Form form)

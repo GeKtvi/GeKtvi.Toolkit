@@ -1,12 +1,16 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Runtime.InteropServices;
 
 namespace GeKtvi.Toolkit.Win32Kit
 {
-    public class WindowThreadListener : IDisposable
+    public class WindowEventListener : IDisposable
     {
-        public event Action<IntPtr, WinUserEventType> AnyEventInvoked;
+        public IObservable<WinUserEventType> EventInvoked => _eventSubject.AsObservable();
+        public IntPtr TargetWindow => _targetWindow;
+        private readonly Subject<WinUserEventType> _eventSubject = new();
         private readonly uint _processId;
         private readonly uint _threadId;
         private readonly IntPtr _targetWindow;
@@ -25,7 +29,7 @@ namespace GeKtvi.Toolkit.Win32Kit
             uint dwEventThread,
             uint dwmsEventTime);
 
-        public WindowThreadListener(IntPtr targetWindow)
+        public WindowEventListener(IntPtr targetWindow)
         {
             _targetWindow = targetWindow;
 
@@ -55,7 +59,8 @@ namespace GeKtvi.Toolkit.Win32Kit
 
         private void HookCallback(IntPtr hWinEventHook, uint eventType, IntPtr hWnd, int idObject, int idChild, uint dwEventThread, uint dwmsEventTime)
         {
-            AnyEventInvoked?.Invoke(hWnd, (WinUserEventType)eventType);
+            if(_targetWindow == hWnd)
+                _eventSubject.OnNext((WinUserEventType)eventType);
         }
 
         private static void ThrowOnWin32Error(string message)
@@ -74,6 +79,6 @@ namespace GeKtvi.Toolkit.Win32Kit
         [DllImport("user32.dll")]
         private static extern IntPtr SetWinEventHook(uint eventMin, uint eventMax, IntPtr hmodWinEventProc, WinEventDelegate lpfnWinEventProc, uint idProcess, uint idThread, uint dwFlags);
 
-        ~WindowThreadListener() => Dispose();
+        ~WindowEventListener() => Dispose();
     }
 }
