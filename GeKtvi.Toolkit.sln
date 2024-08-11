@@ -19,10 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.Win32Kit", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.Win32Kit.WinFormTest", "GeKtvi.Toolkit.Win32Kit.WinFormTest\GeKtvi.Toolkit.Win32Kit.WinFormTest.csproj", "{04D14F55-A295-4E7D-8311-2BC815136BB6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1745F8A9-F2F7-4A2F-BB1F-474C4E6AF20B}"
-	ProjectSection(SolutionItems) = preProject
-		Directory.Build.props = Directory.Build.props
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeKtvi.Toolkit.Tests", "GeKtvi.Toolkit.Tests\GeKtvi.Toolkit.Tests.csproj", "{D84EB00F-740F-45A8-B9BB-C80DF24E8663}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +59,10 @@ Global
 		{04D14F55-A295-4E7D-8311-2BC815136BB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04D14F55-A295-4E7D-8311-2BC815136BB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04D14F55-A295-4E7D-8311-2BC815136BB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D84EB00F-740F-45A8-B9BB-C80DF24E8663}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D84EB00F-740F-45A8-B9BB-C80DF24E8663}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D84EB00F-740F-45A8-B9BB-C80DF24E8663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D84EB00F-740F-45A8-B9BB-C80DF24E8663}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
