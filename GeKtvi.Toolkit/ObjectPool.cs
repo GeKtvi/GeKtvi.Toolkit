@@ -15,6 +15,7 @@ namespace GeKtvi.Toolkit
         public Action<T>? ObjectIsNotFreeSetter { get; }
         public Func<T> ObjectFactory { get; }
         public Func<T, IObservable<T>> ObjectIsFreeSubscriber { get; }
+        public int ObjectsCount => _pool.Count;
         public int FreeObjectsCount => _pool.Where(IsObjectFreeSelector).Count();
 
         private readonly List<T> _pool;

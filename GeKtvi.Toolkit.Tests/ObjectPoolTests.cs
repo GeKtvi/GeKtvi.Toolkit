@@ -35,12 +35,9 @@ namespace GeKtvi.Toolkit.Tests
 
             obj.IsFree = false;
 
+            AddItems(allObjects, 24);
 
-            for (int i = 0; i < 24; i++)
-            {
-                var multiObj = _testingPool.GetObject();
-                allObjects.Add(multiObj);
-            }
+            Assert.AreEqual(_testingPool.ObjectsCount, 25);
 
             Thread.Sleep(ClearThrottleTimeInMilliseconds);
 
@@ -51,6 +48,32 @@ namespace GeKtvi.Toolkit.Tests
             Thread.Sleep(ClearThrottleTimeInMilliseconds);
 
             Assert.AreEqual(_testingPool.FreeObjectsCount, 25);
+
+            AddItems(allObjects, 50, true);
+
+            Assert.AreEqual(_testingPool.FreeObjectsCount, 50);
+            Assert.AreEqual(_testingPool.ObjectsCount, 50);
+
+            Thread.Sleep(ClearThrottleTimeInMilliseconds);
+            Thread.Sleep(ClearThrottleTimeInMilliseconds);
+
+            Assert.AreEqual(_testingPool.ObjectsCount, 25);
+        }
+
+        private void AddItems(HashSet<TestObject> allObjects, int count, bool isFreeObject = false)
+        {
+            HashSet<TestObject> addedObjects = new();
+
+            for (int i = 0; i < count; i++)
+            {
+                var multiObj = _testingPool.GetObject();
+                addedObjects.Add(multiObj);
+                allObjects.Add(multiObj);
+            }
+
+            if (isFreeObject)
+                foreach (var item in addedObjects)
+                    item.IsFree = true;
         }
 
         private class TestObject
