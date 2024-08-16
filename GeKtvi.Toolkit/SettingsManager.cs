@@ -64,7 +64,7 @@ namespace GeKtvi.Toolkit
 #endif
         private void LoadFile()
         {
-            FileStream fs = new(_saveFileName, FileMode.OpenOrCreate);
+            using FileStream fs = new(_saveFileName, FileMode.OpenOrCreate);
             _settings = (SettingsType)(new XmlSerializer(typeof(SettingsType)).Deserialize(fs)
                 ?? throw new InvalidDataException($"Cant cast serialized object to {nameof(SettingsType)}"));
         }
