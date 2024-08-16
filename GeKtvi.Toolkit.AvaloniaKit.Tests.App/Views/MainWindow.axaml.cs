@@ -15,6 +15,7 @@ public partial class MainWindow : Avalonia.Controls.Window
 
     public MainWindow()
     {
+        InitializeComponent();
         var conf = AppConfigHelper.LoadArrayConfigs<string>(filePattern: "*File.config");
 
         var manager = new SettingsManager<WindowSettingsAvalonia>(

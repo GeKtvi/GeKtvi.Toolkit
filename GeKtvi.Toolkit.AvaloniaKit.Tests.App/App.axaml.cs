@@ -1,7 +1,7 @@
 ﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-
 using GeKtvi.Toolkit.AvaloniaKit.Tests.App.ViewModels;
 using GeKtvi.Toolkit.AvaloniaKit.Tests.App.Views;
 using GeKtvi.Toolkit.AvaloniaKit.Window;
@@ -24,14 +24,14 @@ public partial class App : Application
                 DataContext = new MainViewModel()
             };
 
-            var manager = new SettingsManager<WindowSettingsAvalonia>(
-                "AvaloniaKit.Tests.App",
-                () => new WindowSettingsAvalonia(),
-                afterLoad: ws => ws.SubscribeWindow(desktop.MainWindow));
+            //var manager = new SettingsManager<WindowSettingsAvalonia>(
+            //    "AvaloniaKit.Tests.App",
+            //    () => new WindowSettingsAvalonia(),
+            //    afterLoad: ws => ws.SubscribeWindow(desktop.MainWindow));
 
-            desktop.MainWindow.Closed += (s, e) => manager.Save();
+            //desktop.MainWindow.Closed += (s, e) => manager.Save();
 
-            manager.Load();
+            //manager.Load();
         }
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
         {
