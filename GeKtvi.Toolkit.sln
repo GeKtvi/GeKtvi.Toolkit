@@ -21,10 +21,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.Win32Kit.Win
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.Tests", "GeKtvi.Toolkit.Tests\GeKtvi.Toolkit.Tests.csproj", "{D84EB00F-740F-45A8-B9BB-C80DF24E8663}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A297BB42-68A7-4980-87A0-59464A52D2F0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7501DFA8-068B-4029-BCF1-51377B7E50C3}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.Wcf.Service", "GeKtvi.Toolkit.Wcf\GeKtvi.Toolkit.Wcf.Service.csproj", "{4DC47B18-4A76-49D7-BFCC-AE61B53A162A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.Wcf.Client", "GeKtvi.Toolkit.Wcf.Client\GeKtvi.Toolkit.Wcf.Client.csproj", "{D4AC16D8-290F-4906-A188-36DC72034970}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.Wcf.Core", "GeKtvi.Toolkit.Wcf.Core\GeKtvi.Toolkit.Wcf.Core.csproj", "{6FD930DF-73E5-4AF1-8E4F-39F13C174B98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +74,18 @@ Global
 		{D84EB00F-740F-45A8-B9BB-C80DF24E8663}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D84EB00F-740F-45A8-B9BB-C80DF24E8663}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D84EB00F-740F-45A8-B9BB-C80DF24E8663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DC47B18-4A76-49D7-BFCC-AE61B53A162A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DC47B18-4A76-49D7-BFCC-AE61B53A162A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DC47B18-4A76-49D7-BFCC-AE61B53A162A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DC47B18-4A76-49D7-BFCC-AE61B53A162A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4AC16D8-290F-4906-A188-36DC72034970}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4AC16D8-290F-4906-A188-36DC72034970}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4AC16D8-290F-4906-A188-36DC72034970}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4AC16D8-290F-4906-A188-36DC72034970}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FD930DF-73E5-4AF1-8E4F-39F13C174B98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FD930DF-73E5-4AF1-8E4F-39F13C174B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FD930DF-73E5-4AF1-8E4F-39F13C174B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FD930DF-73E5-4AF1-8E4F-39F13C174B98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
