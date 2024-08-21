@@ -1,20 +1,34 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net48</TargetFramework>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeProjectReferenceDlls</TargetsForTfmSpecificBuildOutput>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Reactive" Version="6.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="System.Reactive" Version="6.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\GeKtvi.Toolkit.Wcf.Core\GeKtvi.Toolkit.Wcf.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\GeKtvi.Toolkit.Wcf.Core\GeKtvi.Toolkit.Wcf.Core.csproj" ReferenceOutputAssembly="true" CopyToOutputDirectory="true">
+			<PrivateAssets>all</PrivateAssets>
+		</ProjectReference>
+	</ItemGroup>
+	
+	<ItemGroup>
+		<!-- Add a ref folder to the package which only exposes the library so that the referenced class library doesn't get exposed. -->
+		<None Include="$(TargetPath)" PackagePath="ref/$(TargetFramework)" Pack="true" Condition="'$(TargetFramework)' != ''" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="System.ServiceModel" />
-  </ItemGroup>
+	<Target Name="IncludeProjectReferenceDlls" DependsOnTargets="BuildOnlySettings;ResolveReferences">
+		<ItemGroup>
+			<BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('PrivateAssets', 'All'))"/>
+		</ItemGroup>
+	</Target>
+
+	<ItemGroup>
+		<Reference Include="System.ServiceModel" />
+	</ItemGroup>
 </Project>

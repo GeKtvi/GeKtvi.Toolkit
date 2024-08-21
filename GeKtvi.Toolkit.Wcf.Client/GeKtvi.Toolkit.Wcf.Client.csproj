@@ -1,15 +1,24 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeProjectReferenceDlls</TargetsForTfmSpecificBuildOutput>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Reactive" Version="6.0.0" />
-    <PackageReference Include="System.ServiceModel.NetNamedPipe" Version="6.2.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="System.Reactive" Version="6.0.0" />
+		<PackageReference Include="System.ServiceModel.NetNamedPipe" Version="6.2.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\GeKtvi.Toolkit.Wcf.Core\GeKtvi.Toolkit.Wcf.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\GeKtvi.Toolkit.Wcf.Core\GeKtvi.Toolkit.Wcf.Core.csproj" ReferenceOutputAssembly="true" CopyToOutputDirectory="true">
+			<PrivateAssets>all</PrivateAssets>
+		</ProjectReference>
+	</ItemGroup>
+
+	<Target Name="IncludeProjectReferenceDlls" DependsOnTargets="BuildOnlySettings;ResolveReferences">
+		<ItemGroup>
+			<BuildOutputInPackage Include="@(ReferenceCopyLocalPaths->WithMetadataValue('ReferenceSourceTarget', 'ProjectReference')->WithMetadataValue('PrivateAssets', 'All'))"/>
+		</ItemGroup>
+	</Target>
 </Project>

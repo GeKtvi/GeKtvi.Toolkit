@@ -11,7 +11,7 @@ namespace NXOpenCommon.Wcf.Client
     public class ClientConnection<T>(Func<IServiceClosingCallback> callbackInstanceFactory,
                                      Func<InstanceContext, Binding, EndpointAddress, T> communicationObjectFactory,
                                      Action<T> subscribeCallbackAction,
-                                     string endpointAddress, 
+                                     string endpointAddress,
                                      int reconnectInterval = 50,
                                      int reconnectionAttempts = 100) : IDisposable, IClientConnection<T> where T : class, ICommunicationObject
     {
@@ -60,7 +60,7 @@ namespace NXOpenCommon.Wcf.Client
 
                 if (reconnectionAttempts <= 0)
                     throw;
-                TryReconect();
+                TryReconnect();
             }
             return _client!;
         }
@@ -79,7 +79,7 @@ namespace NXOpenCommon.Wcf.Client
             }
         }
 
-        private void TryReconect()
+        private void TryReconnect()
         {
             reconnectionAttempts--;
             Thread.Sleep(reconnectInterval);

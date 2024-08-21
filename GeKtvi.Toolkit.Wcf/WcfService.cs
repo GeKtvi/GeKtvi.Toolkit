@@ -11,12 +11,15 @@ namespace GeKtvi.Toolkit.Wcf.Service
 {
     public class WcfService<T>(T serviceInstance,
                                string serviceName = "NxOpenService",
-                               string baseAddress = "net.pipe://localhost/") : IDisposable where T : IDisposable
+                               string baseAddress = "net.pipe://localhost/",
+                               bool useUniqueProcessAddress = false,
+                               TimeSpan? receiveTimeout = null) : IDisposable where T : IDisposable
     {
         public string BaseAddress { get; } = baseAddress;
-        public string ServiceName { get; set; } = serviceName;
+        public string ServiceName { get; } = serviceName;
+        public TimeSpan? ReceiveTimeout { get; } = receiveTimeout;
         public IObservable<Unit> Errors => _errors.AsObservable();
-        public bool UseUniqueProcessAddress { get; set; } = false;
+        public bool UseUniqueProcessAddress { get; } = useUniqueProcessAddress;
         public async Task StartAsync() => await Task.Run(Start);
 
         private ServiceHost? _serviceHost;
@@ -39,7 +42,7 @@ namespace GeKtvi.Toolkit.Wcf.Service
                     new NetNamedPipeBinding()
                     {
                         MaxReceivedMessageSize = int.MaxValue,
-                        ReceiveTimeout = TimeSpan.MaxValue
+                        ReceiveTimeout = ReceiveTimeout ?? TimeSpan.FromMinutes(1)
                     },
                     ServiceName);
 

@@ -1,8 +1,5 @@
-﻿using NXOpenCommon.Wcf;
-using System;
+﻿using System;
 using System.Reactive;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
 
 namespace NXOpenCommon.Wcf.Client
 {
