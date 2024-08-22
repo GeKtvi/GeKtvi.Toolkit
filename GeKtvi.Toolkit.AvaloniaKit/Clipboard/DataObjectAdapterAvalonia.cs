@@ -17,14 +17,8 @@ namespace GeKtvi.Toolkit.AvaloniaKit.Clipboard
 
         public bool? HasUnicodeData() => Clipboard.GetFormatsAsync().Result.Any(x => x == "Text");
 
-        public void SetRtfData(string sb)
-        {
-            DataObject.Set("Rich Text Format", sb);
-        }
+        public void SetRtfData(string sb) => DataObject.Set("Rich Text Format", System.Text.Encoding.UTF8.GetBytes(sb));
 
-        public void SetTextData(string sb)
-        {
-            DataObject.Set(DataFormats.Text, sb);
-        }
+        public void SetTextData(string sb) => DataObject.Set(DataFormats.Text, sb);
     }
 }
