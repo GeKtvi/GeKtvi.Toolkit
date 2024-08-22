@@ -6,7 +6,6 @@ using Avalonia.Metadata;
 using Avalonia.Threading;
 using Avalonia.VisualTree;
 using System.Reactive;
-using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 
@@ -14,7 +13,7 @@ namespace GeKtvi.Toolkit.AvaloniaKit.DataTemplates
 {
     public class PoolingDataTemplate : ITypedDataTemplate
     {
-        private TimeSpan ThrottleBeforeClear { get => _throttleBeforeClear.Value; set => _throttleBeforeClear.OnNext(value); } 
+        private TimeSpan ThrottleBeforeClear { get => _throttleBeforeClear.Value; set => _throttleBeforeClear.OnNext(value); }
         private TimeSpan ThrottleBeforeFlushHot { get => _throttleBeforeFlushHot.Value; set => _throttleBeforeFlushHot.OnNext(value); }
 
         private BehaviorSubject<TimeSpan> _throttleBeforeClear = new(TimeSpan.FromMilliseconds(1000));
@@ -29,6 +28,7 @@ namespace GeKtvi.Toolkit.AvaloniaKit.DataTemplates
         private HashSet<ControlContainer> _hot = new();
         private Subject<Unit> _flushHot = new();
 
+        [DataType]
         public Type? DataType { get; set; }
         [Content]
         [TemplateContent]
@@ -37,7 +37,7 @@ namespace GeKtvi.Toolkit.AvaloniaKit.DataTemplates
         public PoolingDataTemplate()
         {
             var flush = _flushHot.Throttle(_ => _throttleBeforeClear);
-                        
+
             flush.Subscribe(ReturnAllHot);
 
             _pool = new(ThrottleBeforeClear,
@@ -98,7 +98,7 @@ namespace GeKtvi.Toolkit.AvaloniaKit.DataTemplates
             _flushHot.OnNext(Unit.Default);
         }
 
-        private class ControlContainer(Control control) 
+        private class ControlContainer(Control control)
         {
             public Control Control { get; } = control;
             public bool IsDataContextRemoved { get; set; } = control.DataContext is null;

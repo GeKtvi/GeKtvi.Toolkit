@@ -1,6 +1,8 @@
-﻿using GeKtvi.Toolkit.AvaloniaKit.Clipboard;
+﻿using Avalonia.Threading;
+using GeKtvi.Toolkit.AvaloniaKit.Clipboard;
 using GeKtvi.Toolkit.AvaloniaKit.Window;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace GeKtvi.Toolkit.AvaloniaKit.Tests.App.Views;
 
@@ -30,7 +32,13 @@ public partial class MainWindow : Avalonia.Controls.Window
     private void MainWindow_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         var clipboard = new ClipboardHelperAvalonia(this);
-        clipboard.SetClipboardData(TestData);
-        var data = clipboard.ParseClipboardData();
+        Dispatcher.UIThread.Invoke(() =>
+        {
+            var data = clipboard.ParseClipboardData();
+        });
+        Dispatcher.UIThread.Invoke(() =>
+        {
+            clipboard.SetClipboardData(TestData);
+        });
     }
 }
