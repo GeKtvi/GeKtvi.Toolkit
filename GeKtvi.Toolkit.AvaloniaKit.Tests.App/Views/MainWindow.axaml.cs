@@ -10,7 +10,7 @@ public partial class MainWindow : Avalonia.Controls.Window
 {
     public List<List<string>> TestData = new(3)
     {
-        new List<string>(4) {"1",  "2", "3", "4"},
+        new List<string>(4) {"1А",  "2Б", "3В", "4Г"},
         new List<string>(4) {"5",  "6", "7", "8"},
         new List<string>(4) {"9",  "10", "11", "12"}
     };

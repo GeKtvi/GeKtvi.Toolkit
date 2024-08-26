@@ -1,6 +1,7 @@
 ﻿using Avalonia.Input;
 using Avalonia.Input.Platform;
 using GeKtvi.Toolkit.Clipboard;
+using System.Text;
 
 namespace GeKtvi.Toolkit.AvaloniaKit.Clipboard
 {
@@ -17,8 +18,29 @@ namespace GeKtvi.Toolkit.AvaloniaKit.Clipboard
 
         public bool? HasUnicodeData() => Clipboard.GetFormatsAsync().Result.Any(x => x == "Text");
 
-        public void SetRtfData(string sb) => DataObject.Set("Rich Text Format", System.Text.Encoding.UTF8.GetBytes(sb));
+        public void SetRtfData(string sb) => DataObject.Set("Rich Text Format", RtfEncode(sb));
 
         public void SetTextData(string sb) => DataObject.Set(DataFormats.Text, sb);
+
+        // Simple solution to RTF encoding problem that I found: https://ru.stackoverflow.com/a/932127
+        private static byte[] RtfEncode(string input)
+        {
+            StringBuilder sb = new StringBuilder(input.Length * 4);
+
+            foreach (var c in input)
+            {
+                if (c > 127)
+                {
+                    string escape = "\\u" + ((Int16)c).ToString() + "?";
+                    sb.Append(escape);
+                }
+                else
+                {
+                    sb.Append(c);
+                }
+            }
+
+            return Encoding.ASCII.GetBytes(sb.ToString());
+        }
     }
 }
