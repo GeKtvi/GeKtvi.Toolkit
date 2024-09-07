@@ -10,13 +10,13 @@ using System.Threading.Tasks;
 namespace GeKtvi.Toolkit.Wcf.Service
 {
     public class WcfService<T>(T serviceInstance,
-                               string serviceName = "NxOpenService",
-                               string baseAddress = "net.pipe://localhost/",
+                               string serviceName = "AppEndpoint",
+                               string baseAddress = "net.pipe://localhost/AppService/",
                                bool useUniqueProcessAddress = false,
                                TimeSpan? receiveTimeout = null) : IDisposable where T : IDisposable
     {
         public string BaseAddress { get; } = baseAddress;
-        public string ServiceName { get; } = serviceName;
+        public string EndpointName { get; } = serviceName;
         public TimeSpan? ReceiveTimeout { get; } = receiveTimeout;
         public IObservable<Unit> Errors => _errors.AsObservable();
         public bool UseUniqueProcessAddress { get; } = useUniqueProcessAddress;
@@ -44,7 +44,7 @@ namespace GeKtvi.Toolkit.Wcf.Service
                         MaxReceivedMessageSize = int.MaxValue,
                         ReceiveTimeout = ReceiveTimeout ?? TimeSpan.FromMinutes(1)
                     },
-                    ServiceName);
+                    EndpointName);
 
                 ServiceMetadataBehavior smb = new();
                 if (_serviceHost.Description.Behaviors.Contains(typeof(ServiceMetadataBehavior)) == false)

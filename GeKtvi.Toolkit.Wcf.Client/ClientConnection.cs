@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GeKtvi.Toolkit.Wcf.Core;
+using System;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -6,7 +7,7 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Threading;
 
-namespace NXOpenCommon.Wcf.Client
+namespace GeKtvi.Toolkit.Wcf.Client
 {
     public class ClientConnection<T>(Func<IServiceClosingCallback> callbackInstanceFactory,
                                      Func<InstanceContext, Binding, EndpointAddress, T> communicationObjectFactory,

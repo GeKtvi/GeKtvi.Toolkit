@@ -1,7 +1,8 @@
-﻿using System;
+﻿using GeKtvi.Toolkit.Wcf.Core;
+using System;
 using System.Reactive;
 
-namespace NXOpenCommon.Wcf.Client
+namespace GeKtvi.Toolkit.Wcf.Client
 {
     public interface IClientConnection<out T>
     {

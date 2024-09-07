@@ -32,6 +32,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.Wcf.Client",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeKtvi.Toolkit.Wcf.Core", "GeKtvi.Toolkit.Wcf.Core\GeKtvi.Toolkit.Wcf.Core.csproj", "{6FD930DF-73E5-4AF1-8E4F-39F13C174B98}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeKtvi.Toolkit.Wcf.Tests", "GeKtvi.Toolkit.Wcf.Tests\GeKtvi.Toolkit.Wcf.Tests.csproj", "{2C441897-0007-400C-BC1E-8E26AFFCC8BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +88,10 @@ Global
 		{6FD930DF-73E5-4AF1-8E4F-39F13C174B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FD930DF-73E5-4AF1-8E4F-39F13C174B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FD930DF-73E5-4AF1-8E4F-39F13C174B98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C441897-0007-400C-BC1E-8E26AFFCC8BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C441897-0007-400C-BC1E-8E26AFFCC8BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C441897-0007-400C-BC1E-8E26AFFCC8BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C441897-0007-400C-BC1E-8E26AFFCC8BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GeKtvi.Toolkit.Wcf.Core;
+using System;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;

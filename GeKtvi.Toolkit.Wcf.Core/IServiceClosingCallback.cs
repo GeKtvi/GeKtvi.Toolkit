@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reactive;
 
-namespace NXOpenCommon.Wcf
+namespace GeKtvi.Toolkit.Wcf.Core
 {
     public interface IServiceClosingCallback
     {
