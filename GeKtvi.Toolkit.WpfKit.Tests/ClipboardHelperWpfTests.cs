@@ -1,3 +1,6 @@
+using GeKtvi.Toolkit.WpfKit.Clipboard;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 namespace GeKtvi.Toolkit.WpfKit.Tests
 {
     [TestClass]

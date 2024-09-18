@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GeKtvi.Toolkit\GeKtvi.Toolkit.csproj" />
     <ProjectReference Include="..\GeKtvi.Toolkit.WpfKit\GeKtvi.Toolkit.WpfKit.csproj" />
+    <ProjectReference Include="..\GeKtvi.Toolkit\GeKtvi.Toolkit.csproj" />
 
   </ItemGroup>
 

@@ -3,6 +3,7 @@ using GeKtvi.Toolkit.WpfKit.ValueConverters;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -155,7 +156,7 @@ namespace GeKtvi.Toolkit.WpfKit.Controls
 
             System.ComponentModel.PropertyDescriptor propertyDescriptor = e.PropertyDescriptor as System.ComponentModel.PropertyDescriptor;
 
-            if (propertyDescriptor.Attributes[typeof(System.ComponentModel.DataAnnotations.DisplayAttribute)] is not System.ComponentModel.DataAnnotations.DisplayAttribute displayAttribute)
+            if (propertyDescriptor.Attributes[typeof(DisplayAttribute)] is not DisplayAttribute displayAttribute)
                 return;
 
             if (displayAttribute.Name != null)
@@ -281,7 +282,7 @@ namespace GeKtvi.Toolkit.WpfKit.Controls
 
                     if (cellProp is null)
                     {
-                        if (createNewRows == true && cell.Item == Items[^1]) // Не создавать последнюю строку если выбрана временная строка
+                        if (createNewRows == true && cell.Item == Items[Items.Count - 1]) // Не создавать последнюю строку если выбрана временная строка
                             cell.Column.OnPastingCellClipboardContent(cell.Item, value);
                     }
                     else

@@ -7,7 +7,6 @@ using System.Text;
 
 namespace GeKtvi.Toolkit.Clipboard
 {
-#if NET6_0_OR_GREATER
     public class ClipboardHelper
     {
         private IClipboardAdapter _clipboard;
@@ -200,7 +199,7 @@ namespace GeKtvi.Toolkit.Clipboard
                 char ch = value[i];
                 if (ch == separator)
                 {
-                    outputList.Add(value[startIndex..endIndex]);
+                    outputList.Add(value.Substring(startIndex, endIndex - startIndex));
 
                     startIndex = endIndex + 1;
                     endIndex = startIndex;
@@ -222,7 +221,7 @@ namespace GeKtvi.Toolkit.Clipboard
                 else if (i + 1 == value.Length)
                 {
                     // add the last value
-                    outputList.Add(value[startIndex..]);
+                    outputList.Add(value.Substring(startIndex));
                     break;
                 }
                 else
@@ -234,5 +233,4 @@ namespace GeKtvi.Toolkit.Clipboard
             return outputList.ToArray();
         }
     }
-#endif
 }

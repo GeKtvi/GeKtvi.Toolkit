@@ -11,11 +11,8 @@ public class WpfTestMethodAttribute : TestMethodAttribute
         thread.SetApartmentState(ApartmentState.STA);
         thread.Start();
         thread.Join();
-        return result ?? new TestResult[0];
+        return result ?? Array.Empty<TestResult>();
     }
 
-    private TestResult[] Invoke(ITestMethod testMethod)
-    {
-        return new[] { testMethod.Invoke(null) };
-    }
+    private TestResult[] Invoke(ITestMethod testMethod) => [testMethod.Invoke(null)];
 }

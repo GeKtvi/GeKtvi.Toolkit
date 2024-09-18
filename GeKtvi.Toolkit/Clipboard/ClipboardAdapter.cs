@@ -2,7 +2,6 @@
 
 namespace GeKtvi.Toolkit.Clipboard
 {
-#if NET6_0_OR_GREATER
     public class ClipboardAdapter : IClipboardAdapter
     {
         public Func<IDataObjectAdapter>? GetDataObjectFunc { get; init; }
@@ -15,5 +14,4 @@ namespace GeKtvi.Toolkit.Clipboard
 
         public object? GetText() => GetTextAction?.Invoke();
     }
-#endif
 }
