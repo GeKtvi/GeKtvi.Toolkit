@@ -5,14 +5,16 @@ using System.Xml.Serialization;
 
 namespace GeKtvi.Toolkit
 {
-    public class SettingsManager<SettingsType>
+    public class SettingsManager<SettingsType> : ISettingsManager<SettingsType>
     {
         public event EventHandler<SettingsType>? AfterLoad;
 
-        private readonly string _saveFileName;
-        private readonly string _saveDirectory;
+        protected string SaveFileName { get; init; }
+        protected string SaveDirectory { get; init; }
+        protected SettingsType? Settings { get; set; }
+
+        private bool _isDisposed = false;
         private readonly Func<SettingsType> _settingsFactory;
-        private SettingsType? _settings;
 
         public SettingsManager(
             string folder,
@@ -25,8 +27,8 @@ namespace GeKtvi.Toolkit
 
             fileName ??= typeof(SettingsType).Name + ".save";
 
-            _saveDirectory = $@"{folderDirectory}\{folder}";
-            _saveFileName = $@"{_saveDirectory}\{fileName}";
+            SaveDirectory = $@"{folderDirectory}\{folder}";
+            SaveFileName = $@"{SaveDirectory}\{fileName}";
 
             _settingsFactory = settingsFactory;
 
@@ -34,7 +36,7 @@ namespace GeKtvi.Toolkit
                 AfterLoad += (s, e) => afterLoad(e);
         }
 
-        public SettingsType TryLoad()
+        public SettingsType? TryLoad()
         {
             try
             {
@@ -42,39 +44,55 @@ namespace GeKtvi.Toolkit
             }
             catch (IOException)
             {
-                _settings = _settingsFactory.Invoke();
+                Settings = _settingsFactory.Invoke();
             }
             catch (InvalidOperationException)
             {
-                _settings = _settingsFactory.Invoke();
+                Settings = _settingsFactory.Invoke();
             }
-            AfterLoad?.Invoke(this, _settings);
-            return _settings;
+            AfterLoad?.Invoke(this, Settings);
+            return Settings;
         }
 
         public SettingsType Load()
         {
             LoadFile();
-            AfterLoad?.Invoke(this, _settings);
-            return _settings;
+            AfterLoad?.Invoke(this, Settings);
+            return Settings;
         }
 
 #if NET6_0_OR_GREATER
-        [MemberNotNull(nameof(_settings))]
+        [MemberNotNull(nameof(Settings))]
 #endif
-        private void LoadFile()
+        protected virtual void LoadFile()
         {
-            using FileStream fs = new(_saveFileName, FileMode.OpenOrCreate);
-            _settings = (SettingsType)(new XmlSerializer(typeof(SettingsType)).Deserialize(fs)
+            using FileStream fileStream = new(SaveFileName, FileMode.OpenOrCreate);
+            using StreamReader fs = new(fileStream);
+
+            Settings = (SettingsType)(new XmlSerializer(typeof(SettingsType)).Deserialize(fs)
                 ?? throw new InvalidDataException($"Cant cast serialized object to {nameof(SettingsType)}"));
         }
 
-        public void Save()
+        public virtual void Save()
         {
-            Directory.CreateDirectory(_saveDirectory);
-            using FileStream fs = new(_saveFileName, FileMode.OpenOrCreate);
-            fs.SetLength(0);
-            new XmlSerializer(typeof(SettingsType)).Serialize(fs, _settings);
+            if (Settings is null)
+                return;
+
+            Directory.CreateDirectory(SaveDirectory);
+            using FileStream fileStream = new(SaveFileName, FileMode.OpenOrCreate);
+            fileStream.SetLength(0);
+            using StreamWriter sw = new(fileStream);
+            new XmlSerializer(typeof(SettingsType)).Serialize(sw, Settings);
+        }
+
+        public virtual void Dispose()
+        {
+            if(_isDisposed == false)
+            {
+                GC.SuppressFinalize(this);
+                Save();
+                _isDisposed = true;
+            }
         }
     }
 }
