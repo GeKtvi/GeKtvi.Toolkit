@@ -10,12 +10,12 @@
         private bool _isFactoryExecuted;
 
         [TestMethod]
-        public void Test_XmlSettingsManager_CorrectWorkedManager() => Test(CreateXmlSettingManager());
+        public void Test_XmlSettingsManager_CorrectWorkedManager() => Test(CreateXmlSettingManager(), SerializerType.Xml);
 
         [TestMethod]
-        public void Test_JsonSettingsManager_CorrectWorkedManager() => Test(CreateJsonSettingManager());
+        public void Test_JsonSettingsManager_CorrectWorkedManager() => Test(CreateJsonSettingManager(), SerializerType.Json);
 
-        public void Test(ISettingsManager<TestConfig> manager)
+        public void Test(ISettingsManager<TestConfig> manager, SerializerType serializerType)
         {
             _isFactoryExecuted = false;
 
@@ -24,7 +24,7 @@
             Assert.IsTrue(_isFactoryExecuted);
             Assert.IsNotNull(settings);
             Assert.AreEqual(ChangedValue, settings.Property3);
-            Assert.AreEqual(TestConfig.CurrentRandom, settings);
+            Assert.AreEqual(TestConfig.GetCurrentRandom(serializerType), settings);
 
             settings.Property1 = -1;
             manager.Save();
@@ -44,7 +44,7 @@
                 () =>
                 {
                     _isFactoryExecuted = true;
-                    return TestConfig.CurrentRandom;
+                    return TestConfig.GetCurrentRandom(SerializerType.Xml);
                 },
                 FolderDirectory,
                 "MySettings.save",
@@ -57,7 +57,7 @@
                 () =>
                 {
                     _isFactoryExecuted = true;
-                    return TestConfig.CurrentRandom;
+                    return TestConfig.GetCurrentRandom(SerializerType.Json);
                 },
                 FolderDirectory,
                 "MySettings.save",

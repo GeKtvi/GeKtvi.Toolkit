@@ -21,9 +21,6 @@ public class ComparableList<T> : List<T>
         return false;
     }
 
-    public override int GetHashCode()
-    {
-        return 0;
-    }
+    public override int GetHashCode() => 0;
 }
 

@@ -3,8 +3,6 @@ namespace GeKtvi.Toolkit.Tests;
 [TestClass]
 public class AppConfigHelperTests
 {
-    private static readonly TestConfig _config = TestConfig.CurrentRandom;  
-
     [TestMethod]
     public void WriteConfig_ConfigObject_CorrectSavedConfig() => WriteConfig(SerializerType.Xml);
 
@@ -25,8 +23,8 @@ public class AppConfigHelperTests
         WriteConfig(serializerType);
 
         var config = AppConfigHelper.LoadConfig<TestConfig>(serializerType);
-        Assert.AreEqual(_config, config);
+        Assert.AreEqual(TestConfig.GetCurrentRandom(serializerType), config);
     }
 
-    private static void WriteConfig(SerializerType serializerType) => AppConfigHelper.WriteConfig(_config, serializerType);
+    private static void WriteConfig(SerializerType serializerType) => AppConfigHelper.WriteConfig(TestConfig.GetCurrentRandom(serializerType), serializerType);
 }

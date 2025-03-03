@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Text.Json;
 
 
 namespace GeKtvi.Toolkit
@@ -27,7 +28,6 @@ namespace GeKtvi.Toolkit
                 throw new FileNotFoundException("Config not found", fullPath);
 
             using FileStream fileStream = new(fullPath, FileMode.Open, FileAccess.Read);
-            using StreamReader sr = new(fileStream);
 
             object? res;
 
@@ -36,14 +36,12 @@ namespace GeKtvi.Toolkit
                 case SerializerType.Xml:
                     {
                         XmlSerializer ser = new(typeof(T));
-                        res = ser.Deserialize(sr);
+                        res = ser.Deserialize(fileStream);
                         break;
                     }
                 case SerializerType.Json:
                     {
-                        DataContractJsonSerializer ser = new (typeof(T));
-
-                        res = ser.ReadObject(fileStream);
+                        res = JsonSerializer.Deserialize<T>(fileStream);
                     }
                     break;
                 default:
@@ -67,24 +65,18 @@ namespace GeKtvi.Toolkit
 
             using var fileStream = new FileStream(fullPath, FileMode.OpenOrCreate, FileAccess.Write);
             fileStream.SetLength(0);
-            using StreamWriter sr = new(fileStream);
 
             switch (serializer)
             {
                 case SerializerType.Xml:
                     {
                         XmlSerializer ser = new(config.GetType());
-                        ser.Serialize(sr, config);
+                        ser.Serialize(fileStream, config);
                         break;
                     }
                 case SerializerType.Json:
                     {
-
-                        DataContractJsonSerializer ser = new (config.GetType());
-                        using MemoryStream ms = new();
-                        ser.WriteObject(ms, config);
-                        ms.Position = 0;
-                        sr.Write(new StreamReader(ms).ReadToEnd());
+                        JsonSerializer.Serialize(fileStream, config);
                     }
                     break;
                 default:
