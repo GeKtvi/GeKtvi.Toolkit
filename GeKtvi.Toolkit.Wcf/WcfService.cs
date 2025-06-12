@@ -13,7 +13,8 @@ namespace GeKtvi.Toolkit.Wcf.Service
                                string serviceName = "AppEndpoint",
                                string baseAddress = "net.pipe://localhost/AppService/",
                                bool useUniqueProcessAddress = false,
-                               TimeSpan? receiveTimeout = null) : IDisposable where T : IDisposable
+                               TimeSpan? receiveTimeout = null,
+                               TimeSpan? closeTimeout = null) : IDisposable where T : IDisposable
     {
         public string BaseAddress { get; } = baseAddress;
         public string EndpointName { get; } = serviceName;
@@ -23,6 +24,7 @@ namespace GeKtvi.Toolkit.Wcf.Service
         public async Task StartAsync() => await Task.Run(Start);
 
         private ServiceHost? _serviceHost;
+        private TimeSpan _closeTimeout =  closeTimeout ?? TimeSpan.FromSeconds(1);
         private readonly Subject<Unit> _errors = new();
 
         public void Start()
@@ -70,7 +72,7 @@ namespace GeKtvi.Toolkit.Wcf.Service
             serviceInstance.Dispose();
 
             if (_serviceHost is not null && _serviceHost.State != CommunicationState.Faulted)
-                _serviceHost.Close();
+                _serviceHost.Close(_closeTimeout);
         }
 
         ~WcfService() => Dispose();
